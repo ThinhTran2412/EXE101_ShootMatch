@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pickic | Experimental Gallery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f8f8d8",
+                        "background-light": "#f8f8f6",
+                        "background-dark": "#202012",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background-color: #f8f8d8;
+    /* Forced theme background */
+    }
+/* Film grain overlay effect */
+.film-grain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.04;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAqoVzK0YGRAP5LeOe6bASYgBEIQM4OF5Cak1yvOq57mrUHqcFvm9SkCz0ZRIGkRVZiAG7JhjAM17f5Ma4ENgN4ngzSrjQfwK7ZQGWbZNNwpUgOa5AytKXU_dlXRVid-C8cx8JRzlbo0SyC8YHTS9hydT7-kZyVsK2-hCQYXAX8sU6ky3RSo8hvtvKoKlMzYLgB9lRhKnAvKTX7Wos8vT2OzOEBFlLlOZby4hyJMaecoAvpAl-iBnlrlGxJ-Tl_5NFLO9NrUfZHtXA)
+    }
+/* Soft feathering mask */
+.feather-mask {
+    mask-image: radial-gradient(circle, black 60%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: radial-gradient(circle, black 60%, rgba(0, 0, 0, 0) 100%)
+    }
+/* Masonry-like staggered effect */
+.masonry-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem
+    }</style>
+<style>
+    
+  </style>
+  </head>
+<body class="bg-primary dark:bg-background-dark text-[#1a1a0f] selection:bg-black selection:text-white"><div id="app-shell">
+<div class="film-grain"></div>
+<!-- Top Navigation -->
+<header class="sticky top-0 z-40 bg-primary/80 dark:bg-background-dark/80 backdrop-blur-md px-6 py-4 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-2xl">grid_view</span>
+</div>
+<h1 class="text-xl font-extrabold tracking-tighter uppercase">Pickic</h1>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center size-10 rounded-full border border-black/5">
+<span class="material-symbols-outlined text-xl">search</span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-full bg-black text-white">
+<span class="material-symbols-outlined text-xl">menu</span>
+</button>
+</div>
+</header>
+<!-- Category Tabs -->
+<nav class="px-6 py-4 overflow-x-auto no-scrollbar">
+<div class="flex gap-8 border-b border-black/5 min-w-max">
+<a class="pb-3 border-b-2 border-black text-sm font-bold tracking-widest uppercase" href="#">All</a>
+<a class="pb-3 border-b-2 border-transparent text-sm font-medium tracking-widest uppercase opacity-40 hover:opacity-100" href="#">Cinematic Noir</a>
+<a class="pb-3 border-b-2 border-transparent text-sm font-medium tracking-widest uppercase opacity-40 hover:opacity-100" href="#">Surrealism</a>
+<a class="pb-3 border-b-2 border-transparent text-sm font-medium tracking-widest uppercase opacity-40 hover:opacity-100" href="#">Brutalist</a>
+</div>
+</nav>
+<!-- Experimental Masonry Gallery -->
+<main class="p-6">
+<div class="grid grid-cols-2 gap-4 items-start">
+<!-- Left Column -->
+<div class="masonry-col">
+<!-- Large Vertical Noir -->
+<div class="group relative">
+<div class="w-full aspect-[2/3] bg-center bg-cover rounded-xl shadow-2xl transition-transform duration-700 group-hover:scale-[0.98]" data-alt="High contrast cinematic noir street photography" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBwioxW3jjy_6uC1TYEOXInAWiG6Lfhucd-W1WaCTQ7qyl_q0i6jj1OY14vSUiNUTGgQdWORgkYjbpRWYAGKHUI7_0uZqa2XjNXoVdZ8orm0Qo0YnWiBanA2CUCj9p6ZHlbZIVDYsmOq3ggx6zDjiinNwBbZ7FYoM5MBA3SJdzYPp6n_Nr_KvjJt1LJ9er_nWvUjOy82Spo0AAss0vPPLWr2sY2SH7NFwyfrf9_400SCeU2c2F1WEl0ARHU0ohmb3hB2D4Cvv6ABdI");'>
+</div>
+<div class="mt-3">
+<p class="text-[10px] font-bold tracking-[0.2em] uppercase opacity-50">Series 01 // Noir</p>
+<p class="text-sm font-medium">SHADOW_STUDY</p>
+</div>
+</div>
+<!-- Circular Surrealist -->
+<div class="group relative flex flex-col items-center">
+<div class="w-full aspect-square bg-center bg-cover rounded-full shadow-inner feather-mask transition-all duration-700 group-hover:rotate-6" data-alt="Surreal circular floating object in fog" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD3sGbV9SbV_9oNehWfOGMzgEgzjoKO4Uv3lXS6lgv5KOXLASiYh_2Q3rMzBjTre04lYiqkx1hA2FRExSxjg4oFfGK48pi_-9TcAfQCwH7b9CCRNowEc6cOeCzcgEIn80Kjrn-Y_WO2iEITSxrm4B7O8mQ1-0CNBvQM7H9NtN9FWcYND933nnCLVBt2ur8vRRQ5nEnWpuUJjE1Z7bysxuXNhfjOG4KMRwqPOcfUr6wtXa2qdySUoLqGR8cCzncH45Ee2lvZxbNWIH8");'>
+</div>
+<div class="mt-4 text-center">
+<p class="text-sm font-light italic">Ethereal Form</p>
+</div>
+</div>
+<!-- Small Detail -->
+<div class="group relative">
+<div class="w-full aspect-video bg-center bg-cover rounded-lg overflow-hidden" data-alt="Abstract close up of concrete textures" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBUL_dGQMKANuzqoER1q0FgMLefLvCV-MYFGa8W8fskL4czsMRX2si-fUYd2Ync63GDKE0YgvAJ-dhzCbf2GG-ifnLQy93MEF190EB7ZxFkNCmlPuWkAdjhPdk7GYejApnMhEpa8P6_FLia4cHWl4ZKESUKw3b8mcslLqYMc0eFK6HWH3ZklD07xSDRnorQu8CFViBZI2LCxatKW9qSCbnqCvsknLIVj1rcQRvCyHlQlOes81aXpFSd5DuS717UYYPqs4BQoiQeX8c");'>
+<div class="absolute inset-0 bg-black/10 transition-opacity group-hover:opacity-0"></div>
+</div>
+</div>
+</div>
+<!-- Right Column -->
+<div class="masonry-col pt-12">
+<!-- Brutalist Architecture (Sharp Cut) -->
+<div class="group relative">
+<div class="w-full aspect-square bg-center bg-cover shadow-xl grayscale" data-alt="Sharp angular brutalist concrete architecture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD-mxIaMH8L5xRt2GG2cbN2nFaT3osYea-oRO45z1wzuSliH5f4igUzDvvj0SvRZjVyBl0543VGd-RguwcTSm21NXP27U0mTS0IsqVQu92FKNCnIgMmL63IlbaSn3APkjETrNyoa1L8MPE7GxlJUf6qV-q1cqon6jRsQMpft62rxDOaEdhFinvmLpM0wP_zuk2Vw8PXpzmCSy9OIxt0LAWiTgrdoQDf9gbwu_3BjR0gC0WNj_kGqN7iGc8NHLV0yVIBR88qa5hqUlA"); clip-path: polygon(0 0, 100% 15%, 100% 100%, 0 85%);'>
+</div>
+<div class="mt-6 flex justify-between items-baseline">
+<p class="text-sm font-bold tracking-tighter">STRUCT_04</p>
+<span class="text-[9px] font-medium opacity-40">2024</span>
+</div>
+</div>
+<!-- Tall Portrait Bleed -->
+<div class="group relative -mx-4">
+<div class="w-full aspect-[3/5] bg-center bg-cover rounded-r-full shadow-lg" data-alt="Moody fashion portrait with dramatic lighting" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCat6wwl1UgRCwqZZPgrbVid_qUyeUg729lIFekWfNf1U1BgCm6v8RtNmWdEauz3VnMHfQS5zBWxPYFDrnc0t0EYoN_IUfp3A5hkegwb1e7Kch0nszYc0IlKW1d2ktx7cSrYWH7Uxd8_FI6e097p8QlqwRwD5TE6OiCxGAmpeoZK6OOfE1Cf8bVbEsEdtrDGOBrUdq9i9jRqV2tdICxz7N0saDLrSFAwkqMHsg7xbWFUea8W6TTWjopD82bWvBAv3txbSRiHxlh6po");'>
+</div>
+<div class="px-4 mt-3">
+<p class="text-xs font-light tracking-wide leading-relaxed">The intersection of light and digital decay.</p>
+</div>
+</div>
+<!-- Geometric Duo -->
+<div class="flex gap-2">
+<div class="w-1/2 aspect-square bg-center bg-cover rounded-full" data-alt="Abstract shadow pattern" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC-xMlXS6IV3B3_MjTxfO6ls4XlbCmxv5oBaSif9MumnfdkN8TYisM3d4WJT-ZU2orRoCGuUia5gQpfBgY5x6B_OZt3GR1268Czn0v_QArqsN-HIQIyPyBk26lhFi4GfkBdzvDLxf-tdx0cgGjWBbqSlzOn8MUdWwv7Yu7aMfxdaQj6wGzK7uQ6S4eyBd_h_8cw2baecr1QLhDQcpZmd_o8-ZFqggbV85YaqPlx7BmWpy7sUWvGK9kP-JAixk4KPEHCH2VEQIuE2SY");'></div>
+<div class="w-1/2 aspect-square bg-center bg-cover rounded-xl" data-alt="Minimalist architectural line" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCb3H57gcIl6K_OCHLYMkOnlwQdIyJOaaTw1qWbYLWqJkMhmEK0o3f6Bhn-mMXfnEITmtfY1n_ljnau5Ij7eqB8MVjV504bc5WJ29CwuGlPtyaO0aidADaXlKLEFoxfM1e7tRVB5O5651pS7u4Hxb89Do0oIf8udjPmUZon7io3JkZCvu2PmbP3IV4iwvlQkLR1rWOGfXUrzHQTUcFd4IK8dYEITEKhjm_DxO-VIl9JQlyEkU1HD9-VzmbvAUTHFznBTceYjsNd24o");'></div>
+</div>
+</div>
+</div>
+<!-- Featured Section (Full Width Bleed) -->
+<section class="mt-16 -mx-6 bg-black text-primary p-12 relative overflow-hidden">
+<div class="absolute top-0 right-0 size-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+<p class="text-[10px] tracking-[0.4em] uppercase mb-4 opacity-60">Featured Artist</p>
+<h2 class="text-4xl font-extrabold tracking-tighter leading-none mb-6">ELARA<br/>VOX</h2>
+<div class="w-full aspect-video bg-center bg-cover rounded-lg shadow-2xl" data-alt="Cinematic landscape in fog" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCFHc80TJx-AIiBouDiYi6_W-eKwFXDR0afofccxfqiE650HUAeAfzlbJR5Ecz0sBLhNpTD62nlEJGcmGFtT3yJ8yokJBfUxkeDlWGRi3Mmmb8thNKDrSXIhiwA68LN3eJbrnXqDz7-ufMQQAubrW21NBodUyYaE5GcBl0fduyWXYyc9cnxpPGjdnsRPOyrcl1AkUCiKE4408P6zmU2YdQ3afYq3nAjJrMG6FWvpvoPQBhanyKDVL0_VRpJnJvkAKtRDT8mSvPnHNk");'>
+</div>
+<button class="mt-8 px-6 py-3 border border-primary/20 rounded-full text-xs font-bold tracking-widest uppercase hover:bg-primary hover:text-black transition-colors">
+                Explore Portfolio
+            </button>
+</section>
+<!-- Final Masonry Row -->
+<div class="grid grid-cols-3 gap-2 mt-16 pb-24">
+<div class="aspect-[1/2] bg-center bg-cover rounded-full" data-alt="Vertical abstract" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB3nErT_ln4APPfmLzuh4HAGslGu_rFmx4YgdCuYGnoarBr6WM3YPzxXiCOv7WzYiVkSpfxfO8OaNMQfCHTKHwhH-3Bjytgmcep_M-nicbNQTbxp6DBm1-4kiItMFKVIIHHzgDyCeVSoNShE1PLJnCRuTV_ZsXZa5jOwwwVwR_QxkEhu9BtK_sBgj3Cf7KzCIsichoFegewrvNec-zebjcOEpon-gc_ZorQAiKcI8_DsRyS7BFcdZV8ej3yUS_Vi851SG9vZe7OK18");'></div>
+<div class="col-span-2 aspect-square bg-center bg-cover rounded-3xl shadow-xl" data-alt="Wide cinematic shot" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZKmdXGwVgCekwiOn1CWBui4vqEQH9nghTWxdzG0kwo-1QrZljC-OsPJWx0CsP9H-ckwwJl5A-yw9H1EsN7k6BVLkTeY3ztx2RPzXT2SurU0RoaWyBi_9tYoDKiX6gNooKRsWVz4zB-japhWt1gEO94JDgWGPHo9tfZS0rvGP6hfTh2ExOWaGKTY7CvdsLJkSLhbFE31jeimOYTvtQWC1TluDo3L-ArFgezhe9MC7xddj5MLZK8xn2IrXg0yL1OqLnOpCRkyWgwTQ");'></div>
+</div>
+</main>
+<!-- Navigation Bar (iOS Style) -->
+<footer class="fixed bottom-0 w-full z-50 px-6 pb-8 pt-4 bg-gradient-to-t from-primary via-primary/90 to-transparent">
+<div class="bg-black/90 backdrop-blur-xl rounded-full h-16 flex items-center justify-around px-4 shadow-2xl">
+<button class="text-primary flex flex-col items-center">
+<span class="material-symbols-outlined fill-1">home</span>
+</button>
+<button class="text-primary/40 flex flex-col items-center">
+<span class="material-symbols-outlined">explore</span>
+</button>
+<button class="size-12 bg-primary rounded-full flex items-center justify-center -mt-12 border-4 border-[#f8f8d8] shadow-lg">
+<span class="material-symbols-outlined text-black font-bold">add</span>
+</button>
+<button class="text-primary/40 flex flex-col items-center">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+<button class="text-primary/40 flex flex-col items-center">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+<div class="w-32 h-1 bg-black/20 mx-auto mt-4 rounded-full"></div> <!-- Home Indicator -->
+</footer>
+</div></body></html>

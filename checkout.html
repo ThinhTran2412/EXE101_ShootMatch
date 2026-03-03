@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Đặt Lịch - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#eebd2b",
+                        "background-light": "#f8f8d9",
+                        "background-dark": "#1a1a15",
+                        "border-thin": "rgba(0,0,0,0.1)",
+                        "border-thin-dark": "rgba(255,255,255,0.1)",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+    
+        .textured-btn {
+            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuB0youfCnycTzg3L9MtYE39iF7lC3lITinJfnlnEaACYaFInzAW_bDbwBHCLvcSDQep_iDQVDXNd4wVKIpw83W-W5I7nqRzrD88svadlfaCmiZk72guieJZJDGrG1pQrrn66Bn_fLPjyBxu_Tqh6XGfatA6yQbIaf0ZeRiu924ORVgxZaG3edruSE2rxF-t5yEvzsyK35tu5UzEim42GhY_a2ZxoSs7-Uh7Pjpnm2PNdyxN8OkafaZKoC2XSa7sx32_qmhgw59E244);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#181611] dark:text-[#f4f3f0] min-h-screen"><div id="app-shell">
+    <div class="relative mx-auto max-w-md flex min-h-screen flex-col overflow-x-hidden">
+        <!-- TopAppBar -->
+        <header class="flex items-center bg-transparent px-4 py-6 justify-between border-b border-border-thin dark:border-border-thin-dark">
+            <a href="photo-profile.html" class="flex size-10 shrink-0 items-center justify-start cursor-pointer hover:opacity-60 transition-opacity">
+                <span class="material-symbols-outlined text-2xl">arrow_back</span>
+            </a>
+            <h2 class="text-sm uppercase tracking-[0.2em] font-medium flex-1 text-center">Đặt Lịch</h2>
+            <div class="size-10 shrink-0"></div>
+        </header>
+
+        <main class="flex-1 flex flex-col">
+            <!-- HeadlineText -->
+            <div class="px-6 pt-12 pb-8">
+                <h1 class="text-[42px] leading-[1.1] font-light italic tracking-tight">Tóm Tắt Đặt Lịch</h1>
+                <p class="text-sm uppercase tracking-widest mt-4 opacity-60">Xem lại buổi chụp của bạn</p>
+            </div>
+
+            <!-- Content Sections -->
+            <div class="flex flex-col border-t border-border-thin dark:border-border-thin-dark">
+                <!-- ListItem: Concept -->
+                <div class="flex items-center gap-6 px-6 py-8 border-b border-border-thin dark:border-border-thin-dark group cursor-pointer hover:opacity-80 transition-opacity">
+                    <div class="relative shrink-0">
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-sm size-20 grayscale border border-border-thin" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDYaDcSN90_z-IwpciXJDy5ztAQOPpEZAPZwUC1MaIaYyrSlV2uuemA3b1-V8GK7GRyUz-6_uqEksrx8yvbpEuu-JFF0AKxhMv9GP8ZmM7t-Yv48VQhT-j-jDvVbVZpqgR32QH5fF9sA3BOMfbHhKaLP8hsbZVm1rKZRRePeGp4BROlMM1kkPYiyKrUmxyY9BVj9Gzov2e9HwqlUGtqip3CLQhAP_35VAaLEloYsK9NvPoVlfqST_CkHBuaxIxP_KkB8ZBzXDiAgpM");'>
+                        </div>
+                    </div>
+                    <div class="flex flex-col flex-1">
+                        <span class="text-[10px] uppercase tracking-widest opacity-50 mb-1">Concept</span>
+                        <p class="text-xl font-medium leading-tight">Noir Minimalism</p>
+                        <p class="text-sm italic opacity-70 mt-1">Monochromatic studio portraits</p>
+                    </div>
+                    <div class="shrink-0">
+                        <span class="text-xs uppercase tracking-tighter border-b border-current pb-0.5">Sửa</span>
+                    </div>
+                </div>
+
+                <!-- ListItem: Location -->
+                <div class="flex items-center gap-6 px-6 py-8 border-b border-border-thin dark:border-border-thin-dark group cursor-pointer hover:opacity-80 transition-opacity">
+                    <div class="flex items-center justify-center rounded-full bg-black/5 dark:bg-white/5 shrink-0 size-12">
+                        <span class="material-symbols-outlined">near_me</span>
+                    </div>
+                    <div class="flex flex-col flex-1">
+                        <span class="text-[10px] uppercase tracking-widest opacity-50 mb-1">Địa Điểm</span>
+                        <p class="text-lg font-medium leading-tight">12 Nguyễn Du, Hà Nội</p>
+                        <p class="text-sm opacity-70 mt-1">Studio IV • Quận Hoàn Kiếm</p>
+                    </div>
+                    <div class="shrink-0">
+                        <span class="text-xs uppercase tracking-tighter border-b border-current pb-0.5">Sửa</span>
+                    </div>
+                </div>
+
+                <!-- ListItem: Duration -->
+                <div class="flex items-center gap-6 px-6 py-8 border-b border-border-thin dark:border-border-thin-dark group cursor-pointer hover:opacity-80 transition-opacity">
+                    <div class="flex items-center justify-center rounded-full bg-black/5 dark:bg-white/5 shrink-0 size-12">
+                        <span class="material-symbols-outlined">schedule</span>
+                    </div>
+                    <div class="flex flex-col flex-1">
+                        <span class="text-[10px] uppercase tracking-widest opacity-50 mb-1">Thời Gian</span>
+                        <p class="text-lg font-medium leading-tight">120 Phút</p>
+                        <p class="text-sm opacity-70 mt-1">Bao gồm chỉnh sửa hậu kỳ</p>
+                    </div>
+                    <div class="shrink-0">
+                        <span class="text-xs uppercase tracking-tighter border-b border-current pb-0.5">Sửa</span>
+                    </div>
+                </div>
+
+                <!-- ListItem: Photographer -->
+                <div class="flex items-center gap-6 px-6 py-8 border-b border-border-thin dark:border-border-thin-dark">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBIWRKDnXjM2KaMVaMG4MZ-f2-TDUuI4YDJPVUQZ6huNmjdPINP3GKkKERH51od1peg_63OEN34H6KMOvgyiRRT79MSbEo4sSWQAXvC8gUDp-psRl8zcFrLa1cAlhqy22MyRspLimSt9mw4D4d_oaWhEU46R9edGVcWOnzdeAYYHm68BO2Zv-RyttWCDRP1M9MKxj-Bckj0WUx_58I3mrXrMtHf9WjIiuywAmSTP9dAzE-G-uyazVpV2eGbZ3BcTS52-z61gZ5rhFY");'></div>
+                    <div class="flex flex-col flex-1">
+                        <span class="text-[10px] uppercase tracking-widest opacity-50 mb-1">Photographer</span>
+                        <p class="text-lg font-medium leading-tight">Elena Vance</p>
+                        <p class="text-sm opacity-70 mt-1">Kyoto Studio • Verified</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary & CTA Section -->
+            <div class="mt-auto px-6 py-10">
+                <div class="flex justify-between items-end mb-8">
+                    <div>
+                        <p class="text-[10px] uppercase tracking-[0.2em] opacity-50 mb-1">Tổng Cộng</p>
+                        <p class="text-3xl font-light tracking-tighter">2.500.000₫</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs italic opacity-60">Đã bao gồm thuế</p>
+                    </div>
+                </div>
+                <!-- Textured CTA Button -->
+                <a href="booking-success.html" class="textured-btn w-full bg-primary text-black font-display font-bold text-lg py-5 rounded-none shadow-sm hover:brightness-95 transition-all flex items-center justify-center gap-3 active:scale-[0.98]">
+                    <span class="uppercase tracking-[0.15em] text-sm">Đặt Lịch Ngay</span>
+                    <span class="material-symbols-outlined text-xl">arrow_forward</span>
+                </a>
+                <p class="text-center text-[10px] uppercase tracking-widest opacity-40 mt-6">
+                    Thanh toán an toàn bởi PicKic
+                </p>
+            </div>
+        </main>
+
+        <!-- Subtle Navigation Indicator -->
+        <div class="h-1.5 w-32 bg-black/10 dark:bg-white/10 mx-auto rounded-full mb-2 mt-4"></div>
+    </div>
+</div></body>
+</html>

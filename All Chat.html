@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pickic Notifications Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#e5e619",
+                "background-light": "#f8f8d9", // Custom requested color
+                "background-dark": "#212111",
+                "border-soft": "rgba(0,0,0,0.05)",
+              },
+              fontFamily: {
+                "display": ["Plus Jakarta Sans", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8f8d9;
+        }
+        .debossed {
+            background: #f8f8d9;
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.05), 
+                        inset -2px -2px 5px rgba(255, 255, 255, 0.5);
+            border: 0.5px solid rgba(0,0,0,0.03);
+        }
+        .hairline {
+            border-width: 0.5px;
+        }
+    </style>
+<style>
+    
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#1b1b0e]"><div id="app-shell">
+<div class="relative flex h-auto min-h-screen w-full flex-col max-w-[480px] mx-auto bg-background-light dark:bg-background-dark overflow-x-hidden border-x border-border-soft">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-50 flex items-center bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md p-4 pb-2 justify-between">
+<div class="text-[#1b1b0e] dark:text-white flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined font-light text-[24px]">arrow_back_ios</span>
+</div>
+<h2 class="text-[#1b1b0e] dark:text-white text-xs font-bold leading-tight tracking-[0.3em] uppercase flex-1 text-center">Chronicle</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-[#1b1b0e] dark:text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined font-light text-[24px]">more_horiz</span>
+</button>
+</div>
+</div>
+<!-- Tabs -->
+<div class="pb-3 px-4">
+<div class="flex border-b hairline border-[#e7e7d0] dark:border-white/10 gap-8 justify-center">
+<a class="flex flex-col items-center justify-center border-b-[2px] border-primary text-[#1b1b0e] dark:text-white pb-3 pt-4" href="#">
+<p class="text-xs font-bold leading-normal tracking-[0.1em] uppercase">All</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[2px] border-transparent text-[#97974e] dark:text-white/50 pb-3 pt-4" href="#">
+<p class="text-xs font-bold leading-normal tracking-[0.1em] uppercase">Matches</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[2px] border-transparent text-[#97974e] dark:text-white/50 pb-3 pt-4" href="#">
+<p class="text-xs font-bold leading-normal tracking-[0.1em] uppercase">Updates</p>
+</a>
+</div>
+</div>
+<!-- SectionHeader -->
+<div class="flex items-center justify-between px-6 pt-6 pb-2">
+<h3 class="text-[#1b1b0e] dark:text-white text-[10px] font-bold leading-tight tracking-[0.2em] uppercase opacity-50">Today</h3>
+<div class="h-[1px] flex-1 ml-4 bg-[#e7e7d0] dark:bg-white/10"></div>
+</div>
+<!-- Notification List -->
+<div class="flex flex-col gap-3 p-4">
+<!-- New Match Item - Debossed Style -->
+<div class="debossed rounded-xl flex items-center gap-4 px-4 py-4 justify-between transition-all active:scale-[0.98]">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 border border-black/5" data-alt="Monochrome portrait of a female artist" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDs2oh0rPNEKfcv5khwe-tpQogGHDEC-8OdwJAu8pPTgBomLgWELOKmq0HUOse0WW-9m_4bnXRnKbl2cskf8WtE9F0Zn3Vz1eMV6kjG45paeKxzHE1EShcDNoNTZo3xrnWoCn9VjUYQMExP955YgG4ppta_PKahZphAn-wXPbKh3ol5_JXX_Iu-ujn8D3QWxJ7josKX54LRVNWosYGVghVAwAMTUDysuf7gHS8TkbgbJ2mUn67eJy3ZQsmZghHtaR89ptTYc_HqCvI");'>
+</div>
+<div class="absolute bottom-0 right-0 size-3.5 bg-primary border-2 border-background-light rounded-full"></div>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#1b1b0e] dark:text-white text-sm font-medium leading-snug">A new perspective found.</p>
+<p class="text-[#97974e] dark:text-white/60 text-[13px] font-normal leading-normal">Elena matches your aesthetic.</p>
+</div>
+</div>
+<div class="shrink-0 flex flex-col items-end gap-1">
+<p class="text-[#97974e] dark:text-white/40 text-[10px] font-medium uppercase tracking-tighter">Now</p>
+<span class="material-symbols-outlined text-primary text-lg font-light">link</span>
+</div>
+</div>
+<!-- Project Update Item -->
+<div class="debossed rounded-xl flex items-center gap-4 px-4 py-4 justify-between transition-all active:scale-[0.98]">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-14 border border-black/5" data-alt="Abstract minimalist photography of architectural shadows" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCumpTK_cTJG-BLblWWmIJLzQSjOKRxYzKvVFNBhTx-zM2fuKu08fMY3xqXW5yvenaabkw5tO5YaMNRBOXgE1L1BWAmawDDddmTDXkgzJmoJitPJU7i4ZamUGcalsoh1VOoOqnfoEIX7lRs07ur5K7BVvZsV5Ztb372bq44Zjn8WSR-vPo44WlLmcLmkSyUbGBm44oApgrOMKM0j6SYQtLT8l5mm44sdb-H-RI26t2I4CuzZ53yAtnOL8TjwWcwrqD8pb8n1ynNirg");'>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#1b1b0e] dark:text-white text-sm font-medium leading-snug line-clamp-1">Project: 'Dust' curated.</p>
+<p class="text-[#97974e] dark:text-white/60 text-[13px] font-normal leading-normal line-clamp-1">By The Void Collective</p>
+</div>
+</div>
+<div class="shrink-0 flex flex-col items-end gap-1">
+<p class="text-[#97974e] dark:text-white/40 text-[10px] font-medium uppercase tracking-tighter">2h</p>
+<span class="material-symbols-outlined text-[#97974e] text-lg font-light">auto_awesome</span>
+</div>
+</div>
+<!-- Milestone Item -->
+<div class="debossed rounded-xl flex items-center gap-4 px-4 py-4 justify-between transition-all active:scale-[0.98]">
+<div class="flex items-center gap-4">
+<div class="flex size-14 items-center justify-center rounded-full bg-primary/10 border border-primary/20">
+<span class="material-symbols-outlined text-black font-light text-2xl">visibility</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#1b1b0e] dark:text-white text-sm font-medium leading-snug">Curation Milestone</p>
+<p class="text-[#97974e] dark:text-white/60 text-[13px] font-normal leading-normal line-clamp-2">Your gallery reached 500 views this morning.</p>
+</div>
+</div>
+<div class="shrink-0 flex flex-col items-end gap-1">
+<p class="text-[#97974e] dark:text-white/40 text-[10px] font-medium uppercase tracking-tighter">5h</p>
+</div>
+</div>
+</div>
+<!-- SectionHeader Earlier -->
+<div class="flex items-center justify-between px-6 pt-6 pb-2">
+<h3 class="text-[#1b1b0e] dark:text-white text-[10px] font-bold leading-tight tracking-[0.2em] uppercase opacity-50">This Week</h3>
+<div class="h-[1px] flex-1 ml-4 bg-[#e7e7d0] dark:bg-white/10"></div>
+</div>
+<div class="flex flex-col gap-3 p-4">
+<!-- Older Update -->
+<div class="debossed rounded-xl flex items-center gap-4 px-4 py-4 justify-between opacity-80">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-14 grayscale" data-alt="Close up of a film camera lens" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCa9eClt8zRLnkrg5ouVQNoVz3amtPAsyFMx7yzArxZudfz-_jJnEgq-pZQWxlll8cpHwbyR2ON8sAfz0WCi4cfBLhy2wKEVXg0kyB4EFDBbfidlzYfLXpEVLUuy42Dt4q9289C32aV4EwoMarko52abYDNfNAy8G1AJYjTIJCci5rj0tHdRfZVtArO4jWorfDGf1RaW-Nkl4Pp-HZnO0wJ_FPcQ8gv-jJoyurzXPmEo4oLzcZQyIMV_tU5K22N0UWYwkKebUJM2J4");'>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#1b1b0e] dark:text-white text-sm font-medium leading-snug">System: Platform Maintenance</p>
+<p class="text-[#97974e] dark:text-white/60 text-[13px] font-normal leading-normal">Optimizing your viewing experience.</p>
+</div>
+</div>
+<div class="shrink-0 flex flex-col items-end gap-1">
+<p class="text-[#97974e] dark:text-white/40 text-[10px] font-medium uppercase tracking-tighter">2d</p>
+<span class="material-symbols-outlined text-[#97974e] text-lg font-light">info</span>
+</div>
+</div>
+<!-- Empty State Concept (Hidden by scroll) -->
+<div class="mt-12 flex flex-col items-center justify-center py-12 px-8 text-center opacity-30">
+<div class="w-24 h-32 bg-gray-200 mb-6 rounded-sm hairline border-black/10" data-alt="Abstract white minimalist frame"></div>
+<p class="text-[10px] font-bold tracking-[0.3em] uppercase">Silence is a canvas.</p>
+</div>
+</div>
+<!-- Navigation Placeholder (iOS Home Bar) -->
+<div class="h-8 w-full flex justify-center items-center pb-2">
+<div class="w-32 h-1 bg-black/10 dark:bg-white/10 rounded-full"></div>
+</div>
+</div>
+</div></body></html>

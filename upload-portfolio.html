@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Tải Portfolio - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f8f8d9",
+                        "accent": "#1a1a0f",
+                    },
+                    fontFamily: {
+                        "sans": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+    
+    </style>
+</head>
+<body class="bg-primary text-accent"><div id="app-shell">
+    <div class="film-grain"></div>
+    
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-primary/80 backdrop-blur-md px-6 py-4 flex items-center justify-between">
+        <a href="photographer-dashboard.html" class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors">
+            <span class="material-symbols-outlined text-xl">arrow_back</span>
+        </a>
+        <h2 class="text-lg font-semibold">Tải Portfolio</h2>
+        <button class="text-sm font-semibold hover:opacity-60">Lưu</button>
+    </header>
+
+    <main class="px-6 pt-6 pb-32">
+        <!-- Upload Area -->
+        <section class="mb-8">
+            <div class="clay-card rounded-xl p-8 text-center border-2 border-dashed border-accent/20 hover:border-accent/40 transition-colors">
+                <div class="size-16 rounded-full clay-inset flex items-center justify-center mx-auto mb-4">
+                    <span class="material-symbols-outlined text-3xl text-accent/60">cloud_upload</span>
+                </div>
+                <h3 class="font-semibold mb-2">Kéo thả ảnh vào đây</h3>
+                <p class="text-xs opacity-60 mb-4">hoặc</p>
+                <button class="px-6 py-3 rounded-lg clay-inset text-sm font-semibold hover:opacity-80">
+                    Chọn từ thiết bị
+                </button>
+                <p class="text-xs opacity-40 mt-4">Hỗ trợ: JPG, PNG, HEIC (tối đa 10MB/ảnh)</p>
+            </div>
+        </section>
+
+        <!-- Selected Images Preview -->
+        <section class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-sm font-semibold">Đã chọn (3)</h3>
+                <button class="text-xs opacity-60 hover:opacity-80">Xóa tất cả</button>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+                <div class="relative aspect-square rounded-lg overflow-hidden clay-card group">
+                    <div class="w-full h-full bg-center bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCRwHSThZH6h6spE0aPX_rFGudbOYE8isRp30dC4C37G2UNKnKO0oZfIzsU9EnB8AW5kkCDs2dXQwziaxtNRfJ4g6R44gVK-3sevnbn-DdKWKdoRJe0Jz-D2wKEyIPNpwlLExMjrS3SvrLnRkbvmnlKWZJC_MB8Qqr5jdulxr-atv6-OHZy7ujqvdmsYxs1psMHap76bCM_HCNRomyD2EAl71SNTGh3EcMKDKaUFcPUjNyzYkjhJpXbr-KBnkcUkedwTW3D4zggvi4");'></div>
+                    <button class="absolute top-2 right-2 size-6 rounded-full bg-red-500 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="material-symbols-outlined text-sm">close</span>
+                    </button>
+                </div>
+                <div class="relative aspect-square rounded-lg overflow-hidden clay-card group">
+                    <div class="w-full h-full bg-center bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCat6wwl1UgRCwqZZPgrbVid_qUyeUg729lIFekWfNf1U1BgCm6v8RtNmWdEauz3VnMHfQS5zBWxPYFDrnc0t0EYoN_IUfp3A5hkegwb1e7Kch0nszYc0IlKW1d2ktx7cSrYWH7Uxd8_FI6e097p8QlqwRwD5TE6OiCxGAmpeoZK6OOfE1Cf8bVbEsEdtrDGOBrUdq9i9jRqV2tdICxz7N0saDLrSFAwkqMHsg7xbWFUea8W6TTWjopD82bWvBAv3txbSRiHxlh6po");'></div>
+                    <button class="absolute top-2 right-2 size-6 rounded-full bg-red-500 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="material-symbols-outlined text-sm">close</span>
+                    </button>
+                </div>
+                <div class="relative aspect-square rounded-lg overflow-hidden clay-card group">
+                    <div class="w-full h-full bg-center bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDYw2MTuHdWwOFYczBaWFX2bl4rGuWmQVJ0ZLT5ah3-31Yfk28d73NVCytvX4EtfIZ4CcGq8iUEH6dRhxqfAZFWGxMnUK8HNt45DsQN41MqumlFdx3cPJMSohmbVZhLg3lXUNdV3ptv22WNdxnuPtslbdGnQlv8r6dRBXOE_8NxM59E0lIUK-LKmgGizbPwJyk-kAdmpy3vMlwmLKmbMvqJcE5D70UoCc0V_o-A7poevi5MN6ABpDXwGi4GwPVdlLuad5AL-BKIHsI");'></div>
+                    <button class="absolute top-2 right-2 size-6 rounded-full bg-red-500 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="material-symbols-outlined text-sm">close</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Details -->
+        <section class="mb-8">
+            <h3 class="text-sm font-semibold mb-4">Thông Tin Ảnh</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-xs font-semibold uppercase tracking-wider opacity-60 mb-2 block">Tiêu đề</label>
+                    <input type="text" placeholder="Nhập tiêu đề..." class="w-full px-4 py-3 rounded-xl clay-card border border-accent/10 focus:outline-none focus:border-accent/30 transition-colors">
+                </div>
+                <div>
+                    <label class="text-xs font-semibold uppercase tracking-wider opacity-60 mb-2 block">Concept</label>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="px-4 py-2 rounded-full clay-card text-xs hover:opacity-80">Portrait</button>
+                        <button class="px-4 py-2 rounded-full clay-card text-xs hover:opacity-80">Fashion</button>
+                        <button class="px-4 py-2 rounded-full clay-card text-xs hover:opacity-80">Editorial</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="text-xs font-semibold uppercase tracking-wider opacity-60 mb-2 block">Mô tả</label>
+                    <textarea rows="4" placeholder="Mô tả về bức ảnh..." class="w-full px-4 py-3 rounded-xl clay-card border border-accent/10 focus:outline-none focus:border-accent/30 transition-colors resize-none"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs font-semibold uppercase tracking-wider opacity-60 mb-2 block">Camera</label>
+                        <input type="text" placeholder="Canon EOS R5" class="w-full px-4 py-3 rounded-xl clay-card border border-accent/10 focus:outline-none focus:border-accent/30 transition-colors">
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold uppercase tracking-wider opacity-60 mb-2 block">Lens</label>
+                        <input type="text" placeholder="85mm f/1.4" class="w-full px-4 py-3 rounded-xl clay-card border border-accent/10 focus:outline-none focus:border-accent/30 transition-colors">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Settings -->
+        <section class="mb-8">
+            <h3 class="text-sm font-semibold mb-4">Cài Đặt</h3>
+            <div class="space-y-3">
+                <label class="flex items-center justify-between p-4 rounded-xl clay-card cursor-pointer hover:opacity-80">
+                    <div>
+                        <p class="font-medium text-sm">Hiển thị công khai</p>
+                        <p class="text-xs opacity-60">Ảnh sẽ xuất hiện trong portfolio</p>
+                    </div>
+                    <input type="checkbox" checked class="size-5 rounded">
+                </label>
+                <label class="flex items-center justify-between p-4 rounded-xl clay-card cursor-pointer hover:opacity-80">
+                    <div>
+                        <p class="font-medium text-sm">Cho phép tải xuống</p>
+                        <p class="text-xs opacity-60">Khách hàng có thể tải ảnh</p>
+                    </div>
+                    <input type="checkbox" class="size-5 rounded">
+                </label>
+            </div>
+        </section>
+
+        <!-- Upload Button -->
+        <button class="w-full py-4 rounded-xl clay-card text-center font-semibold hover:opacity-80 transition-opacity">
+            Tải Lên Portfolio
+        </button>
+    </main>
+</div></body>
+</html>

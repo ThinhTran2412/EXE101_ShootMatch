@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Photographer Service Dashboard | Pickic</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3617cf",
+                        "background-light": "#f8f8d9", // Monochromatic bone-white from prompt
+                        "background-dark": "#141121",
+                        "accent-bone": "#f8f8d9"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<style>
+    
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30"><div id="app-shell">
+<!-- Top Navigation Bar -->
+<div class="fixed top-0 left-0 right-0 z-50 bg-background-dark/80 backdrop-blur-md border-b border-white/5">
+<div class="flex items-center p-4 justify-between max-w-md mx-auto">
+<div class="flex size-10 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8 border border-white/10" data-alt="Photographer profile avatar portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDYw2MTuHdWwOFYczBaWFX2bl4rGuWmQVJ0ZLT5ah3-31Yfk28d73NVCytvX4EtfIZ4CcGq8iUEH6dRhxqfAZFWGxMnUK8HNt45DsQN41MqumlFdx3cPJMSohmbVZhLg3lXUNdV3ptv22WNdxnuPtslbdGnQlv8r6dRBXOE_8NxM59E0lIUK-LKmgGizbPwJyk-kAdmpy3vMlwmLKmbMvqJcE5D70UoCc0V_o-A7poevi5MN6ABpDXwGi4GwPVdlLuad5AL-BKIHsI");'>
+</div>
+</div>
+<h2 class="text-accent-bone text-lg font-bold leading-tight tracking-[-0.05em] flex-1 text-center uppercase italic">Pickic</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex cursor-pointer items-center justify-center text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<main class="pt-20 pb-24 px-4 max-w-md mx-auto space-y-6">
+<!-- Minimalist Status Toggle -->
+<div class="@container">
+<div class="flex flex-1 items-center justify-between gap-4 rounded-xl border border-white/10 bg-[#1e1c26]/40 p-5 backdrop-blur-sm">
+<div class="flex flex-col gap-1">
+<p class="text-accent-bone text-sm font-bold tracking-widest uppercase">Availability</p>
+<p class="text-[#a29db8] text-xs font-normal">Active for on-demand sessions</p>
+</div>
+<label class="relative flex h-[32px] w-[56px] cursor-pointer items-center rounded-full border border-white/10 bg-[#121118] p-1 transition-colors has-[:checked]:bg-primary">
+<div class="h-full aspect-square rounded-full bg-accent-bone shadow-lg transition-transform" style="box-shadow: 0 0 10px rgba(54, 23, 207, 0.4);"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Performance Stats -->
+<div class="flex gap-4">
+<div class="flex flex-1 flex-col gap-2 rounded-xl p-5 border border-white/5 bg-[#1e1c26]/20">
+<p class="text-[#a29db8] text-[10px] font-bold tracking-widest uppercase">Revenue Today</p>
+<p class="text-accent-bone tracking-tighter text-2xl font-bold leading-tight">$842.00</p>
+</div>
+<div class="flex flex-1 flex-col gap-2 rounded-xl p-5 border border-white/5 bg-[#1e1c26]/20">
+<p class="text-[#a29db8] text-[10px] font-bold tracking-widest uppercase">Bookings</p>
+<p class="text-accent-bone tracking-tighter text-2xl font-bold leading-tight">04</p>
+</div>
+</div>
+<!-- Section: New Request Pop-up (High Contrast Overlay Vibe) -->
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary/50 to-purple-600/50 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+<div class="relative bg-[#1e1c26] border border-white/10 rounded-xl overflow-hidden">
+<div class="h-48 w-full bg-center bg-no-repeat bg-cover relative" data-alt="Luxurious gallery interior location" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAuMMp5k_gvXgsRgyk6Qu3vepceKfxIiuQK9l5HDH3iZLSKU_i4qWwMDj63KB8pgGrFjPBDQOh0uQaaSm7zuRuV2z5wC9XmI6OJDRCAJ8Oew5qLLihFk00dRXIrnlJJ_lvhBFvHXexEfnfSeTmjyVQrd-78rOESZZaC1ZqcLw2GFgyE0rwA7NBpYmvgOnhgro3warNdw7v2Gc8GIIg3VQysGndd_8dabhFjG-w9mihPpAeawsvpQyT5Hts8BkrpFNXgtjIvsfYV-lw");'>
+<div class="absolute inset-0 bg-gradient-to-t from-[#1e1c26] to-transparent"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-primary px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">Urgent Request</span>
+</div>
+</div>
+<div class="p-5 space-y-4">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-[#a29db8] text-[10px] font-bold tracking-widest uppercase leading-none mb-1">Estimated Earnings</p>
+<h3 class="text-accent-bone text-2xl font-bold tracking-tighter">$180.00</h3>
+</div>
+<div class="text-right">
+<p class="text-[#a29db8] text-[10px] font-bold tracking-widest uppercase leading-none mb-1">Duration</p>
+<p class="text-accent-bone text-sm font-medium">90 Minutes</p>
+</div>
+</div>
+<div class="space-y-1">
+<p class="text-white text-lg font-bold leading-tight">Minimalist Architectural Shoot</p>
+<div class="flex items-center gap-2 text-[#a29db8] text-sm">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>The High Line, New York</span>
+</div>
+<div class="flex items-center gap-2 text-[#a29db8] text-sm">
+<span class="material-symbols-outlined text-sm">person</span>
+<span>Client: Julian V.</span>
+</div>
+</div>
+<div class="flex gap-3 pt-2">
+<button class="flex-1 bg-white text-black py-4 rounded-lg font-bold uppercase tracking-widest text-xs hover:bg-accent-bone transition-colors">
+                            Accept
+                        </button>
+<button class="flex-1 bg-[#2b2938] text-white/50 py-4 rounded-lg font-bold uppercase tracking-widest text-xs border border-white/5 hover:bg-white/10 transition-colors">
+                            Decline
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Upcoming -->
+<div class="pt-4">
+<div class="flex justify-between items-end px-1 pb-4">
+<h3 class="text-accent-bone text-sm font-bold tracking-widest uppercase">Upcoming Schedule</h3>
+<p class="text-[#a29db8] text-[10px] font-bold uppercase cursor-pointer">View All</p>
+</div>
+<div class="space-y-3">
+<!-- Booking Card 1 -->
+<div class="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-[#1e1c26]/20">
+<div class="flex-shrink-0 size-12 rounded-lg bg-center bg-cover border border-white/5" data-alt="Urban portrait session preview" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDXb0lILf3rSYVcBtlZ3JKDLYG4vKROhk-mMP__xq0FdUZIE1Tmrk5jf_crC7oiUfUP0FKOldE_ogO5BQK9iz0Crlbi0mkRAyQunCdP4mnAtoqdSPgSXUqqRpcE0clM-qlU04TCxWiTwCniWVdAbXaGIN4B943NfxH3NW17QR23bA1e6DG7e6lZdJkJfCLkz5mZ_fFdiDs0vX8x40sAT8NSEKtNF5ChL-XZQi-hUDwSSVd0UTsLHEyYorIJrvnvrFP2hkn2ydxSn5A");'></div>
+<div class="flex-1">
+<p class="text-accent-bone text-sm font-bold leading-tight">Portrait Session</p>
+<p class="text-[#a29db8] text-xs">14:00 • Central Park</p>
+</div>
+<div class="text-right">
+<p class="text-accent-bone text-xs font-bold">$120</p>
+<span class="material-symbols-outlined text-white/20 text-lg">chevron_right</span>
+</div>
+</div>
+<!-- Booking Card 2 -->
+<div class="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-[#1e1c26]/20">
+<div class="flex-shrink-0 size-12 rounded-lg bg-center bg-cover border border-white/5" data-alt="Interior gallery shoot preview" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAjShhMbfokPX-yFq9xVyh4iCXhy3ofGSSc7JjPadZd1plk0lBtHlwNw8TrElLsOYZVHT-moHwJRySU9wURCWJ8r06xnPcIEGQMF86biBf5k5CGt22FDlG10HRQ8MMpXWeIRJVSSVKXTlE6vb-LgQhKrD1hsKPIDcFRrGYtMNi7Sbrg_1qBdT0ZQwMLSz10h6pgXgH-2ypCP-zddKDwr1KTXrdsbuVLWSoN0pQhLRmyARTG-liX5mc7jv-TQQPH0pwYomQItct6qBE");'></div>
+<div class="flex-1">
+<p class="text-accent-bone text-sm font-bold leading-tight">Gallery Opening</p>
+<p class="text-[#a29db8] text-xs">18:30 • Chelsea Arts</p>
+</div>
+<div class="text-right">
+<p class="text-accent-bone text-xs font-bold">$350</p>
+<span class="material-symbols-outlined text-white/20 text-lg">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-background-dark/90 backdrop-blur-xl border-t border-white/5 pb-8 pt-3">
+<div class="flex justify-around items-center max-w-md mx-auto px-6">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Dash</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-white/40">
+<span class="material-symbols-outlined text-[28px]">photo_library</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Gallery</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-white/40">
+<span class="material-symbols-outlined text-[28px]">payments</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Earnings</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-white/40">
+<span class="material-symbols-outlined text-[28px]">settings</span>
+<span class="text-[9px] font-bold uppercase tracking-tighter">Profile</span>
+</button>
+</div>
+</nav>
+<!-- Map View Background (Optional visual element for background texture) -->
+<div class="fixed inset-0 -z-10 opacity-5 grayscale invert dark:invert-0 pointer-events-none" data-location="New York City" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCio8SGmdhpXGvbFoafpXIdP8Yk_HATPUK8qr8iJo7RsolHcx-8jkQbAPtXP7nfwIBYUFN-zPHYf2GoL14St3UKMTMIedcod-zTR54M5YolAzLNWc98Z7ILIk4Y7baUlsIAkNE6iTxH92hRgtjgeS3-PNwZ7f0GFS2jAgT90sN0p85AIxyp1dPFneyd4bf8s0ReE8lxfK1-LJf7lUuFQLvG8pwHzmiWFW2KqNuCKh45YvkgI5WTFz0Fywvmc_JkDfMYqMY2zkgnz-k'); background-size: cover;">
+</div>
+</div></body></html>

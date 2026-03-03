@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Đặt Lịch Của Tôi - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f8f8d9",
+                        "accent": "#1a1a0f",
+                    },
+                    fontFamily: {
+                        "sans": ["Plus Jakarta Sans", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+
+    </style>
+</head>
+
+<body class="bg-primary text-accent">
+    <div id="app-shell">
+        <div class="film-grain"></div>
+        <div class="mobile-container">
+
+            <!-- Header -->
+            <header
+                class="sticky top-0 z-40 bg-primary/80 backdrop-blur-md px-6 py-4 flex items-center justify-between">
+                <a href="profile.html"
+                    class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors">
+                    <span class="material-symbols-outlined text-xl">arrow_back</span>
+                </a>
+                <h2 class="text-lg font-semibold">Đặt Lịch Của Tôi</h2>
+                <div class="size-10"></div>
+            </header>
+
+            <main class="px-6 pt-6 pb-32">
+                <!-- Tabs -->
+                <div class="flex gap-4 mb-6 border-b border-accent/5">
+                    <button class="pb-3 border-b-2 border-accent font-semibold text-sm">Tất cả</button>
+                    <button class="pb-3 border-b-2 border-transparent opacity-40 hover:opacity-80 text-sm">Sắp
+                        tới</button>
+                    <button class="pb-3 border-b-2 border-transparent opacity-40 hover:opacity-80 text-sm">Hoàn
+                        thành</button>
+                </div>
+
+                <!-- Bookings Container -->
+                <div id="bookingsList" class="space-y-4">
+                    <!-- Bookings will be loaded here -->
+                </div>
+
+                <div id="emptyState" class="hidden flex flex-col items-center justify-center py-20 text-center">
+                    <span class="material-symbols-outlined text-6xl text-accent/20 mb-4">calendar_today</span>
+                    <h3 class="font-semibold text-lg mb-2">Chưa có lịch đặt nào</h3>
+                    <p class="text-sm opacity-60 mb-6">Hãy tìm photographer và đặt lịch ngay!</p>
+                    <a href="discovery.html" class="modern-btn-primary px-6 py-3 rounded-full">
+                        Khám Phá Ngay
+                    </a>
+                </div>
+            </main>
+
+            <script src="js/pickic-store.js"></script>
+            <script>
+                function loadBookings() {
+                    const bookings = PicKicStore.getBookings();
+                    const container = document.getElementById('bookingsList');
+                    const emptyState = document.getElementById('emptyState');
+
+                    if (bookings.length === 0) {
+                        container.classList.add('hidden');
+                        emptyState.classList.remove('hidden');
+                        return;
+                    }
+
+                    container.classList.remove('hidden');
+                    emptyState.classList.add('hidden');
+
+                    container.innerHTML = bookings.map(b => {
+                        const statusMap = {
+                            'confirmed': { label: 'Xác nhận', class: 'bg-green-100 text-green-700' },
+                            'pending': { label: 'Chờ xác nhận', class: 'bg-yellow-100 text-yellow-700' },
+                            'active': { label: 'Đang tiến hành', class: 'bg-primary/20 text-primary border border-primary/30' },
+                            'completed': { label: 'Hoàn thành', class: 'bg-gray-100 text-gray-700' }
+                        };
+                        const status = statusMap[b.status] || { label: b.status, class: 'bg-gray-100' };
+
+                        return `
+                    <div class="clay-card rounded-xl p-4 hover:opacity-95 transition-opacity">
+                        <div class="flex gap-4">
+                            <div onclick="viewProfile('${b.photographerId}')" class="size-20 bg-center bg-cover rounded-lg cursor-pointer flex-shrink-0" style='background-image: url("${b.image}");'></div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div onclick="viewProfile('${b.photographerId}')" class="cursor-pointer min-w-0">
+                                        <h3 class="font-semibold mb-1 truncate">${b.photographerName}</h3>
+                                        <p class="text-[10px] opacity-60 truncate">${b.studio}</p>
+                                    </div>
+                                    <span class="flex-shrink-0 px-2 py-1 rounded-full ${status.class} text-[9px] font-bold uppercase ml-2">${status.label}</span>
+                                </div>
+                                <div class="space-y-1 mb-3">
+                                    <div class="flex items-center gap-2 text-[10px]">
+                                        <span class="material-symbols-outlined text-sm opacity-40">event</span>
+                                        <span>${b.date}${b.time ? ', ' + b.time : ''}</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-[10px]">
+                                        <span class="material-symbols-outlined text-sm opacity-40">location_on</span>
+                                        <span class="truncate">${b.location}</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-[10px]">
+                                        <span class="material-symbols-outlined text-sm opacity-40">attach_money</span>
+                                        <span class="font-semibold">${b.price}</span>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <a href="chat.html" class="flex-1 py-2 rounded-lg clay-inset text-center text-[10px] font-bold hover:opacity-80">Nhắn tin</a>
+                                    <a href="booking-detail.html" class="flex-1 py-2 rounded-lg clay-inset text-center text-[10px] font-bold hover:opacity-80">Chi tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    }).join('');
+                }
+
+                function viewProfile(id) {
+                    sessionStorage.setItem('viewingPhotographer', id);
+                    window.location.href = 'photo-profile.html';
+                }
+
+                document.addEventListener('DOMContentLoaded', loadBookings);
+            </script>
+
+            <!-- Bottom Navigation -->
+            <nav
+                class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3">
+                <div class="flex justify-around items-center max-w-md mx-auto px-6">
+                    <a href="index.html"
+                        class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                        <span class="material-symbols-outlined text-[28px]">home</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
+                    </a>
+                    <a href="discovery.html"
+                        class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                        <span class="material-symbols-outlined text-[28px]">explore</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
+                    </a>
+                    <a href="search.html"
+                        class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                        <span class="material-symbols-outlined text-[28px]">search</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
+                    </a>
+                    <a href="all-chat.html"
+                        class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                        <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
+                    </a>
+                    <a href="profile.html" class="flex flex-col items-center gap-1 text-accent">
+                        <span class="material-symbols-outlined text-[28px]"
+                            style="font-variation-settings: 'FILL' 1;">person</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
+                    </a>
+                </div>
+                <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
+            </nav>
+        </div>
+    </div>
+</body>
+
+</html>

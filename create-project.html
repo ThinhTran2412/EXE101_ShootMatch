@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Tạo Dự Án - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e5e619",
+                        "background-light": "#f8f8d9",
+                        "background-dark": "#212111",
+                        "accent": "#1a1a0f",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+    
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            transform: translateY(-2px);
+        }
+        .upload-area {
+            transition: all 0.3s ease;
+        }
+        .upload-area:hover {
+            border-color: rgba(26, 26, 15, 0.3);
+            background: rgba(26, 26, 15, 0.02);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-accent dark:text-[#f8f8d9] min-h-screen"><div id="app-shell">
+    <div class="film-grain"></div>
+    <div class="relative flex h-auto min-h-screen w-full flex-col max-w-md mx-auto overflow-x-hidden">
+        <!-- TopAppBar -->
+        <div class="flex items-center p-4 pt-8 pb-4 justify-between sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm z-40">
+            <a href="profile.html" class="flex size-12 shrink-0 items-center cursor-pointer hover:opacity-60 transition-opacity">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <h2 class="text-accent dark:text-[#f8f8d9] text-[10px] tracking-[0.3em] font-bold uppercase flex-1 text-center">Tạo Dự Án</h2>
+            <div class="size-12"></div>
+        </div>
+
+        <!-- HeadlineText -->
+        <div class="px-6 pt-10 pb-6">
+            <h2 class="text-accent dark:text-[#f8f8d9] tracking-tight text-[32px] font-light leading-tight">Tạo<br/><span class="font-bold">Visual Narrative</span></h2>
+            <div class="h-[1px] w-12 bg-primary mt-6"></div>
+            <p class="text-sm opacity-60 mt-4">Mô tả chi tiết về concept và yêu cầu của bạn</p>
+        </div>
+
+        <div class="flex flex-col gap-8 px-6 pb-24">
+            <!-- TextField: Date -->
+            <div class="flex flex-col gap-2">
+                <label class="flex flex-col w-full">
+                    <p class="text-accent dark:text-[#f8f8d9] text-[10px] tracking-[0.2em] font-medium uppercase pb-1 opacity-60">Ngày Chụp</p>
+                    <input class="form-input flush-border w-full rounded-none bg-transparent px-0 py-4 text-lg font-normal focus:outline-none placeholder:text-accent/30 dark:placeholder:text-[#f8f8d9]/30" placeholder="DD / MM / YYYY" type="text"/>
+                </label>
+            </div>
+
+            <!-- TextField: Location -->
+            <div class="flex flex-col gap-2">
+                <label class="flex flex-col w-full">
+                    <p class="text-accent dark:text-[#f8f8d9] text-[10px] tracking-[0.2em] font-medium uppercase pb-1 opacity-60">Địa Điểm</p>
+                    <input class="form-input flush-border w-full rounded-none bg-transparent px-0 py-4 text-lg font-normal focus:outline-none placeholder:text-accent/30 dark:placeholder:text-[#f8f8d9]/30" placeholder="Studio hoặc địa chỉ ngoài trời" type="text"/>
+                </label>
+            </div>
+
+            <!-- TextField: Concept -->
+            <div class="flex flex-col gap-2">
+                <label class="flex flex-col w-full">
+                    <p class="text-accent dark:text-[#f8f8d9] text-[10px] tracking-[0.2em] font-medium uppercase pb-1 opacity-60">Concept</p>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        <button class="px-4 py-2 rounded-full clay-card text-xs hover:opacity-80 transition-opacity">Portrait</button>
+                        <button class="px-4 py-2 rounded-full clay-card text-xs hover:opacity-80 transition-opacity">Fashion</button>
+                        <button class="px-4 py-2 rounded-full clay-card text-xs hover:opacity-80 transition-opacity">Editorial</button>
+                        <button class="px-4 py-2 rounded-full clay-card text-xs hover:opacity-80 transition-opacity">Commercial</button>
+                    </div>
+                </label>
+            </div>
+
+            <!-- TextField: Requirements -->
+            <div class="flex flex-col gap-2">
+                <label class="flex flex-col w-full">
+                    <p class="text-accent dark:text-[#f8f8d9] text-[10px] tracking-[0.2em] font-medium uppercase pb-1 opacity-60">Yêu Cầu Chi Tiết</p>
+                    <textarea class="form-input flush-border w-full min-h-[160px] rounded-none bg-transparent px-0 py-4 text-lg font-normal resize-none focus:outline-none placeholder:text-accent/30 dark:placeholder:text-[#f8f8d9]/30" placeholder="Hướng sáng tạo, mood, và các shot cụ thể..."></textarea>
+                </label>
+            </div>
+
+            <!-- Image/Mood Placeholder -->
+            <div class="mt-4">
+                <div class="upload-area w-full aspect-[16/9] bg-accent/5 dark:bg-white/5 border border-dashed border-accent/20 dark:border-white/20 rounded-xl flex flex-col items-center justify-center gap-3 cursor-pointer">
+                    <span class="material-symbols-outlined text-accent/40 dark:text-white/40 text-3xl">add_photo_alternate</span>
+                    <p class="text-[10px] tracking-widest uppercase opacity-40">Tải Moodboard (Tùy chọn)</p>
+                    <p class="text-[9px] opacity-30">JPG, PNG tối đa 10MB</p>
+                </div>
+            </div>
+
+            <!-- Budget -->
+            <div class="flex flex-col gap-2">
+                <label class="flex flex-col w-full">
+                    <p class="text-accent dark:text-[#f8f8d9] text-[10px] tracking-[0.2em] font-medium uppercase pb-1 opacity-60">Ngân Sách</p>
+                    <input class="form-input flush-border w-full rounded-none bg-transparent px-0 py-4 text-lg font-normal focus:outline-none placeholder:text-accent/30 dark:placeholder:text-[#f8f8d9]/30" placeholder="VNĐ" type="text"/>
+                </label>
+            </div>
+        </div>
+
+        <!-- Sticky Bottom Button -->
+        <div class="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light/90 to-transparent pt-12 z-50">
+            <a href="search-results.html" class="group relative w-full modern-btn-primary overflow-hidden h-16 rounded-xl flex items-center justify-center gap-2">
+                <span class="text-white text-[12px] tracking-[0.4em] font-bold uppercase">Tìm Photographer</span>
+                <span class="material-symbols-outlined text-white text-[18px] transform group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
+            </a>
+        </div>
+    </div>
+</div></body>
+</html>

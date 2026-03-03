@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Luxury Booking Checkout</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#eebd2b",
+                        "background-light": "#f8f8d9",
+                        "background-dark": "#1a1a15",
+                        "border-thin": "rgba(0,0,0,0.1)",
+                        "border-thin-dark": "rgba(255,255,255,0.1)",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>body {
+    font-family: "Newsreader", serif
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24
+    }
+/* Subtle paper texture effect for the primary button */
+.textured-btn {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuB0youfCnycTzg3L9MtYE39iF7lC3lITinJfnlnEaACYaFInzAW_bDbwBHCLvcSDQep_iDQVDXNd4wVKIpw83W-W5I7nqRzrD88svadlfaCmiZk72guieJZJDGrG1pQrrn66Bn_fLPjyBxu_Tqh6XGfatA6yQbIaf0ZeRiu924ORVgxZaG3edruSE2rxF-t5yEvzsyK35tu5UzEim42GhY_a2ZxoSs7-Uh7Pjpnm2PNdyxN8OkafaZKoC2XSa7sx32_qmhgw59E244)
+    }</style>
+<style>
+    
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#181611] dark:text-[#f4f3f0] min-h-screen"><div id="app-shell">
+<div class="relative mx-auto max-w-md flex min-h-screen flex-col overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="flex items-center bg-transparent px-4 py-6 justify-between border-b border-border-thin dark:border-border-thin-dark">
+<div class="flex size-10 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</div>
+<h2 class="text-sm uppercase tracking-[0.2em] font-medium flex-1 text-center">Checkout</h2>
+<div class="size-10 shrink-0"></div>
+</header>
+<main class="flex-1 flex flex-col">
+<!-- HeadlineText (Editorial Style) -->
+<div class="px-6 pt-12 pb-8">
+<h1 class="text-[42px] leading-[1.1] font-light italic tracking-tight">Booking Summary</h1>
+<p class="text-sm uppercase tracking-widest mt-4 opacity-60">Review your bespoke session</p>
+</div>
+<!-- Content Sections with Thin Dividers -->
+<div class="flex flex-col border-t border-border-thin dark:border-border-thin-dark">
+<!-- ListItem: Concept -->
+<div class="flex items-center gap-6 px-6 py-8 border-b border-border-thin dark:border-border-thin-dark group cursor-pointer">
+<div class="relative shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-sm size-20 grayscale border border-border-thin" data-alt="Monochromatic minimalist photography studio session" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDYaDcSN90_z-IwpciXJDy5ztAQOPpEZAPZwUC1MaIaYyrSlV2uuemA3b1-V8GK7GRyUz-6_uqEksrx8yvbpEuu-JFF0AKxhMv9GP8ZmM7t-Yv48VQhT-j-jDvVbVZpqgR32QH5fF9sA3BOMfbHhKaLP8hsbZVm1rKZRRePeGp4BROlMM1kkPYiyKrUmxyY9BVj9Gzov2e9HwqlUGtqip3CLQhAP_35VAaLEloYsK9NvPoVlfqST_CkHBuaxIxP_KkB8ZBzXDiAgpM");'>
+</div>
+</div>
+<div class="flex flex-col flex-1">
+<span class="text-[10px] uppercase tracking-widest opacity-50 mb-1">The Aesthetic</span>
+<p class="text-xl font-medium leading-tight">Noir Minimalism</p>
+<p class="text-sm italic opacity-70 mt-1">Monochromatic studio portraits</p>
+</div>
+<div class="shrink-0">
+<span class="text-xs uppercase tracking-tighter border-b border-current pb-0.5">Edit</span>
+</div>
+</div>
+<!-- ListItem: Pick-up Point -->
+<div class="flex items-center gap-6 px-6 py-8 border-b border-border-thin dark:border-border-thin-dark group cursor-pointer">
+<div class="flex items-center justify-center rounded-full bg-black/5 dark:bg-white/5 shrink-0 size-12">
+<span class="material-symbols-outlined">near_me</span>
+</div>
+<div class="flex flex-col flex-1">
+<span class="text-[10px] uppercase tracking-widest opacity-50 mb-1">Rendezvous</span>
+<p class="text-lg font-medium leading-tight">12 Rue de l'Odéon, Paris</p>
+<p class="text-sm opacity-70 mt-1" data-location="Paris">Studio IV • Rive Gauche</p>
+</div>
+<div class="shrink-0">
+<span class="text-xs uppercase tracking-tighter border-b border-current pb-0.5">Edit</span>
+</div>
+</div>
+<!-- ListItem: Duration -->
+<div class="flex items-center gap-6 px-6 py-8 border-b border-border-thin dark:border-border-thin-dark group cursor-pointer">
+<div class="flex items-center justify-center rounded-full bg-black/5 dark:bg-white/5 shrink-0 size-12">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<div class="flex flex-col flex-1">
+<span class="text-[10px] uppercase tracking-widest opacity-50 mb-1">Allotted Time</span>
+<p class="text-lg font-medium leading-tight">120 Minutes Session</p>
+<p class="text-sm opacity-70 mt-1">Includes post-production</p>
+</div>
+<div class="shrink-0">
+<span class="text-xs uppercase tracking-tighter border-b border-current pb-0.5">Edit</span>
+</div>
+</div>
+</div>
+<!-- Summary & CTA Section -->
+<div class="mt-auto px-6 py-10">
+<div class="flex justify-between items-end mb-8">
+<div>
+<p class="text-[10px] uppercase tracking-[0.2em] opacity-50 mb-1">Total Investment</p>
+<p class="text-3xl font-light tracking-tighter">€450.00</p>
+</div>
+<div class="text-right">
+<p class="text-xs italic opacity-60">All taxes included</p>
+</div>
+</div>
+<!-- Textured CTA Button -->
+<button class="textured-btn w-full bg-primary text-black font-display font-bold text-lg py-5 rounded-none shadow-sm hover:brightness-95 transition-all flex items-center justify-center gap-3 active:scale-[0.98]">
+<span class="uppercase tracking-[0.15em] text-sm">Book Photographer</span>
+<span class="material-symbols-outlined text-xl">arrow_forward</span>
+</button>
+<p class="text-center text-[10px] uppercase tracking-widest opacity-40 mt-6">
+                    Secure checkout powered by Pickic
+                </p>
+</div>
+</main>
+<!-- Subtle Navigation Indicator (iPhone style) -->
+<div class="h-1.5 w-32 bg-black/10 dark:bg-white/10 mx-auto rounded-full mb-2 mt-4"></div>
+</div>
+</div></body></html>

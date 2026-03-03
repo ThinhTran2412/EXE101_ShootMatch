@@ -1,0 +1,372 @@
+/* PicKic Design System - Shared Styles */
+
+/* Film Grain Overlay */
+.film-grain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.04;
+    background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAqoVzK0YGRAP5LeOe6bASYgBEIQM4OF5Cak1yvOq57mrUHqcFvm9SkCz0ZRIGkRVZiAG7JhjAM17f5Ma4ENgN4ngzSrjQfwK7ZQGWbZNNwpUgOa5AytKXU_dlXRVid-C8cx8JRzlbo0SyC8YHTS9hydT7-kZyVsK2-hCQYXAX8sU6ky3RSo8hvtvKoKlMzYLgB9lRhKnAvKTX7Wos8vT2OzOEBFlLlOZby4hyJMaecoAvpAl-iBnlrlGxJ-Tl_5NFLO9NrUfZHtXA');
+}
+
+/* Claymorphic Card */
+.clay-card {
+    background: #f8f8d9;
+    box-shadow: 6px 6px 12px #d9d9bc, -6px -6px 12px #ffffff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.clay-card:hover {
+    box-shadow: 8px 8px 16px #d9d9bc, -8px -8px 16px #ffffff;
+    transform: translateY(-2px);
+}
+
+.clay-inset {
+    background: #f8f8d9;
+    box-shadow: inset 4px 4px 8px #d9d9bc, inset -4px -4px 8px #ffffff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.clay-inset:hover {
+    box-shadow: inset 6px 6px 12px #d9d9bc, inset -6px -6px 12px #ffffff;
+}
+
+.clay-accent {
+    background: #df8f20;
+    box-shadow: 4px 4px 10px #be7a1b, -4px -4px 10px #ffa426;
+}
+
+/* Debossed Effect */
+.debossed {
+    background: #f8f8f8;
+    box-shadow: inset 4px 4px 8px #e0e0e0, inset -4px -4px 8px #fff;
+}
+
+/* Textured Button */
+.textured-btn {
+    background: linear-gradient(145deg, #f8f8d9, #f0f0d0);
+    box-shadow:
+        0.5px 0.5px 2px rgba(0, 0, 0, 0.02),
+        inset 0 0 0 0.5px rgba(26, 26, 15, 0.08);
+    transition: all 0.3s ease;
+}
+
+.textured-btn:active {
+    transform: scale(0.98);
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Modern Button Styles */
+.modern-btn-primary {
+    position: relative;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #1a1a0f, #2a2a24);
+    color: #f8f8d9;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(26, 26, 15, 0.2);
+}
+
+.modern-btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.modern-btn-primary:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.modern-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(26, 26, 15, 0.3);
+}
+
+.modern-btn-primary:active {
+    transform: translateY(0);
+}
+
+.modern-btn-secondary {
+    background: linear-gradient(135deg, #f8f8d9, #f0f0d0);
+    color: #1a1a0f;
+    box-shadow: 0 4px 20px rgba(26, 26, 15, 0.1);
+    border: 1px solid rgba(26, 26, 15, 0.1);
+}
+
+.modern-btn-secondary:hover {
+    box-shadow: 0 8px 30px rgba(26, 26, 15, 0.2);
+    transform: translateY(-2px);
+}
+
+.modern-btn-ghost {
+    background: transparent;
+    color: #1a1a0f;
+    border: 2px solid rgba(26, 26, 15, 0.2);
+}
+
+.modern-btn-ghost:hover {
+    background: rgba(26, 26, 15, 0.05);
+    border-color: rgba(26, 26, 15, 0.3);
+}
+
+/* Minimal Input */
+.minimal-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(26, 26, 15, 0.1);
+    padding: 1rem 0;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    transition: border-color 0.5s ease;
+    outline: none;
+}
+
+.minimal-input:focus {
+    border-bottom-color: rgba(26, 26, 15, 0.4);
+}
+
+/* Asymmetric Frame */
+.asymmetric-frame {
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 40%;
+}
+
+/* Glass Card */
+.glass-card {
+    background: rgba(248, 248, 216, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* No Scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Smooth Transitions */
+* {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Enhanced Animations */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.5s ease-out;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.4s ease-out;
+}
+
+.animate-pulse-slow {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Page Transitions */
+.page-transition {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover Effects */
+.hover-lift:hover {
+    transform: translateY(-2px);
+}
+
+.hover-scale:active {
+    transform: scale(0.95);
+}
+
+/* Typography Helpers */
+.editorial-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+}
+
+.technical-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+/* Badge Component */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: linear-gradient(135deg, rgba(26, 26, 15, 0.1), rgba(26, 26, 15, 0.05));
+    border: 1px solid rgba(26, 26, 15, 0.1);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+}
+
+.badge:hover {
+    background: linear-gradient(135deg, rgba(26, 26, 15, 0.15), rgba(26, 26, 15, 0.1));
+    transform: translateY(-1px);
+}
+
+/* Gradient Text */
+.gradient-text {
+    background: linear-gradient(135deg, #1a1a0f, #4a4a35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Glass Morphism */
+.glass-morphism {
+    background: rgba(248, 248, 216, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(26, 26, 15, 0.1);
+}
+
+/* Interactive Elements */
+.interactive-element {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.interactive-element:hover {
+    transform: translateY(-2px);
+}
+
+.interactive-element:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* ========================================
+   Mobile-Only App Shell Layout
+   ======================================== */
+
+html {
+    background: #c4c4a8;
+    min-height: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100dvh;
+    background: #c4c4a8;
+}
+
+#app-shell {
+    position: relative;
+    width: 430px;
+    max-width: 100%;
+    min-height: max(884px, 100dvh);
+    background: #f8f8d9;
+    overflow-x: hidden;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.06);
+    /* Tạo containing block mới cho position:fixed children */
+    transform: translateZ(0);
+    isolation: isolate;
+}
+
+/* Trên điện thoại thật (< 430px): bỏ outer frame */
+@media (max-width: 430px) {
+
+    html,
+    body {
+        background: #f8f8d9;
+    }
+
+    #app-shell {
+        width: 100%;
+        box-shadow: none;
+    }
+}

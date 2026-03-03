@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Thông Báo - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script src="js/pickic-store.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f8f8d9",
+                        "accent": "#1a1a0f",
+                    },
+                    fontFamily: {
+                        "sans": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+
+    </style>
+</head>
+
+<body class="bg-primary text-accent">
+    <div id="app-shell">
+        <div class="film-grain"></div>
+
+        <!-- Header -->
+        <header class="sticky top-0 z-40 bg-primary/80 backdrop-blur-md px-6 py-4 flex items-center justify-between">
+            <a href="profile.html"
+                class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors">
+                <span class="material-symbols-outlined text-xl">arrow_back</span>
+            </a>
+            <h2 class="text-lg font-semibold">Thông Báo</h2>
+            <button id="readAllBtn" onclick="markAllRead()"
+                class="text-sm font-semibold hover:opacity-60 transition-opacity">Dấu tất cả đã đọc</button>
+        </header>
+
+        <main class="px-6 pt-6 pb-32">
+            <!-- Today -->
+            <section class="mb-8">
+                <h3 class="text-xs font-semibold uppercase tracking-wider mb-4 opacity-60">Hôm nay</h3>
+                <div class="space-y-3">
+                    <!-- Notification 1 -->
+                    <a href="booking-detail.html"
+                        class="flex gap-4 p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                        <div class="size-12 rounded-full bg-center bg-cover"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBIWRKDnXjM2KaMVaMG4MZ-f2-TDUuI4YDJPVUQZ6huNmjdPINP3GKkKERH51od1peg_63OEN34H6KMOvgyiRRT79MSbEo4sSWQAXvC8gUDp-psRl8zcFrLa1cAlhqy22MyRspLimSt9mw4D4d_oaWhEU46R9edGVcWOnzdeAYYHm68BO2Zv-RyttWCDRP1M9MKxj-Bckj0WUx_58I3mrXrMtHf9WjIiuywAmSTP9dAzE-G-uyazVpV2eGbZ3BcTS52-z61gZ5rhFY");'>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between mb-1">
+                                <p class="text-sm font-semibold">Elena Vance đã xác nhận đặt lịch</p>
+                                <span class="size-2 bg-blue-500 rounded-full"></span>
+                            </div>
+                            <p class="text-xs opacity-60 mb-1">Buổi chụp của bạn vào 25/01 đã được xác nhận</p>
+                            <p class="text-[10px] opacity-40">2 giờ trước</p>
+                        </div>
+                    </a>
+
+                    <!-- Notification 2 -->
+                    <a href="chat.html" class="flex gap-4 p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                        <div class="size-12 rounded-full bg-center bg-cover"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBKv61edjPQvLrWJYAeKIQ72bfujXC5Ol7r5I0CkwCSpDAaypNrI-3Wn83NuDhZpkkdiEOzCY4u-nvE0TYN65R7Mk9d1u5maMXADgYomO3GsXo7Flp6gdxOK9xxe4L1SG-bRVXnvI2uxGP3DOSjlClPCZUPbFBQ0o2I07E3HSPXry8ARn-E5f_-EBcmpylFCph-qiBY9nKY5bLavvEXF6y4zZNr8NWf78W6HnXJFWYwNrDQRAjPaRNE3E7vE0eIXWu05t2BfJOrTZU");'>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between mb-1">
+                                <p class="text-sm font-semibold">Tin nhắn mới từ Elara Vox</p>
+                                <span class="size-2 bg-blue-500 rounded-full"></span>
+                            </div>
+                            <p class="text-xs opacity-60 mb-1">"Cảm ơn bạn đã đặt lịch! Tôi rất mong được..."</p>
+                            <p class="text-[10px] opacity-40">5 giờ trước</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Yesterday -->
+            <section class="mb-8">
+                <h3 class="text-xs font-semibold uppercase tracking-wider mb-4 opacity-60">Hôm qua</h3>
+                <div class="space-y-3">
+                    <!-- Notification 3 -->
+                    <a href="photo-profile.html"
+                        class="flex gap-4 p-4 rounded-xl clay-card hover:opacity-80 transition-opacity opacity-60">
+                        <div class="size-12 rounded-full bg-center bg-cover"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDYw2MTuHdWwOFYczBaWFX2bl4rGuWmQVJ0ZLT5ah3-31Yfk28d73NVCytvX4EtfIZ4CcGq8iUEH6dRhxqfAZFWGxMnUK8HNt45DsQN41MqumlFdx3cPJMSohmbVZhLg3lXUNdV3ptv22WNdxnuPtslbdGnQlv8r6dRBXOE_8NxM59E0lIUK-LKmgGizbPwJyk-kAdmpy3vMlwmLKmbMvqJcE5D70UoCc0V_o-A7poevi5MN6ABpDXwGi4GwPVdlLuad5AL-BKIHsI");'>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-semibold mb-1">Marcus Chen đã cập nhật portfolio</p>
+                            <p class="text-xs opacity-60 mb-1">Thêm 12 ảnh mới vào gallery</p>
+                            <p class="text-[10px] opacity-40">Hôm qua</p>
+                        </div>
+                    </a>
+
+                    <!-- Notification 4 -->
+                    <a href="reviews.html"
+                        class="flex gap-4 p-4 rounded-xl clay-card hover:opacity-80 transition-opacity opacity-60">
+                        <div class="size-12 rounded-full bg-green-100 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-green-600">star</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-semibold mb-1">Nhắc nhở đánh giá</p>
+                            <p class="text-xs opacity-60 mb-1">Hãy đánh giá buổi chụp với Elena Vance</p>
+                            <p class="text-[10px] opacity-40">Hôm qua</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- This Week -->
+            <section>
+                <h3 class="text-xs font-semibold uppercase tracking-wider mb-4 opacity-60">Tuần này</h3>
+                <div class="space-y-3">
+                    <!-- Notification 5 -->
+                    <a href="index.html"
+                        class="flex gap-4 p-4 rounded-xl clay-card hover:opacity-80 transition-opacity opacity-60">
+                        <div class="size-12 rounded-full bg-blue-100 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-blue-600">campaign</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-semibold mb-1">Khuyến mãi đặc biệt</p>
+                            <p class="text-xs opacity-60 mb-1">Giảm 20% cho booking đầu tiên</p>
+                            <p class="text-[10px] opacity-40">3 ngày trước</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav
+            class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3">
+            <div class="flex justify-around items-center max-w-md mx-auto px-6">
+                <a href="index.html"
+                    class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                    <span class="material-symbols-outlined text-[28px]">home</span>
+                    <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
+                </a>
+                <a href="discovery.html"
+                    class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                    <span class="material-symbols-outlined text-[28px]">explore</span>
+                    <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
+                </a>
+                <a href="search.html"
+                    class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                    <span class="material-symbols-outlined text-[28px]">search</span>
+                    <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
+                </a>
+                <a href="all-chat.html"
+                    class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                    <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
+                    <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
+                </a>
+                <a href="profile.html" class="flex flex-col items-center gap-1 text-accent">
+                    <span class="material-symbols-outlined text-[28px]"
+                        style="font-variation-settings: 'FILL' 1;">person</span>
+                    <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
+                </a>
+            </div>
+            <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
+        </nav>
+        <script>
+            // Hiện unread count và highlight notifications chưa đọc
+            document.addEventListener('DOMContentLoaded', function () {
+                const count = PicKicStore.getUnreadCount();
+                if (count > 0) {
+                    // Highlight 2 notifications đầu tiên (chưa đọc)
+                    const items = document.querySelectorAll('main a.flex, main .flex.gap-4.p-4');
+                    let highlighted = 0;
+                    document.querySelectorAll('main a').forEach(el => {
+                        if (highlighted < count && el.querySelector('.bg-blue-500')) {
+                            el.style.background = 'rgba(59,130,246,0.04)';
+                            highlighted++;
+                        }
+                    });
+                }
+            });
+
+            function markAllRead() {
+                PicKicStore.markAllRead();
+                // Ẩn tất cả dot xanh
+                document.querySelectorAll('.bg-blue-500.rounded-full').forEach(dot => {
+                    dot.style.display = 'none';
+                });
+                // Hiện feedback
+                const btn = document.getElementById('readAllBtn');
+                if (btn) { btn.textContent = '✓ Đã đọc hết'; btn.style.opacity = '0.4'; btn.disabled = true; }
+            }
+        </script>
+    </div>
+</body>
+
+</html>

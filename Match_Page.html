@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#f8f8d8",
+              "background-light": "#f8f8f6",
+              "background-dark": "#202012",
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"],
+              "editorial": ["Playfair Display", "serif"],
+              "mono": ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>.debossed {
+    background: #f8f8f8;
+    box-shadow: inset 4px 4px 8px #e0e0e0, inset -4px -4px 8px #fff
+    }
+.glass-card {
+    background: rgba(248, 248, 216, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px)
+    }
+.asymmetric-frame {
+    border-radius: 40% 60% 70% 30%/40% 50% 60% 40%
+    }
+.grain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.04;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuD8ztihGDUgqaeeTbpNxqiQCZmICdhikCtZytvVYBjP4d5V8AVnYsWr9xcSMW6UlHTPWkH55t9Aq9xV7sXpD28fRpnnnpNuRcH9smCH8ZI2s8G_hkSzN6SGPO9J5JUDGm2JcyR40vCe_Tg8nnNjpeza32Q1f2B_CucTcNHUYwc3Rq4IpsNIpHzuiJo85n-24wcLhULK-ABezQqw4f5pDcu5qvVQS3OME1-pdS2MOZerXbM_P-PZjHF5AeBIi2NQdqIq4cXaYNJxU3w)
+    }</style>
+<style>
+    
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased"><div id="app-shell">
+<div class="grain-overlay"></div>
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-md mx-auto">
+<!-- TopAppBar -->
+<div class="flex items-center p-6 pb-2 justify-between z-10">
+<div class="text-[#1a1a0f] flex size-12 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined text-[28px] font-extralight">menu_open</span>
+</div>
+<h2 class="text-[#1a1a0f] text-xl font-editorial font-black leading-tight tracking-[-0.03em] flex-1 text-center">Pickic</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-primary text-[#1a1a0f] border border-[#1a1a0f]/5">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+</button>
+</div>
+</div>
+<!-- ProgressBar (Technical Mini-Indicator) -->
+<div class="flex flex-col gap-1 px-8 pt-2">
+<div class="flex justify-between items-end">
+<p class="text-[#1a1a0f]/40 text-[10px] font-mono uppercase tracking-widest">Discovery Reel</p>
+<p class="text-[#1a1a0f] text-[10px] font-mono">04 / 12</p>
+</div>
+<div class="h-[1px] w-full bg-[#1a1a0f]/10 relative overflow-hidden">
+<div class="h-full bg-[#1a1a0f] transition-all duration-500" style="width: 33.3%;"></div>
+</div>
+</div>
+<!-- Main Discovery Area -->
+<div class="flex-1 flex flex-col justify-center items-center px-6 relative">
+<!-- Asymmetrical Card Container -->
+<div class="relative w-full aspect-[3/4] @container">
+<!-- Background Stack Shadows (Visual Depth) -->
+<div class="absolute inset-0 bg-primary/20 rotate-3 asymmetric-frame translate-x-2 translate-y-2"></div>
+<!-- Main Asymmetric Frame -->
+<div class="absolute inset-0 overflow-hidden bg-center bg-no-repeat bg-cover asymmetric-frame shadow-2xl z-10" data-alt="Avant-garde high fashion photography of a model in shadows" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCRwHSThZH6h6spE0aPX_rFGudbOYE8isRp30dC4C37G2UNKnKO0oZfIzsU9EnB8AW5kkCDs2dXQwziaxtNRfJ4g6R44gVK-3sevnbn-DdKWKdoRJe0Jz-D2wKEyIPNpwlLExMjrS3SvrLnRkbvmnlKWZJC_MB8Qqr5jdulxr-atv6-OHZy7ujqvdmsYxs1psMHap76bCM_HCNRomyD2EAl71SNTGh3EcMKDKaUFcPUjNyzYkjhJpXbr-KBnkcUkedwTW3D4zggvi4");'>
+<!-- Editorial Info Overlay (Inside Frame) -->
+<div class="absolute bottom-0 left-0 right-0 p-8 pt-24 bg-gradient-to-t from-black/60 to-transparent flex flex-col gap-1">
+<h1 class="text-white font-editorial italic text-3xl leading-none">Ethereal Form</h1>
+<p class="text-white/80 font-mono text-[10px] uppercase tracking-[0.2em]">Elena Vance • Kyoto Studio</p>
+</div>
+</div>
+</div>
+<!-- Technical Metadata (Below Frame) -->
+<div class="w-full mt-6 px-4">
+<div class="flex justify-between border-t border-[#1a1a0f]/5 pt-4">
+<div class="flex flex-col">
+<span class="text-[#1a1a0f]/40 text-[9px] uppercase font-bold tracking-tighter">Lens</span>
+<span class="text-[#1a1a0f] font-mono text-xs">35mm Summilux</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-[#1a1a0f]/40 text-[9px] uppercase font-bold tracking-tighter">Aperture</span>
+<span class="text-[#1a1a0f] font-mono text-xs">f/1.4</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-[#1a1a0f]/40 text-[9px] uppercase font-bold tracking-tighter">ISO</span>
+<span class="text-[#1a1a0f] font-mono text-xs">400</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Debossed Interaction Bar -->
+<div class="p-8 pb-12 flex justify-between items-center max-w-sm mx-auto w-full">
+<!-- Dislike/Skip -->
+<button class="group relative flex items-center justify-center size-20 rounded-full border border-white/40 debossed active:scale-95 transition-transform duration-150">
+<div class="absolute inset-0 rounded-full bg-gradient-to-br from-black/5 to-white/80 opacity-40"></div>
+<span class="material-symbols-outlined text-[#1a1a0f]/30 group-hover:text-[#1a1a0f] transition-colors font-thin text-3xl">close</span>
+</button>
+<!-- Save/Collect -->
+<button class="group flex items-center justify-center size-14 rounded-full border border-[#1a1a0f]/10 bg-white/50 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined text-[#1a1a0f]/60 font-light text-2xl">bookmark</span>
+</button>
+<!-- Like/Appreciate -->
+<button class="group relative flex items-center justify-center size-20 rounded-full border border-white/40 debossed active:scale-95 transition-transform duration-150">
+<div class="absolute inset-0 rounded-full bg-gradient-to-br from-black/5 to-white/80 opacity-40"></div>
+<span class="material-symbols-outlined text-[#1a1a0f]/30 group-hover:text-red-400 transition-colors font-thin text-3xl">favorite</span>
+</button>
+</div>
+<!-- Decorative Bottom Element -->
+<div class="h-1.5 w-32 bg-[#1a1a0f]/10 mx-auto rounded-full mb-2"></div>
+</div>
+</div></body></html>

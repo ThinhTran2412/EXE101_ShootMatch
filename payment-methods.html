@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Phương Thức Thanh Toán - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f8f8d9",
+                        "accent": "#1a1a0f",
+                    },
+                    fontFamily: {
+                        "sans": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+    
+    </style>
+</head>
+<body class="bg-primary text-accent"><div id="app-shell">
+    <div class="film-grain"></div>
+    
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-primary/80 backdrop-blur-md px-6 py-4 flex items-center justify-between">
+        <a href="profile.html" class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors">
+            <span class="material-symbols-outlined text-xl">arrow_back</span>
+        </a>
+        <h2 class="text-lg font-semibold">Thanh Toán</h2>
+        <button class="text-sm font-semibold hover:opacity-60">Thêm</button>
+    </header>
+
+    <main class="px-6 pt-6 pb-32">
+        <!-- Payment Methods -->
+        <section class="mb-8">
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4 opacity-60">Phương Thức Đã Lưu</h3>
+            <div class="space-y-3">
+                <!-- Card 1 -->
+                <div class="clay-card rounded-xl p-4 relative">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="size-12 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-white text-xl">credit_card</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">Visa •••• 4242</p>
+                                <p class="text-xs opacity-60">Hết hạn 12/2026</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-semibold">Mặc định</span>
+                            <button class="text-accent/40 hover:text-accent">
+                                <span class="material-symbols-outlined text-xl">more_vert</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="clay-card rounded-xl p-4 relative">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="size-12 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-white text-xl">account_balance</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">MoMo Wallet</p>
+                                <p class="text-xs opacity-60">0987 654 321</p>
+                            </div>
+                        </div>
+                        <button class="text-accent/40 hover:text-accent">
+                            <span class="material-symbols-outlined text-xl">more_vert</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="clay-card rounded-xl p-4 relative">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="size-12 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-white text-xl">account_balance_wallet</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">ZaloPay</p>
+                                <p class="text-xs opacity-60">Đã liên kết</p>
+                            </div>
+                        </div>
+                        <button class="text-accent/40 hover:text-accent">
+                            <span class="material-symbols-outlined text-xl">more_vert</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add Payment Method -->
+        <section>
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4 opacity-60">Thêm Phương Thức</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="clay-card rounded-xl p-4 text-center hover:opacity-80 transition-opacity">
+                    <span class="material-symbols-outlined text-3xl text-accent/70 mb-2 block">credit_card</span>
+                    <p class="text-xs font-semibold">Thẻ Tín Dụng</p>
+                </button>
+                <button class="clay-card rounded-xl p-4 text-center hover:opacity-80 transition-opacity">
+                    <span class="material-symbols-outlined text-3xl text-accent/70 mb-2 block">account_balance</span>
+                    <p class="text-xs font-semibold">Ví Điện Tử</p>
+                </button>
+                <button class="clay-card rounded-xl p-4 text-center hover:opacity-80 transition-opacity">
+                    <span class="material-symbols-outlined text-3xl text-accent/70 mb-2 block">account_balance_wallet</span>
+                    <p class="text-xs font-semibold">Ngân Hàng</p>
+                </button>
+                <button class="clay-card rounded-xl p-4 text-center hover:opacity-80 transition-opacity">
+                    <span class="material-symbols-outlined text-3xl text-accent/70 mb-2 block">qr_code</span>
+                    <p class="text-xs font-semibold">QR Code</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- Security Info -->
+        <div class="mt-8 p-4 rounded-xl clay-card text-center">
+            <div class="flex items-center justify-center gap-2 mb-2">
+                <span class="material-symbols-outlined text-sm text-green-600">lock</span>
+                <span class="text-xs font-semibold">Thanh toán an toàn</span>
+            </div>
+            <p class="text-[10px] opacity-60">Tất cả giao dịch được mã hóa và bảo mật</p>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3">
+        <div class="flex justify-around items-center max-w-md mx-auto px-6">
+            <a href="index.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                <span class="material-symbols-outlined text-[28px]">home</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
+            </a>
+            <a href="discovery.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                <span class="material-symbols-outlined text-[28px]">explore</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
+            </a>
+            <a href="search.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                <span class="material-symbols-outlined text-[28px]">search</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
+            </a>
+            <a href="all-chat.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center gap-1 text-accent">
+                <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">person</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
+            </a>
+        </div>
+        <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
+    </nav>
+</div></body>
+</html>

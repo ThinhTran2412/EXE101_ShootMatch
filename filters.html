@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Bộ Lọc - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f8f8d9",
+                        "accent": "#1a1a0f",
+                    },
+                    fontFamily: {
+                        "sans": ["Plus Jakarta Sans", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+    
+        .filter-tag {
+            transition: all 0.3s ease;
+        }
+        .filter-tag.active {
+            background: #1a1a0f;
+            color: #f8f8d9;
+        }
+    </style>
+</head>
+<body class="bg-primary text-accent"><div id="app-shell">
+    <div class="film-grain"></div>
+    
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-primary/80 backdrop-blur-md px-6 py-4 flex items-center justify-between">
+        <a href="search.html" class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors">
+            <span class="material-symbols-outlined text-xl">close</span>
+        </a>
+        <h2 class="text-lg font-semibold">Bộ Lọc</h2>
+        <button class="text-sm font-semibold hover:opacity-60" onclick="resetFilters()">Đặt lại</button>
+    </header>
+
+    <main class="px-6 pt-6 pb-32">
+        <!-- Location Filter -->
+        <section class="mb-8">
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4">Khu Vực</h3>
+            <div class="flex flex-wrap gap-2">
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs active" onclick="toggleFilter(this)">Tất cả</button>
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Hà Nội</button>
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">TP. Hồ Chí Minh</button>
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Đà Nẵng</button>
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Hải Phòng</button>
+            </div>
+        </section>
+
+        <!-- Concept Filter -->
+        <section class="mb-8">
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4">Concept</h3>
+            <div class="flex flex-wrap gap-2">
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Portrait</button>
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Couple</button>
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Wedding</button>
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Fashion</button>
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Commercial</button>
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Editorial</button>
+            </div>
+        </section>
+
+        <!-- Price Range -->
+        <section class="mb-8">
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4">Khoảng Giá</h3>
+            <div class="space-y-3">
+                <label class="flex items-center gap-3 p-4 rounded-xl clay-card cursor-pointer hover:opacity-80">
+                    <input type="radio" name="price" value="all" class="size-4" checked>
+                    <span class="flex-1">Tất cả mức giá</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-xl clay-card cursor-pointer hover:opacity-80">
+                    <input type="radio" name="price" value="low" class="size-4">
+                    <span class="flex-1">Dưới 1.5M VNĐ</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-xl clay-card cursor-pointer hover:opacity-80">
+                    <input type="radio" name="price" value="mid" class="size-4">
+                    <span class="flex-1">1.5M - 3M VNĐ</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-xl clay-card cursor-pointer hover:opacity-80">
+                    <input type="radio" name="price" value="high" class="size-4">
+                    <span class="flex-1">Trên 3M VNĐ</span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Rating Filter -->
+        <section class="mb-8">
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4">Đánh Giá Tối Thiểu</h3>
+            <div class="flex gap-2">
+                <button class="filter-tag flex-1 px-4 py-3 rounded-xl clay-card text-sm" onclick="toggleFilter(this)">4.0+ ⭐</button>
+                <button class="filter-tag flex-1 px-4 py-3 rounded-xl clay-card text-sm" onclick="toggleFilter(this)">4.5+ ⭐</button>
+                <button class="filter-tag flex-1 px-4 py-3 rounded-xl clay-card text-sm active" onclick="toggleFilter(this)">4.8+ ⭐</button>
+            </div>
+        </section>
+
+        <!-- Equipment Filter -->
+        <section class="mb-8">
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4">Thiết Bị</h3>
+            <div class="flex flex-wrap gap-2">
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Canon</button>
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Nikon</button>
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Sony</button>
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Leica</button>
+                <button class="filter-tag px-4 py-2 rounded-full clay-card text-xs" onclick="toggleFilter(this)">Fujifilm</button>
+            </div>
+        </section>
+
+        <!-- Verified Only -->
+        <section class="mb-8">
+            <label class="flex items-center justify-between p-4 rounded-xl clay-card cursor-pointer hover:opacity-80">
+                <div>
+                    <p class="font-semibold text-sm">Chỉ Photographer đã xác minh</p>
+                    <p class="text-xs opacity-60">Hiển thị những người đã được xác minh danh tính</p>
+                </div>
+                <input type="checkbox" class="size-5 rounded">
+            </label>
+        </section>
+    </main>
+
+    <!-- Apply Button -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 p-6">
+        <a href="search-results.html" class="block w-full py-4 rounded-xl clay-card text-center font-semibold hover:opacity-80 transition-opacity">
+            Áp Dụng Bộ Lọc
+        </a>
+    </div>
+
+    <script>
+        function toggleFilter(element) {
+            if (element.classList.contains('active')) {
+                element.classList.remove('active');
+            } else {
+                // Remove active from siblings in same container
+                const siblings = element.parentElement.querySelectorAll('.filter-tag');
+                siblings.forEach(sibling => {
+                    if (sibling !== element && sibling.parentElement === element.parentElement) {
+                        sibling.classList.remove('active');
+                    }
+                });
+                element.classList.add('active');
+            }
+        }
+
+        function resetFilters() {
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.classList.remove('active');
+            });
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            document.querySelector('input[type="radio"][value="all"]').checked = true;
+            document.querySelector('input[type="checkbox"]').checked = false;
+        }
+    </script>
+</div></body>
+</html>

@@ -1,0 +1,1174 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Khám Phá - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script src="js/pickic-store.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#df8f20",
+                        "background-light": "#f8f8d9",
+                        "accent": "#1a1a0f"
+                    },
+                    fontFamily: {
+                        "sans": ["Plus Jakarta Sans", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Card Stack */
+        .card-stack {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 420px;
+            /* Aspect ratio and max height handled by flexbox wrapper */
+        }
+
+        .swipe-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+            user-select: none;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            will-change: transform;
+        }
+
+        .swipe-card:active {
+            cursor: grabbing;
+        }
+
+        .swipe-card.swiping {
+            transition: none;
+        }
+
+        /* Image Carousel */
+        .image-carousel {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            width: 500%;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .carousel-slide {
+            width: 20%;
+            height: 100%;
+            flex-shrink: 0;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 4px;
+            z-index: 20;
+        }
+
+        .carousel-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            width: 20px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Swipe Overlays */
+        .swipe-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            z-index: 30;
+        }
+
+        .swipe-overlay.like {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(34, 197, 94, 0.1));
+        }
+
+        .swipe-overlay.nope {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(239, 68, 68, 0.1));
+        }
+
+        .swipe-overlay.active {
+            opacity: 1;
+        }
+
+        .swipe-overlay-text {
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transform: rotate(-15deg);
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            padding: 16px 32px;
+            border-radius: 8px;
+        }
+
+        .swipe-overlay.like .swipe-overlay-text {
+            color: #22c55e;
+            border: 4px solid #22c55e;
+        }
+
+        .swipe-overlay.nope .swipe-overlay-text {
+            color: #ef4444;
+            border: 4px solid #ef4444;
+        }
+
+        /* Action Buttons */
+        .action-btn {
+            position: relative;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .action-btn:active {
+            transform: scale(0.88) !important;
+        }
+
+        .action-btn.like {
+            background: linear-gradient(135deg, #f8f8d9, #f0f0d0);
+            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.2), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+        }
+
+        .action-btn.like:hover {
+            box-shadow: 0 12px 32px rgba(239, 68, 68, 0.35), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+            transform: translateY(-3px);
+        }
+
+        .action-btn.like.active {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .action-btn.nope {
+            background: linear-gradient(135deg, #f8f8d9, #f0f0d0);
+            box-shadow: 0 8px 24px rgba(26, 26, 15, 0.1), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+        }
+
+        .action-btn.nope:hover {
+            box-shadow: 0 12px 32px rgba(26, 26, 15, 0.2), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+            transform: translateY(-3px);
+        }
+
+        .action-btn.info {
+            background: linear-gradient(135deg, #f8f8d9, #f0f0d0);
+            box-shadow: 0 8px 24px rgba(26, 26, 15, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+        }
+
+        .action-btn.info:hover {
+            box-shadow: 0 12px 32px rgba(26, 26, 15, 0.15), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+            transform: translateY(-3px);
+        }
+
+        /* Card Enter Animation */
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.92) translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .card-enter {
+            animation: cardEnter 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Match Animation */
+        @keyframes matchPulse {
+
+            0%,
+            100% {
+                transform: scale(1)
+            }
+
+            50% {
+                transform: scale(1.15)
+            }
+        }
+
+        .match-pulse {
+            animation: matchPulse 0.5s ease-in-out;
+        }
+
+        /* Like feedback burst */
+        @keyframes likeBurst {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .like-burst {
+            animation: likeBurst 0.5s ease-out;
+        }
+
+        /* Empty State */
+        .empty-state {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            padding: 40px;
+        }
+
+        /* Toast */
+        #swipeToast {
+            position: fixed;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #1a1a0f;
+            color: #f8f8d9;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        #swipeToast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Tech metadata bar */
+        .tech-bar {
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Background cards (behind active) */
+        .bg-card-2 {
+            z-index: 9;
+            transform: scale(0.95) translateY(12px);
+            opacity: 0.75;
+            pointer-events: none;
+        }
+
+        .bg-card-3 {
+            z-index: 8;
+            transform: scale(0.90) translateY(24px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light text-accent font-sans antialiased">
+    <div id="app-shell">
+        <div class="film-grain"></div>
+        <!-- Bọc toàn bộ ứng dụng bằng luồng FlexBox 100vh tự nhiên, không tràn -->
+        <div class="relative flex h-[100dvh] w-full flex-col overflow-hidden bg-background-light">
+
+            <!-- Phần 1: Header (Giữ nguyên kích thước - flex-shrink-0) -->
+            <div class="flex items-center px-5 pt-3 pb-1 justify-between z-10 flex-shrink-0">
+                <a href="index.html"
+                    class="text-accent flex size-11 shrink-0 items-center justify-center cursor-pointer hover:opacity-60 transition-opacity rounded-full border border-accent/10">
+                    <span class="material-symbols-outlined text-[22px] font-extralight">arrow_back</span>
+                </a>
+                <div class="text-center">
+                    <h2 class="text-accent text-lg font-serif font-black leading-tight tracking-[-0.03em]">PicKic</h2>
+                    <p class="text-[9px] uppercase tracking-widest opacity-40 font-mono">Discovery Reel</p>
+                </div>
+                <a href="filters.html"
+                    class="flex size-11 items-center justify-center overflow-hidden rounded-full border border-accent/10 hover:bg-accent/5 transition-colors">
+                    <span class="material-symbols-outlined text-[20px]">tune</span>
+                </a>
+            </div>
+
+            <!-- Phần 2: Progress Bar (Giữ nguyên kích thước - flex-shrink-0) -->
+            <div class="px-6 pb-2 flex-shrink-0">
+                <div class="flex justify-between items-center mb-1">
+                    <p class="text-accent/40 text-[9px] font-mono uppercase tracking-widest">Photographer</p>
+                    <p class="text-accent text-[9px] font-mono"><span id="currentCard">1</span> / <span
+                            id="totalCardsEl">12</span></p>
+                </div>
+                <div class="h-[2px] w-full bg-accent/10 relative overflow-hidden rounded-full">
+                    <div id="progressBar"
+                        class="h-full bg-gradient-to-r from-accent to-accent/70 transition-all duration-500 rounded-full"
+                        style="width: 8.33%;"></div>
+                </div>
+            </div>
+
+            <!-- Phần 3: Vùng chứa ảnh (Dãn linh hoạt - flex-1) -->
+            <!-- Vùng này chiếm TOÀN BỘ khoảng không còn lại giữa Header và Controls -->
+            <div class="flex-1 flex justify-center items-center px-3 relative min-h-0 w-full overflow-hidden pb-1">
+                <!-- Thẻ ảnh tự co giãn theo chiều cao khu vực, linh hoạt không bị giới hạn tỉ lệ 3/4 -->
+                <div class="card-stack flex items-center justify-center w-full max-w-[400px] h-full" id="cardStack">
+                    <!-- Cards rendered by JS -->
+                    <div id="emptyStateView" class="empty-state w-full h-full absolute inset-0">
+                        <span class="material-symbols-outlined text-7xl text-accent/20 mb-4">photo_library</span>
+                        <h3 class="font-serif text-2xl italic mb-2 opacity-60">Hết rồi!</h3>
+                        <p class="text-sm opacity-40 mb-6">Bạn đã xem hết các photographer</p>
+                        <button onclick="resetDiscovery()" class="modern-btn-primary px-8 py-3 rounded-full text-sm">
+                            Khám phá lại
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phần 4: Vùng điều khiển (Giữ nguyên kích thước - flex-shrink-0) -->
+            <!-- Luôn nổi lên trên khoảng cách vừa đủ, không bị chồng đè -->
+            <div class="flex-shrink-0 w-full max-w-sm mx-auto flex flex-col gap-4 px-6 pt-2 pb-4">
+                <!-- Action Buttons Area -->
+                <div class="flex justify-between items-center w-full px-2">
+                    <button id="nopeBtn" class="action-btn nope hover:scale-105 transition-transform"
+                        onclick="swipeNope()" title="Bỏ qua">
+                        <span class="material-symbols-outlined text-3xl text-accent/50"
+                            style="font-variation-settings: 'FILL' 0;">close</span>
+                    </button>
+
+                    <button id="infoBtn"
+                        class="action-btn info w-12 h-12 rounded-full bg-accent/5 flex items-center justify-center hover:bg-accent/10 transition-colors"
+                        onclick="goToProfile()" title="Xem hồ sơ">
+                        <span class="material-symbols-outlined text-[22px] text-accent/70">person</span>
+                    </button>
+
+                    <button id="likeBtn" class="action-btn like hover:scale-105 transition-transform"
+                        onclick="swipeLike()" title="Yêu thích ❤️">
+                        <span class="material-symbols-outlined text-3xl text-red-500/90"
+                            style="font-variation-settings: 'FILL' 1;">favorite</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Phần 5: Thanh Điều hướng (Giữ nguyên kích thước - flex-shrink-0 thay vì fixed) -->
+            <nav
+                class="flex-shrink-0 w-full bg-background-light/95 backdrop-blur-xl border-t border-accent/5 pb-5 pt-2 relative z-50">
+                <div class="flex justify-around items-center max-w-md mx-auto px-6">
+                    <a href="index.html"
+                        class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                        <span class="material-symbols-outlined text-[28px]">home</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
+                    </a>
+                    <a href="discovery.html"
+                        class="flex flex-col items-center gap-1 text-primary scale-105 transition-transform">
+                        <span class="material-symbols-outlined text-[28px]"
+                            style="font-variation-settings: 'FILL' 1;">explore</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
+                    </a>
+                    <a href="search.html"
+                        class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                        <span class="material-symbols-outlined text-[28px]">search</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
+                    </a>
+                    <a href="all-chat.html"
+                        class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                        <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
+                    </a>
+                    <a href="profile.html"
+                        class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                        <span class="material-symbols-outlined text-[28px]">person</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
+                    </a>
+                </div>
+                <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
+            </nav>
+        </div>
+
+        <!-- Toast -->
+        <div id="swipeToast"></div>
+    </div>
+
+    <script>
+        // ─── PHOTOGRAPHER DATA ─────────────────────────────────────────────────────
+        const PHOTOGRAPHERS = [
+            {
+                id: 'ph001',
+                name: 'Elena Vance',
+                studio: 'Kyoto Studio',
+                location: 'Hà Nội',
+                rating: 4.9,
+                price: '2.5M',
+                verified: true,
+                tags: ['Portrait', 'Fashion', 'Editorial'],
+                style: 'High Contrast',
+                experience: '10 năm',
+                completedJobs: 320,
+                quote: 'Ánh sáng là ngôn ngữ của tôi.',
+                images: [
+                    // High-fashion editorial
+                    'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=85',
+                    // Dramatic portrait close-up
+                    'https://images.unsplash.com/photo-1531746020798-e6953c012e44?w=800&q=85',
+                    // Full-length fashion shoot
+                    'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=85',
+                    // Studio lighting portrait
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=85',
+                    // Outdoor lifestyle fashion
+                    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&q=85',
+                    // Moody editorial
+                    'https://images.unsplash.com/photo-1488161628813-04466f872be2?w=800&q=85',
+                    // Cinematic portrait
+                    'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=85',
+                    // Beauty close-up
+                    'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=85',
+                    // Urban fashion
+                    'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=85',
+                ],
+            },
+            {
+                id: 'ph002',
+                name: 'Minh Khải',
+                studio: 'Sài Gòn Lens',
+                location: 'TP.HCM',
+                rating: 4.8,
+                price: '1.8M',
+                verified: true,
+                tags: ['Couple', 'Wedding', 'Outdoor'],
+                style: 'Golden Hour',
+                experience: '7 năm',
+                completedJobs: 480,
+                quote: 'Mỗi cặp đôi là một câu chuyện.',
+                images: [
+                    // Couple golden hour silhouette
+                    'https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?w=800&q=85',
+                    // Wedding ceremony moment
+                    'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=85',
+                    // Pre-wedding outdoor
+                    'https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800&q=85',
+                    // Romantic couple portrait
+                    'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&q=85',
+                    // Garden couple
+                    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&q=85',
+                    // Beach sunset couple
+                    'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&q=85',
+                    // Wedding reception candid
+                    'https://images.unsplash.com/photo-1502635385003-ee1e6a1a742d?w=800&q=85',
+                    // Bridal portrait
+                    'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=85',
+                ],
+            },
+            {
+                id: 'ph003',
+                name: 'Lisa Nakamura',
+                studio: 'Tokyo Minimal',
+                location: 'Đà Nẵng',
+                rating: 4.9,
+                price: '3.2M',
+                verified: true,
+                tags: ['Minimalist', 'Fine Art', 'Fashion'],
+                style: 'Minimalist',
+                experience: '12 năm',
+                completedJobs: 215,
+                quote: 'Ít là nhiều — trong nhiếp ảnh.',
+                images: [
+                    // White studio minimal portrait
+                    'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=85',
+                    // Clean negative space fashion
+                    'https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?w=800&q=85',
+                    // Minimalist person of color detail
+                    'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=800&q=85',
+                    // Japanese aesthetic portrait
+                    'https://images.unsplash.com/photo-1531746020798-e6953c012e44?w=800&q=85',
+                    // Fine art nude silhouette
+                    'https://images.unsplash.com/photo-1503104132249-a8b98e7de37e?w=800&q=85',
+                    // Abstract minimalist body
+                    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&q=85',
+                    // Monochrome minimal fashion
+                    'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=800&q=85',
+                    // Clean white backdrop portrait
+                    'https://images.unsplash.com/photo-1585763210742-b9d89f0fe7c4?w=800&q=85',
+                    // Soft editorial minimalism
+                    'https://images.unsplash.com/photo-1520038410233-7141be7e6f97?w=800&q=85',
+                ],
+            },
+            {
+                id: 'ph004',
+                name: 'Marcus Chen',
+                studio: 'Studio Noir',
+                location: 'Hà Nội',
+                rating: 4.7,
+                price: '1.8M',
+                verified: false,
+                tags: ['Portrait', 'Product', 'Commercial'],
+                style: 'Chiaroscuro',
+                experience: '6 năm',
+                completedJobs: 390,
+                quote: 'Bóng tối là người bạn đồng hành.',
+                images: [
+                    // Dramatic side lighting portrait
+                    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=85',
+                    // Dark moody male portrait
+                    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=85',
+                    // Studio low-key lighting
+                    'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=800&q=85',
+                    // Cinematic male portrait
+                    'https://images.unsplash.com/photo-1488161628813-04466f872be2?w=800&q=85',
+                    // Vintage noir style
+                    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=800&q=85',
+                    // Business commercial portrait
+                    'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&q=85',
+                    // Product photography detail
+                    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=85',
+                    // Dramatic environmental portrait
+                    'https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?w=800&q=85',
+                ],
+            },
+            {
+                id: 'ph005',
+                name: 'Nguyễn Thảo Ly',
+                studio: 'Bloom Studio',
+                location: 'TP.HCM',
+                rating: 4.8,
+                price: '2.0M',
+                verified: true,
+                tags: ['Maternity', 'Newborn', 'Family'],
+                style: 'Soft & Warm',
+                experience: '5 năm',
+                completedJobs: 560,
+                quote: 'Lưu giữ những khoảnh khắc thiêng liêng nhất.',
+                images: [
+                    // Maternity glow outdoor
+                    'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=800&q=85',
+                    // Family golden light
+                    'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=800&q=85',
+                    // Mother and newborn
+                    'https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=800&q=85',
+                    // Family candid outdoor
+                    'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=800&q=85',
+                    // Pregnancy silhouette sunset
+                    'https://images.unsplash.com/photo-1520466809213-7b9a56adcd45?w=800&q=85',
+                    // Baby detail hands feet
+                    'https://images.unsplash.com/photo-1438955948745-1ac7b5bf1f67?w=800&q=85',
+                    // Family in nature
+                    'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=85',
+                    // Soft morning light portrait mom
+                    'https://images.unsplash.com/photo-1499744937866-d7e566a20a61?w=800&q=85',
+                ],
+            },
+            {
+                id: 'ph006',
+                name: 'Alvaro Reyes',
+                studio: 'Urban Frame',
+                location: 'Đà Nẵng',
+                rating: 4.6,
+                price: '1.5M',
+                verified: false,
+                tags: ['Street', 'Documentary', 'Urban'],
+                style: 'Raw & Gritty',
+                experience: '9 năm',
+                completedJobs: 700,
+                quote: 'Đường phố là studio tốt nhất.',
+                images: [
+                    // City skyline night
+                    'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=85',
+                    // Street market life
+                    'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&q=85',
+                    // Urban architecture
+                    'https://images.unsplash.com/photo-1414609245224-aea9e2557d3a?w=800&q=85',
+                    // Street level perspective
+                    'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&q=85',
+                    // Neon rain streets
+                    'https://images.unsplash.com/photo-1517960413843-0aee8e2b3285?w=800&q=85',
+                    // Documentary people candid
+                    'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=85',
+                    // Graffiti urban scene
+                    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=85',
+                    // Late night alley mood
+                    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=85',
+                    // Street portrait gritty
+                    'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&q=85',
+                ],
+            },
+            {
+                id: 'ph007',
+                name: 'Sophia Lê',
+                studio: 'Aura Studio',
+                location: 'Hội An',
+                rating: 5.0,
+                price: '4.0M',
+                verified: true,
+                tags: ['Conceptual', 'Fine Art', 'Avant-garde'],
+                style: 'Surrealist',
+                experience: '15 năm',
+                completedJobs: 180,
+                quote: 'Nhiếp ảnh là thơ bằng ánh sáng.',
+                images: [
+                    // Dreamy avant-garde fashion
+                    'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=85',
+                    // Ethereal bridal fine art
+                    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&q=85',
+                    // Conceptual smoke art
+                    'https://images.unsplash.com/photo-1503104132249-a8b98e7de37e?w=800&q=85',
+                    // Fine art long exposure
+                    'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=85',
+                    // Dramatic conceptual color
+                    'https://images.unsplash.com/photo-1520038410233-7141be7e6f97?w=800&q=85',
+                    // Art-directed fashion editorial
+                    'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=85',
+                    // Surrealist portrait color
+                    'https://images.unsplash.com/photo-1522252234503-e356532cafd5?w=800&q=85',
+                    // Fine art nature composition
+                    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=85',
+                ],
+            },
+            {
+                id: 'ph008',
+                name: 'Đình Hoàng',
+                studio: 'Heritage Lens',
+                location: 'Huế',
+                rating: 4.7,
+                price: '1.6M',
+                verified: true,
+                tags: ['Cultural', 'Documentary', 'Landscape'],
+                style: 'Film Grain',
+                experience: '11 năm',
+                completedJobs: 430,
+                quote: 'Di sản qua ống kính hiện đại.',
+                images: [
+                    // Misty mountains landscape
+                    'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=85',
+                    // Epic mountain vista
+                    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=85',
+                    // Green forest landscape
+                    'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=800&q=85',
+                    // Cultural documentary people
+                    'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=85',
+                    // Ancient temple architecture
+                    'https://images.unsplash.com/photo-1528164344705-47542687000d?w=800&q=85',
+                    // River reflection landscape
+                    'https://images.unsplash.com/photo-1473773508845-188df298d2d1?w=800&q=85',
+                    // Traditional ceremony candid
+                    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=85',
+                    // Bamboo forest morning
+                    'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=800&q=85',
+                    // Rice field aerial golden
+                    'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=800&q=85',
+                ],
+            },
+            {
+                id: 'ph009',
+                name: 'Yuki Tanaka',
+                studio: 'Sakura Frame',
+                location: 'TP.HCM',
+                rating: 4.9,
+                price: '2.8M',
+                verified: true,
+                tags: ['Fashion', 'Editorial', 'Beauty'],
+                style: 'J-aesthetic',
+                experience: '8 năm',
+                completedJobs: 290,
+                quote: 'Vẻ đẹp châu Á — góc nhìn toàn cầu.',
+                images: [
+                    // High-end beauty closeup
+                    'https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?w=800&q=85',
+                    // Editorial fashion clean
+                    'https://images.unsplash.com/photo-1585763210742-b9d89f0fe7c4?w=800&q=85',
+                    // Japanese street fashion
+                    'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=85',
+                    // Beauty product editorial
+                    'https://images.unsplash.com/photo-1522252234503-e356532cafd5?w=800&q=85',
+                    // Fashion magazine cover style
+                    'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=85',
+                    // Soft light beauty portrait
+                    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&q=85',
+                    // Editorial luxury fashion
+                    'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=85',
+                    // Asian beauty natural light
+                    'https://images.unsplash.com/photo-1503104132249-a8b98e7de37e?w=800&q=85',
+                ],
+            },
+            {
+                id: 'ph010',
+                name: 'Carlos Mendez',
+                studio: 'Vivid Color Lab',
+                location: 'Đà Lạt',
+                rating: 4.6,
+                price: '1.9M',
+                verified: false,
+                tags: ['Landscape', 'Travel', 'Adventure'],
+                style: 'Vibrant',
+                experience: '6 năm',
+                completedJobs: 510,
+                quote: 'Thế giới là bức tranh — tôi là người tô màu.',
+                images: [
+                    // Vibrant sunset coast
+                    'https://images.unsplash.com/photo-1488085061387-422e29b40080?w=800&q=85',
+                    // Alpine mountain adventure
+                    'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=85',
+                    // Aerial drone landscape
+                    'https://images.unsplash.com/photo-1504608524841-42584120d711?w=800&q=85',
+                    // Travel lifestyle hiker
+                    'https://images.unsplash.com/photo-1527856263669-12c3a0af2aa6?w=800&q=85',
+                    // Tropical beach paradise
+                    'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&q=85',
+                    // Canyon adventure travel
+                    'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=85',
+                    // Forest path adventure
+                    'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=85',
+                    // Waterfall landscape vivid
+                    'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=800&q=85',
+                    // Night sky milky way
+                    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=85',
+                ],
+            },
+            {
+                id: 'ph011',
+                name: 'Mai Phương',
+                studio: 'Petal Studio',
+                location: 'Hà Nội',
+                rating: 4.8,
+                price: '2.2M',
+                verified: true,
+                tags: ['Bridal', 'Pre-wedding', 'Romantic'],
+                style: 'Dreamy Pastel',
+                experience: '9 năm',
+                completedJobs: 620,
+                quote: 'Tình yêu xứng đáng được lưu lại mãi mãi.',
+                images: [
+                    // Bridal veil romantic light
+                    'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=85',
+                    // Pre-wedding garden
+                    'https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800&q=85',
+                    // Romantic couple embracing
+                    'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&q=85',
+                    // Wedding ceremony portrait
+                    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&q=85',
+                    // Romantic sunset silhouette
+                    'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&q=85',
+                    // Pastel toned couple portrait
+                    'https://images.unsplash.com/photo-1502635385003-ee1e6a1a742d?w=800&q=85',
+                    // Bridal boudoir soft light
+                    'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=85',
+                    // Floral detail wedding rings
+                    'https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?w=800&q=85',
+                    // Love story candid moment
+                    'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=85',
+                ],
+            },
+            {
+                id: 'ph012',
+                name: 'Trần Quang Dũng',
+                studio: 'Mono Vision',
+                location: 'TP.HCM',
+                rating: 4.7,
+                price: '2.0M',
+                verified: true,
+                tags: ['Black & White', 'Portrait', 'Cinematic'],
+                style: 'Monochrome',
+                experience: '13 năm',
+                completedJobs: 380,
+                quote: 'Đen trắng — nơi cảm xúc thuần khiết nhất.',
+                images: [
+                    // Dramatic BW portrait
+                    'https://images.unsplash.com/photo-1512316609839-ce289d3eba0a?w=800&q=85&grayscale',
+                    // Cinematic BW street
+                    'https://images.unsplash.com/photo-1531804055935-76f44d7cabc6?w=800&q=85&grayscale',
+                    // Fine art BW nude abstract
+                    'https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=800&q=85&grayscale',
+                    // BW architectural contrast
+                    'https://images.unsplash.com/photo-1499557354967-2b2d8910bcca?w=800&q=85&grayscale',
+                    // Documentary BW moment
+                    'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&q=85&grayscale',
+                    // Moody BW male portrait
+                    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=85&grayscale',
+                    // Environmental BW portrait
+                    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=85&grayscale',
+                    // Cinematic city BW
+                    'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=85&grayscale',
+                    // Abstract BW patterns
+                    'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=85&grayscale',
+                ],
+            },
+        ];
+
+        // ─── STATE ─────────────────────────────────────────────────────────────────
+        let currentIndex = 0;
+        let isDragging = false;
+        let startX = 0, startY = 0, currentX = 0, currentY = 0;
+        let activeCard = null;
+        const TOTAL = PHOTOGRAPHERS.length;
+
+        // ─── RENDER CARD ───────────────────────────────────────────────────────────
+        function createCard(photographer, zIndex, isBackground = false) {
+            const card = document.createElement('div');
+            card.className = 'swipe-card' + (isBackground ? '' : ' card-enter');
+            card.dataset.photographerId = photographer.id;
+            card.dataset.photographerIndex = PHOTOGRAPHERS.indexOf(photographer);
+            card.style.zIndex = zIndex;
+            if (isBackground) {
+                card.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
+                card.style.pointerEvents = 'none';
+            }
+
+            const bgClass = isBackground && zIndex === 9 ? 'bg-card-2' :
+                isBackground && zIndex === 8 ? 'bg-card-3' : '';
+            if (bgClass) card.classList.add(bgClass);
+
+            const verifiedBadge = photographer.verified
+                ? `<div class="flex items-center gap-1 mb-2">
+                <span class="material-symbols-outlined text-green-400 text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
+                <span class="text-white text-xs font-semibold tracking-wide">Verified</span>
+               </div>`
+                : '';
+
+            const tagsHTML = photographer.tags.map(t =>
+                `<span class="px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-white text-[10px] font-semibold">${t}</span>`
+            ).join('');
+
+            const imagesHTML = photographer.images.map((img, i) =>
+                `<div class="carousel-slide" style="background-image: url('${img}');"></div>`
+            ).join('');
+
+            const dotsHTML = photographer.images.map((_, i) =>
+                `<div class="carousel-dot ${i === 0 ? 'active' : ''}" data-slide="${i}"></div>`
+            ).join('');
+
+            const ratingStars = '★'.repeat(Math.round(photographer.rating));
+
+            card.innerHTML = `
+            <div class="image-carousel">
+                <div class="carousel-track">${imagesHTML}</div>
+                <div class="carousel-indicators">${dotsHTML}</div>
+
+                <!-- Swipe Overlays -->
+                <div class="swipe-overlay like">
+                    <div class="swipe-overlay-text">❤️ LIKE</div>
+                </div>
+                <div class="swipe-overlay nope">
+                    <div class="swipe-overlay-text">NOPE</div>
+                </div>
+
+                <!-- Info Overlay -->
+                <div class="absolute bottom-0 left-0 right-0 px-6 pb-6 pt-28 bg-gradient-to-t from-black/90 via-black/60 to-transparent z-10">
+                    ${verifiedBadge}
+                    <h1 class="text-white font-serif italic text-3xl leading-none mb-1 drop-shadow-lg">${photographer.name}</h1>
+                    <p class="text-white/80 font-mono text-[10px] uppercase tracking-[0.25em] mb-3">${photographer.studio} · ${photographer.location}</p>
+                    
+                    <div class="flex items-center gap-4 text-xs mb-3">
+                        <div class="flex items-center gap-1">
+                            <span class="text-amber-400 text-sm">★</span>
+                            <span class="text-white font-semibold">${photographer.rating}</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <span class="material-symbols-outlined text-white/70 text-sm">payments</span>
+                            <span class="text-white/90">${photographer.price} VNĐ</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-1.5 mb-3">${tagsHTML}</div>
+                    
+                    <p class="text-white/60 text-xs italic mb-4">"${photographer.quote}"</p>
+
+                    <div class="flex justify-between border-t border-white/20 pt-3 tech-bar">
+                        <div class="flex flex-col">
+                            <span class="text-white/50 text-[8px] uppercase font-bold tracking-tighter">Style</span>
+                            <span class="text-white text-[11px] font-semibold">${photographer.style}</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-white/50 text-[8px] uppercase font-bold tracking-tighter">Năm KN</span>
+                            <span class="text-white text-[11px] font-semibold">${photographer.experience}</span>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <span class="text-white/50 text-[8px] uppercase font-bold tracking-tighter">Đã hoàn thành</span>
+                            <span class="text-white text-[11px] font-semibold">${photographer.completedJobs} buổi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+            // Setup carousel for this card
+            setupCardCarousel(card, photographer.images.length);
+
+            return card;
+        }
+
+        // ─── RENDER STACK ──────────────────────────────────────────────────────────
+        function renderStack() {
+            const stack = document.getElementById('cardStack');
+            // Remove existing cards (not the empty state)
+            stack.querySelectorAll('.swipe-card').forEach(c => c.remove());
+
+            if (currentIndex >= TOTAL) {
+                document.getElementById('emptyStateView').style.display = 'flex';
+                return;
+            }
+
+            document.getElementById('emptyStateView').style.display = 'none';
+
+            // Render 3 cards (active + 2 background)
+            for (let i = Math.min(currentIndex + 2, TOTAL - 1); i >= currentIndex; i--) {
+                const p = PHOTOGRAPHERS[i];
+                const zIndex = 10 - (i - currentIndex);
+                const isBg = i !== currentIndex;
+                const card = createCard(p, zIndex, isBg);
+                stack.appendChild(card);
+            }
+
+            // Setup drag on active card
+            activeCard = stack.querySelector('.swipe-card[style*="z-index: 10"]');
+            if (activeCard) setupDrag(activeCard);
+
+            updateProgress();
+        }
+
+        // ─── METADATA BAR ──────────────────────────────────────────────────────────
+        // removed global meta update since it is now baked into the card HTML
+        function updateMeta() {
+            // no-op
+        }
+
+        // ─── PROGRESS ─────────────────────────────────────────────────────────────
+        function updateProgress() {
+            const idx = Math.min(currentIndex + 1, TOTAL);
+            const pct = (idx / TOTAL) * 100;
+            document.getElementById('progressBar').style.width = pct + '%';
+            document.getElementById('currentCard').textContent = idx;
+            document.getElementById('totalCardsEl').textContent = TOTAL;
+        }
+
+        // ─── CAROUSEL ─────────────────────────────────────────────────────────────
+        function setupCardCarousel(card, totalSlides) {
+            const track = card.querySelector('.carousel-track');
+            if (!track) return;
+
+            let touchStartX = 0;
+            let currentSlide = 0;
+
+            // Click zones for photo navigation (left/right tap)
+            card.addEventListener('click', (e) => {
+                if (isDragging || Math.abs(currentX) > 10) return;
+                const rect = card.getBoundingClientRect();
+                const tapX = e.clientX - rect.left;
+                if (tapX < rect.width / 2) {
+                    if (currentSlide > 0) currentSlide--;
+                } else {
+                    if (currentSlide < totalSlides - 1) currentSlide++;
+                }
+                track.style.transform = `translateX(-${currentSlide * 20}%)`;
+                updateDots(card, currentSlide);
+            });
+        }
+
+        function updateDots(card, activeSlide) {
+            card.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === activeSlide);
+            });
+        }
+
+        // ─── DRAG / SWIPE ──────────────────────────────────────────────────────────
+        function setupDrag(card) {
+            card.addEventListener('mousedown', onDragStart);
+            document.addEventListener('mousemove', onDragMove);
+            document.addEventListener('mouseup', onDragEnd);
+            card.addEventListener('touchstart', onDragStart, { passive: false });
+            card.addEventListener('touchmove', onDragMove, { passive: false });
+            card.addEventListener('touchend', onDragEnd);
+        }
+
+        function removeDragListeners() {
+            document.removeEventListener('mousemove', onDragMove);
+            document.removeEventListener('mouseup', onDragEnd);
+        }
+
+        function onDragStart(e) {
+            if (!activeCard) return;
+            isDragging = true;
+            activeCard.classList.add('swiping');
+            const pt = e.touches ? e.touches[0] : e;
+            startX = pt.clientX; startY = pt.clientY;
+            currentX = 0; currentY = 0;
+            e.preventDefault();
+        }
+
+        function onDragMove(e) {
+            if (!isDragging || !activeCard) return;
+            const pt = e.touches ? e.touches[0] : e;
+            currentX = pt.clientX - startX;
+            currentY = pt.clientY - startY;
+            const rot = currentX * 0.08;
+
+            activeCard.style.transition = 'none';
+            activeCard.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rot}deg)`;
+
+            const likeEl = activeCard.querySelector('.swipe-overlay.like');
+            const nopeEl = activeCard.querySelector('.swipe-overlay.nope');
+            const likeBtn = document.getElementById('likeBtn');
+            const nopeBtn = document.getElementById('nopeBtn');
+
+            if (currentX > 40) {
+                likeEl.classList.add('active'); nopeEl.classList.remove('active');
+                likeBtn.classList.add('active'); nopeBtn.classList.remove('active');
+            } else if (currentX < -40) {
+                nopeEl.classList.add('active'); likeEl.classList.remove('active');
+                nopeBtn.classList.add('active'); likeBtn.classList.remove('active');
+            } else {
+                likeEl.classList.remove('active'); nopeEl.classList.remove('active');
+                likeBtn.classList.remove('active'); nopeBtn.classList.remove('active');
+            }
+            e.preventDefault();
+        }
+
+        function onDragEnd() {
+            if (!isDragging || !activeCard) return;
+            isDragging = false;
+            activeCard.classList.remove('swiping');
+
+            if (currentX > 100) {
+                swipeLike();
+            } else if (currentX < -100) {
+                swipeNope();
+            } else {
+                // Snap back with spring
+                activeCard.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                activeCard.style.transform = 'translate(0,0) rotate(0deg)';
+                activeCard.querySelector('.swipe-overlay.like').classList.remove('active');
+                activeCard.querySelector('.swipe-overlay.nope').classList.remove('active');
+                document.getElementById('likeBtn').classList.remove('active');
+                document.getElementById('nopeBtn').classList.remove('active');
+            }
+            currentX = 0; currentY = 0;
+        }
+
+        // ─── SWIPE LOGIC ───────────────────────────────────────────────────────────
+        function swipeLike() {
+            if (!activeCard || currentIndex >= TOTAL) return;
+            const p = PHOTOGRAPHERS[currentIndex];
+
+            // Animate out to the RIGHT
+            activeCard.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease';
+            activeCard.style.transform = `translate(1200px, ${currentY * 0.5}px) rotate(28deg)`;
+            activeCard.style.opacity = '0';
+
+            // ❤️ Add to favorites via PicKicStore
+            const added = PicKicStore.toggleFavorite({
+                id: p.id,
+                name: p.name,
+                studio: p.studio,
+                location: p.location,
+                rating: p.rating,
+                price: p.price + ' VNĐ',
+                tags: p.tags,
+                image: `url('${p.images[0]}')`,
+            });
+
+            // Pulse like button
+            const likeBtn = document.getElementById('likeBtn');
+            likeBtn.classList.add('like-burst');
+            setTimeout(() => likeBtn.classList.remove('like-burst'), 500);
+
+            showToast(added ? `❤️ Đã lưu ${p.name} vào Yêu Thích!` : `💔 Đã bỏ ${p.name} khỏi Yêu Thích`);
+
+            setTimeout(() => {
+                currentIndex++;
+                renderStack();
+            }, 400);
+        }
+
+        function swipeNope() {
+            if (!activeCard || currentIndex >= TOTAL) return;
+
+            // Animate out to the LEFT
+            activeCard.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease';
+            activeCard.style.transform = `translate(-1200px, ${currentY * 0.5}px) rotate(-28deg)`;
+            activeCard.style.opacity = '0';
+
+            setTimeout(() => {
+                currentIndex++;
+                renderStack();
+            }, 400);
+        }
+
+        function goToProfile() {
+            // Save current photographer id to sessionStorage
+            if (currentIndex < TOTAL) {
+                sessionStorage.setItem('viewingPhotographer', PHOTOGRAPHERS[currentIndex].id);
+            }
+            window.location.href = 'photo-profile.html';
+        }
+
+        function resetDiscovery() {
+            currentIndex = 0;
+            renderStack();
+        }
+
+        // ─── TOAST ────────────────────────────────────────────────────────────────
+        function showToast(msg) {
+            const toast = document.getElementById('swipeToast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+
+        // ─── INIT ─────────────────────────────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            renderStack();
+        });
+    </script>
+    </div>
+</body>
+
+</html>

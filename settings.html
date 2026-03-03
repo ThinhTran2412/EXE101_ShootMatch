@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Cài Đặt - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f8f8d9",
+                        "accent": "#1a1a0f",
+                    },
+                    fontFamily: {
+                        "sans": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+    
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 28px;
+            background: #d9d9bc;
+            border-radius: 9999px;
+            transition: background 0.3s;
+        }
+        .toggle-switch.active {
+            background: #1a1a0f;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body class="bg-primary text-accent"><div id="app-shell">
+    <div class="film-grain"></div>
+    <div class="mobile-container">
+    
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-primary/80 backdrop-blur-md px-6 py-4 flex items-center justify-between">
+        <a href="profile.html" class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors">
+            <span class="material-symbols-outlined text-xl">arrow_back</span>
+        </a>
+        <h2 class="text-lg font-semibold">Cài Đặt</h2>
+        <div class="size-10"></div>
+    </header>
+
+    <main class="px-6 pt-6 pb-32">
+        <!-- Account Settings -->
+        <section class="mb-8">
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-4 opacity-60">Tài Khoản</h3>
+            <div class="space-y-2">
+                <a href="edit-profile.html" class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <span class="font-medium">Chỉnh sửa hồ sơ</span>
+                    <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+                </a>
+                <a href="change-password.html" class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <span class="font-medium">Đổi mật khẩu</span>
+                    <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+                </a>
+                <a href="privacy.html" class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <span class="font-medium">Quyền riêng tư</span>
+                    <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Notifications -->
+        <section class="mb-8">
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-4 opacity-60">Thông Báo</h3>
+            <div class="space-y-2">
+                <div class="flex items-center justify-between p-4 rounded-xl clay-card">
+                    <div>
+                        <p class="font-medium text-sm">Thông báo đặt lịch</p>
+                        <p class="text-xs opacity-60">Nhận thông báo về trạng thái đặt lịch</p>
+                    </div>
+                    <label class="toggle-switch active" onclick="toggleSwitch(this)">
+                        <input type="checkbox" checked class="hidden">
+                    </label>
+                </div>
+                <div class="flex items-center justify-between p-4 rounded-xl clay-card">
+                    <div>
+                        <p class="font-medium text-sm">Tin nhắn mới</p>
+                        <p class="text-xs opacity-60">Thông báo khi có tin nhắn</p>
+                    </div>
+                    <label class="toggle-switch active" onclick="toggleSwitch(this)">
+                        <input type="checkbox" checked class="hidden">
+                    </label>
+                </div>
+                <div class="flex items-center justify-between p-4 rounded-xl clay-card">
+                    <div>
+                        <p class="font-medium text-sm">Khuyến mãi</p>
+                        <p class="text-xs opacity-60">Nhận thông báo về ưu đãi</p>
+                    </div>
+                    <label class="toggle-switch" onclick="toggleSwitch(this)">
+                        <input type="checkbox" class="hidden">
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- App Settings -->
+        <section class="mb-8">
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-4 opacity-60">Ứng Dụng</h3>
+            <div class="space-y-2">
+                <div class="flex items-center justify-between p-4 rounded-xl clay-card">
+                    <div>
+                        <p class="font-medium text-sm">Ngôn ngữ</p>
+                        <p class="text-xs opacity-60">Tiếng Việt</p>
+                    </div>
+                    <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+                </div>
+                <div class="flex items-center justify-between p-4 rounded-xl clay-card">
+                    <div>
+                        <p class="font-medium text-sm">Chế độ tối</p>
+                        <p class="text-xs opacity-60">Bật chế độ tối</p>
+                    </div>
+                    <label class="toggle-switch" onclick="toggleSwitch(this)">
+                        <input type="checkbox" class="hidden">
+                    </label>
+                </div>
+                <div class="flex items-center justify-between p-4 rounded-xl clay-card">
+                    <div>
+                        <p class="font-medium text-sm">Lưu trữ</p>
+                        <p class="text-xs opacity-60">256 MB đã sử dụng</p>
+                    </div>
+                    <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support -->
+        <section class="mb-8">
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-4 opacity-60">Hỗ Trợ</h3>
+            <div class="space-y-2">
+                <a href="help.html" class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <span class="font-medium">Trợ giúp & FAQ</span>
+                    <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+                </a>
+                <a href="contact.html" class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <span class="font-medium">Liên hệ hỗ trợ</span>
+                    <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+                </a>
+                <a href="about.html" class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <span class="font-medium">Về PicKic</span>
+                    <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Legal -->
+        <section>
+            <h3 class="text-xs font-semibold uppercase tracking-wider mb-4 opacity-60">Pháp Lý</h3>
+            <div class="space-y-2">
+                <a href="terms.html" class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <span class="font-medium">Điều khoản sử dụng</span>
+                    <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+                </a>
+                <a href="privacy-policy.html" class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <span class="font-medium">Chính sách bảo mật</span>
+                    <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Version -->
+        <div class="mt-8 text-center">
+            <p class="text-xs opacity-40">Phiên bản 1.0.0</p>
+        </div>
+    </main>
+
+    <script>
+        function toggleSwitch(element) {
+            element.classList.toggle('active');
+            const checkbox = element.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+        }
+    </script>
+    </div>
+</div></body>
+</html>

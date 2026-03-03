@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Chọn Concept - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1919e6",
+                        "background-light": "#f8f8d9",
+                        "background-dark": "#111121",
+                        "clay-shadow": "#e0e0c0",
+                        "clay-highlight": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+    
+        .claymorphic-card {
+            background: #f8f8d9;
+            box-shadow: 12px 12px 24px #e0e0c0, -12px -12px 24px #ffffff;
+            transition: all 0.3s ease;
+        }
+        .claymorphic-card:active {
+            box-shadow: inset 6px 6px 12px #e0e0c0, inset -6px -6px 12px #ffffff;
+            transform: scale(0.98);
+        }
+        .claymorphic-card.selected {
+            border: 2px solid #1919e6;
+            box-shadow: 12px 12px 24px #e0e0c0, -12px -12px 24px #ffffff, 0 0 0 2px #1919e6;
+        }
+        .image-bleed-bottom {
+            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display selection:bg-primary/20"><div id="app-shell">
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-background-light/80 backdrop-blur-md dark:bg-background-dark/80">
+        <a href="discovery.html" class="flex items-center gap-2 hover:opacity-60 transition-opacity">
+            <span class="material-symbols-outlined text-primary text-xl">arrow_back_ios</span>
+            <span class="font-mono text-[10px] tracking-widest text-[#4e4e97] uppercase">Back</span>
+        </a>
+        <h2 class="font-mono text-xs font-bold tracking-[0.2em] text-black dark:text-white uppercase">01 / CONCEPTS</h2>
+        <div class="flex items-center justify-end">
+            <button class="size-10 rounded-full flex items-center justify-center text-black dark:text-white hover:opacity-60">
+                <span class="material-symbols-outlined text-xl">info</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="flex flex-col min-h-screen pb-24">
+        <!-- Headline Section -->
+        <header class="px-8 pt-12 pb-6">
+            <p class="font-mono text-[10px] text-primary tracking-widest uppercase mb-2">Phase One</p>
+            <h1 class="text-4xl md:text-5xl font-light italic leading-tight text-black dark:text-white">
+                Chọn concept<br/>của bạn.
+            </h1>
+        </header>
+
+        <!-- Concept Tabs (Filter) -->
+        <div class="px-6 mb-8">
+            <div class="flex gap-6 overflow-x-auto no-scrollbar border-b border-black/5 dark:border-white/5">
+                <a class="pb-3 border-b-2 border-primary" href="#">
+                    <span class="font-mono text-[11px] font-bold tracking-tighter text-black dark:text-white uppercase">Editorial</span>
+                </a>
+                <a class="pb-3 border-b-2 border-transparent opacity-40 hover:opacity-80" href="#">
+                    <span class="font-mono text-[11px] font-bold tracking-tighter text-black dark:text-white uppercase">Street</span>
+                </a>
+                <a class="pb-3 border-b-2 border-transparent opacity-40 hover:opacity-80" href="#">
+                    <span class="font-mono text-[11px] font-bold tracking-tighter text-black dark:text-white uppercase">Avant-Garde</span>
+                </a>
+                <a class="pb-3 border-b-2 border-transparent opacity-40 hover:opacity-80" href="#">
+                    <span class="font-mono text-[11px] font-bold tracking-tighter text-black dark:text-white uppercase">Portrait</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Concept Cards -->
+        <div class="flex flex-col gap-12 px-8">
+            <!-- Card 1: Minimalist Portrait -->
+            <div class="claymorphic-card rounded-xl p-6 flex flex-col gap-6 relative overflow-hidden group" onclick="selectConcept(this)">
+                <div class="absolute top-6 right-6 font-mono text-[10px] bg-primary text-white px-2 py-1 rounded">NEW</div>
+                <div class="w-full aspect-[4/5] bg-center bg-cover rounded-lg overflow-hidden image-bleed-bottom" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA7stdept-0zo8JcTboPUOa46Cd26-k2WtNhKF1lG518v5OTLUElxVn1vEKcSddvr-jwgSgXqvv0wUqLCGMPheD_rKXVIeY1H_veoQv12OmEEJEDza4L6t8OmBjYt6EsT61XNH1DUaQgRHiqhW7dXSFAQXiC0E_jqYuy1mOrR6ZFanItmFtv31WKJ-N4k_EEqH2FcMvZ9yNz1jOgVhi7XBYd5REsRNofju3Xj_4H6apQI__4zpneDrdxviccA7bynYJ1ECL_gYDuiU');">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-end">
+                        <h3 class="text-2xl font-medium text-black dark:text-white italic">Minimalist Portrait</h3>
+                        <span class="font-mono text-[10px] text-black/40">REF: 8092</span>
+                    </div>
+                    <p class="font-mono text-[12px] text-black/60 dark:text-white/60 leading-relaxed max-w-[80%]">
+                        Focus on texture, form, and high-contrast shadows. A study of human geometry.
+                    </p>
+                    <div class="flex gap-4 mt-4 items-center">
+                        <div class="flex flex-col">
+                            <span class="font-mono text-[8px] uppercase text-black/40">Difficulty</span>
+                            <span class="font-mono text-[10px] font-bold text-black">Technical</span>
+                        </div>
+                        <div class="w-px h-6 bg-black/10"></div>
+                        <div class="flex flex-col">
+                            <span class="font-mono text-[8px] uppercase text-black/40">Lighting</span>
+                            <span class="font-mono text-[10px] font-bold text-black">Hard Light</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Urban Exploration -->
+            <div class="claymorphic-card rounded-xl p-6 flex flex-col gap-6 relative overflow-hidden group" onclick="selectConcept(this)">
+                <div class="w-full aspect-[4/5] bg-center bg-cover rounded-lg overflow-hidden image-bleed-bottom" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsaUyPKF4GwgE5EdkmUapqDbgQ3_lg8S4Tk75vMyMtz17chW8olhz3T8XQGgo6JuvGJ5rwQXY_ARdKKrhzatboMFgQ_pHhbARXhC3S2lxU3CwL656PfThdcC062R2kckrNC9id5295FlPE0a4lYoeerkMG0-rugR5YApa11n6F1JDNiVBTFxJ_5oWiKQY9DkqOgvYQKUeZSruh5rZBrPFj1C12o9YulS_y3vPkL_SHRQir-fW9mEUb4bavlaY0b_RJh-YejEcZfW0');">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-end">
+                        <h3 class="text-2xl font-medium text-black dark:text-white italic">Urban Exploration</h3>
+                        <span class="font-mono text-[10px] text-black/40">REF: 4421</span>
+                    </div>
+                    <p class="font-mono text-[12px] text-black/60 dark:text-white/60 leading-relaxed max-w-[80%]">
+                        Interplay between architectural symmetry and gritty industrial shadows.
+                    </p>
+                    <div class="flex gap-4 mt-4 items-center">
+                        <div class="flex flex-col">
+                            <span class="font-mono text-[8px] uppercase text-black/40">Difficulty</span>
+                            <span class="font-mono text-[10px] font-bold text-black">Intermediate</span>
+                        </div>
+                        <div class="w-px h-6 bg-black/10"></div>
+                        <div class="flex flex-col">
+                            <span class="font-mono text-[8px] uppercase text-black/40">Mood</span>
+                            <span class="font-mono text-[10px] font-bold text-black">Cinematic</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Couple Photography -->
+            <div class="claymorphic-card rounded-xl p-6 flex flex-col gap-6 relative overflow-hidden group" onclick="selectConcept(this)">
+                <div class="w-full aspect-[4/5] bg-center bg-cover rounded-lg overflow-hidden image-bleed-bottom" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCBi2ED-JYlxzhl6LMOsSW0qZx-6-oQUc_FlpkAjyJ7A3WzC_Ru8jVzFiUmGcDHELqj7s_2RI0gwgc3dJOota2W6fAbb4x7gyJKPwAfnWOTNuwQbFjRcO1T-iwYUVg9oUGaWESg0a8bS8LxoBVSdqOtIuApVbwRma_XDHaTajL3mBycFFp8JPUoVXADVOiQc2X0_Y6BhsUuYVhklanNWrfWb16ZcClbF52rSSe2PglcRWabkfqH7lLEXVF7SZ7ZtGp2lElLHGtYSlM');">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-end">
+                        <h3 class="text-2xl font-medium text-black dark:text-white italic">Couple Session</h3>
+                        <span class="font-mono text-[10px] text-black/40">REF: 1039</span>
+                    </div>
+                    <p class="font-mono text-[12px] text-black/60 dark:text-white/60 leading-relaxed max-w-[80%]">
+                        Captured motion blur creating fluid shapes and dreamlike abstractions.
+                    </p>
+                    <div class="flex gap-4 mt-4 items-center">
+                        <div class="flex flex-col">
+                            <span class="font-mono text-[8px] uppercase text-black/40">Difficulty</span>
+                            <span class="font-mono text-[10px] font-bold text-black">Expert</span>
+                        </div>
+                        <div class="w-px h-6 bg-black/10"></div>
+                        <div class="flex flex-col">
+                            <span class="font-mono text-[8px] uppercase text-black/40">Style</span>
+                            <span class="font-mono text-[10px] font-bold text-black">Romantic</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Footer Progress -->
+        <div class="px-8 mt-16 mb-12">
+            <h3 class="font-mono text-[10px] font-bold tracking-widest text-black/40 uppercase mb-4">Current Progress</h3>
+            <div class="flex items-center gap-4">
+                <div class="flex-1 h-px bg-black/10 relative">
+                    <div class="absolute left-0 top-0 h-full w-1/4 bg-primary"></div>
+                </div>
+                <span class="font-mono text-[10px] text-primary font-bold">25% COMPLETE</span>
+            </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="px-8 pb-8">
+            <a href="discovery.html" class="claymorphic-card block text-center py-4 rounded-xl font-mono text-sm font-bold tracking-widest uppercase text-primary hover:opacity-80 transition-opacity">
+                Áp Dụng Bộ Lọc
+            </a>
+        </div>
+    </main>
+
+    <!-- Floating Navigation Bar -->
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[85%] max-w-[400px] h-16 bg-black dark:bg-white rounded-full flex items-center justify-around px-8 shadow-2xl">
+        <a href="index.html" class="text-white dark:text-black hover:opacity-60">
+            <span class="material-symbols-outlined text-2xl">home</span>
+        </a>
+        <a href="discovery.html" class="text-white/40 dark:text-black/40 hover:text-white dark:hover:text-black">
+            <span class="material-symbols-outlined text-2xl">explore</span>
+        </a>
+        <a href="concept.html" class="text-white dark:text-black">
+            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">palette</span>
+        </a>
+        <a href="all-chat.html" class="text-white/40 dark:text-black/40 hover:text-white dark:hover:text-black">
+            <span class="material-symbols-outlined text-2xl">chat_bubble</span>
+        </a>
+    </div>
+
+    <script>
+        function selectConcept(element) {
+            // Remove selected class from all cards
+            document.querySelectorAll('.claymorphic-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            // Add selected class to clicked card
+            element.classList.add('selected');
+        }
+    </script>
+</div></body>
+</html>

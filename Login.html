@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Đăng Nhập - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script src="js/pickic-store.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f8f8d9",
+                        "accent": "#1a1a0f",
+                        "beige-tonal": "#f0f0d0",
+                        "beige-deep": "#e8e8c8"
+                    },
+                    fontFamily: {
+                        "sans": ["Plus Jakarta Sans", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .artistic-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBwioxW3jjy_6uC1TYEOXInAWiG6Lfhucd-W1WaCTQ7qyl_q0i6jj1OY14vSUiNUTGgQdWORgkYjbpRWYAGKHUI7_0uZqa2XjNXoVdZ8orm0Qo0YnWiBanA2CUCj9p6ZHlbZIVDYsmOq3ggx6zDjiinNwBbZ7FYoM5MBA3SJdzYPp6n_Nr_KvjJt1LJ9er_nWvUjOy82Spo0AAss0vPPLWr2sY2SH7NFwyfrf9_400SCeU2c2F1WEl0ARHU0ohmb3hB2D4Cvv6ABdI');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.07;
+            filter: sepia(20%) contrast(90%);
+            z-index: 0;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col h-screen overflow-hidden bg-primary text-accent selection:bg-accent selection:text-primary">
+    <div id="app-shell">
+        <div class="film-grain"></div>
+        <div class="artistic-bg"></div>
+
+        <header class="relative z-10 px-8 pt-12 pb-6">
+            <div class="flex justify-between items-center mb-16">
+                <a href="index.html"
+                    class="font-serif italic text-2xl tracking-tighter hover:opacity-60 transition-opacity">PicKic</a>
+                <span class="text-[9px] font-bold tracking-[0.3em] uppercase opacity-40">Access_Portal</span>
+            </div>
+            <div class="max-w-xs">
+                <h2 class="font-serif text-4xl leading-[1.1] mb-4">Đăng Nhập<br />Tài Khoản</h2>
+                <p class="text-[11px] leading-relaxed opacity-50 font-light tracking-wide">
+                    Kết nối với cộng đồng nhiếp ảnh gia chuyên nghiệp.
+                </p>
+            </div>
+        </header>
+
+        <main class="relative z-10 px-8 flex-1 flex flex-col justify-center">
+            <form id="loginForm" class="space-y-8" onsubmit="handleLogin(event)">
+                <div class="flex flex-col">
+                    <label class="text-[9px] uppercase tracking-[0.2em] font-bold opacity-30 mb-1">Email</label>
+                    <input id="loginEmail" class="minimal-input" placeholder="your@email.com" type="email" required />
+                </div>
+                <div class="flex flex-col">
+                    <div class="flex justify-between items-end mb-1">
+                        <label class="text-[9px] uppercase tracking-[0.2em] font-bold opacity-30">Mật Khẩu</label>
+                        <button
+                            class="text-[8px] uppercase tracking-[0.1em] opacity-20 hover:opacity-40 transition-opacity"
+                            type="button">Quên mật khẩu?</button>
+                    </div>
+                    <input class="minimal-input" placeholder="••••••••" type="password" required />
+                </div>
+                <div class="pt-12">
+                    <button
+                        class="textured-btn w-full py-5 rounded-sm text-[11px] font-bold tracking-[0.4em] uppercase text-accent/80 active:scale-[0.99] transition-transform"
+                        type="submit">
+                        ĐĂNG NHẬP
+                    </button>
+                </div>
+            </form>
+            <div class="mt-12 text-center">
+                <a href="register.html"
+                    class="text-[10px] uppercase tracking-[0.2em] font-medium opacity-40 hover:opacity-80 transition-opacity">
+                    Chưa có tài khoản? <span class="border-b border-accent/20 pb-0.5">Đăng Ký</span>
+                </a>
+            </div>
+        </main>
+
+        <footer class="relative z-10 px-8 pb-12">
+            <div class="flex items-center justify-between border-t border-accent/5 pt-6">
+                <div class="flex gap-4">
+                    <span class="text-[8px] font-bold tracking-widest opacity-20 uppercase">Điều khoản</span>
+                    <span class="text-[8px] font-bold tracking-widest opacity-20 uppercase">Bảo mật</span>
+                </div>
+                <div class="flex items-center gap-2 opacity-20">
+                    <span class="material-symbols-outlined text-[14px]">verified</span>
+                    <span class="text-[8px] font-bold tracking-widest uppercase">Nền tảng an toàn</span>
+                </div>
+            </div>
+            <div class="w-32 h-1 bg-accent/5 mx-auto mt-8 rounded-full"></div>
+        </footer>
+        <script>
+                // Nếu đã login thì redirect vào app
+                (function () {
+                    const user = PicKicStore.getUser();
+                    if (user) window.location.replace('index.html');
+                })();
+
+            function handleLogin(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value.trim();
+                const name = email.split('@')[0].replace(/[._]/g, ' ')
+                    .replace(/\b\w/g, c => c.toUpperCase());
+                // Lưu user session (giả lập login)
+                PicKicStore.saveUser({ id: 'u_' + Date.now(), name, email, joinedAt: new Date().toISOString() });
+                window.location.href = 'index.html';
+            }
+        </script>
+    </div>
+</body>
+
+</html>

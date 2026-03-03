@@ -1,0 +1,983 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title id="pageTitle">Photographer - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script src="js/pickic-store.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#f8f8d9", "accent": "#1a1a0f" },
+                    fontFamily: {
+                        "serif": ["Cormorant Garamond", "serif"],
+                        "sans": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* ── Hero ── */
+        .hero-section {
+            position: relative;
+            height: 70vw;
+            max-height: 340px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.6s ease;
+        }
+
+        .hero-section:hover .hero-bg {
+            transform: scale(1.03);
+        }
+
+        .hero-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, transparent 40%, rgba(26, 26, 15, 0.9) 100%);
+        }
+
+        /* ── Gallery Grid ── */
+        .gallery-masonry {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item:hover {
+            opacity: 0.85;
+        }
+
+        .gallery-item.featured {
+            grid-column: span 2;
+            grid-row: span 2;
+            aspect-ratio: auto;
+        }
+
+        /* ── Stats ── */
+        .stat-card {
+            background: rgba(26, 26, 15, 0.04);
+            border: 1px solid rgba(26, 26, 15, 0.06);
+            border-radius: 16px;
+            padding: 16px 12px;
+            text-align: center;
+            transition: background 0.2s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(26, 26, 15, 0.07);
+        }
+
+        /* ── Review Card ── */
+        .review-card {
+            background: rgba(26, 26, 15, 0.03);
+            border: 1px solid rgba(26, 26, 15, 0.06);
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        /* ── Specialty badge ── */
+        .spec-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            background: rgba(26, 26, 15, 0.06);
+            font-size: 11px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        .spec-badge:hover {
+            background: rgba(26, 26, 15, 0.12);
+        }
+
+        /* ── Sticky CTA bar ── */
+        .cta-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 430px;
+            max-width: 100%;
+            background: rgba(248, 248, 217, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(26, 26, 15, 0.06);
+            padding: 16px 24px 32px;
+            z-index: 50;
+        }
+
+        /* ── Floating back button ── */
+        .float-back {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            z-index: 30;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(248, 248, 217, 0.9);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .float-back:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        /* ── Fav button ── */
+        .float-fav {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 30;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(248, 248, 217, 0.9);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .float-fav.active {
+            background: rgba(239, 68, 68, 0.9);
+        }
+
+        .float-fav.active .fav-icon {
+            color: white;
+        }
+
+        /* ── Schedule Grid ── */
+        .time-slot {
+            padding: 8px 12px;
+            border-radius: 10px;
+            background: rgba(26, 26, 15, 0.04);
+            border: 1px solid rgba(26, 26, 15, 0.08);
+            font-size: 11px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .time-slot:hover {
+            background: rgba(26, 26, 15, 0.08);
+        }
+
+        .time-slot.selected {
+            background: #1a1a0f;
+            color: #f8f8d9;
+            border-color: #1a1a0f;
+        }
+
+        .time-slot.unavailable {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        /* Scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Equipment items */
+        .equip-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: rgba(26, 26, 15, 0.03);
+            border: 1px solid rgba(26, 26, 15, 0.06);
+        }
+
+        /* Rating stars */
+        .star-filled {
+            color: #f59e0b;
+        }
+
+        .star-empty {
+            color: rgba(26, 26, 15, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-primary text-accent font-sans antialiased">
+    <div id="app-shell">
+        <div class="film-grain"></div>
+        <div class="mobile-container">
+            <div class="pb-36">
+
+                <!-- ── HERO ── -->
+                <section class="hero-section">
+                    <div id="heroBg" class="hero-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=900&q=85');">
+                    </div>
+                    <div class="hero-gradient"></div>
+
+                    <!-- Back -->
+                    <button onclick="history.back()" class="float-back">
+                        <span class="material-symbols-outlined text-accent text-xl">arrow_back</span>
+                    </button>
+
+                    <!-- Fav on hero -->
+                    <button id="favBtn" onclick="toggleFav()" class="float-fav">
+                        <span id="favIcon" class="material-symbols-outlined text-accent fav-icon text-xl"
+                            style="font-variation-settings: 'FILL' 0;">favorite</span>
+                    </button>
+
+                    <!-- Hero Info -->
+                    <div class="absolute bottom-0 left-0 right-0 px-6 pb-6 z-10">
+                        <div id="heroBadge" class="flex items-center gap-2 mb-2">
+                            <span class="material-symbols-outlined text-green-400 text-sm"
+                                style="font-variation-settings: 'FILL' 1;">verified</span>
+                            <span class="text-white/90 text-xs font-semibold tracking-wider">Verified</span>
+                        </div>
+                        <h1 id="heroName"
+                            class="text-white font-serif italic text-4xl leading-none mb-2 drop-shadow-xl">Elena Vance
+                        </h1>
+                        <p id="heroStudio" class="text-white/80 font-sans text-xs tracking-[0.2em] uppercase mb-3">Kyoto
+                            Studio · Hà Nội</p>
+                        <div class="flex items-center gap-3">
+                            <div class="flex items-center gap-1">
+                                <span id="heroRating" class="text-amber-400 font-bold text-sm">4.9</span>
+                                <span class="text-white/60 text-xs">/ 5.0</span>
+                            </div>
+                            <span class="text-white/30">·</span>
+                            <span id="heroPrice" class="text-white/90 text-sm font-semibold">2.5M VNĐ</span>
+                            <span class="text-white/30">·</span>
+                            <div id="heroTags" class="flex gap-1.5"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ── PHOTO CAROUSEL SELECTOR ── -->
+                <section class="px-4 pt-4 pb-2 reveal">
+                    <div id="photoStrip" class="flex gap-2 overflow-x-auto no-scrollbar">
+                        <!-- Rendered by JS -->
+                    </div>
+                </section>
+
+                <!-- ── QUOTE ── -->
+                <section class="px-6 py-5 reveal">
+                    <blockquote
+                        class="font-serif italic text-2xl leading-snug text-accent/80 border-l-2 border-accent/20 pl-4">
+                        "<span id="profileQuote">Ánh sáng là ngôn ngữ của tôi.</span>"
+                    </blockquote>
+                </section>
+
+                <!-- ── STATS ── -->
+                <section class="px-5 pb-4 reveal">
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="stat-card">
+                            <p id="statJobs" class="text-2xl font-bold font-serif">320</p>
+                            <p class="text-[10px] uppercase tracking-wider opacity-50 mt-1">Buổi chụp</p>
+                        </div>
+                        <div class="stat-card">
+                            <p id="statExp" class="text-2xl font-bold font-serif">10</p>
+                            <p class="text-[10px] uppercase tracking-wider opacity-50 mt-1">Năm kinh nghiệm</p>
+                        </div>
+                        <div class="stat-card">
+                            <p id="statRating" class="text-2xl font-bold font-serif">4.9</p>
+                            <p class="text-[10px] uppercase tracking-wider opacity-50 mt-1">Điểm đánh giá</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ── SPECIALTIES ── -->
+                <section class="px-5 pb-5 reveal">
+                    <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold opacity-40 mb-3">Chuyên Môn</h3>
+                    <div id="specialties" class="flex flex-wrap gap-2"></div>
+                </section>
+
+                <!-- ── ABOUT ── -->
+                <section class="px-5 pb-5 reveal">
+                    <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold opacity-40 mb-3">Giới Thiệu</h3>
+                    <p id="aboutText" class="text-sm leading-relaxed opacity-70">
+                        Elena Vance là nhiếp ảnh gia chuyên nghiệp với hơn 10 năm kinh nghiệm trong lĩnh vực portrait và
+                        fashion.
+                        Phong cách của cô kết hợp giữa ánh sáng tự nhiên và chỉnh màu nghệ thuật, tạo nên những bức ảnh
+                        mang cảm xúc sâu sắc.
+                    </p>
+                </section>
+
+                <!-- ── PORTFOLIO GALLERY ── -->
+                <section class="pb-5 reveal">
+                    <div class="px-5 mb-3 flex items-center justify-between">
+                        <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold opacity-40">Portfolio</h3>
+                        <span id="portfolioCount" class="text-[10px] opacity-40 font-mono">5 ảnh</span>
+                    </div>
+                    <div id="galleryGrid" class="gallery-masonry px-1"></div>
+                </section>
+
+                <!-- ── EQUIPMENT ── -->
+                <section class="px-5 pb-5 reveal">
+                    <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold opacity-40 mb-3">Thiết Bị</h3>
+                    <div id="equipList" class="space-y-2">
+                        <div class="equip-item">
+                            <span class="material-symbols-outlined text-accent/50 text-lg">camera</span>
+                            <div>
+                                <p class="text-sm font-semibold">Sony A7R V</p>
+                                <p class="text-xs opacity-50">61MP Full Frame Mirrorless</p>
+                            </div>
+                        </div>
+                        <div class="equip-item">
+                            <span class="material-symbols-outlined text-accent/50 text-lg">settings</span>
+                            <div>
+                                <p class="text-sm font-semibold">35mm f/1.4 Summilux</p>
+                                <p class="text-xs opacity-50">Leica Prime Lens</p>
+                            </div>
+                        </div>
+                        <div class="equip-item">
+                            <span class="material-symbols-outlined text-accent/50 text-lg">lightbulb</span>
+                            <div>
+                                <p class="text-sm font-semibold">Profoto B10 Plus</p>
+                                <p class="text-xs opacity-50">500Ws Studio Flash</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ── SERVICES & PRICING ── -->
+                <section class="px-5 pb-5 reveal">
+                    <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold opacity-40 mb-3">Dịch Vụ & Giá</h3>
+                    <div id="servicesList" class="space-y-2"></div>
+                </section>
+
+                <!-- ── SCHEDULE ── -->
+                <section class="px-5 pb-5 reveal">
+                    <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold opacity-40 mb-3">Lịch Trống Tuần Này
+                    </h3>
+                    <div class="grid grid-cols-4 gap-2">
+                        <div class="time-slot">T3<br><span class="font-bold">09:00</span></div>
+                        <div class="time-slot selected">T3<br><span class="font-bold">14:00</span></div>
+                        <div class="time-slot unavailable">T4<br><span class="font-bold">10:00</span></div>
+                        <div class="time-slot">T4<br><span class="font-bold">15:00</span></div>
+                        <div class="time-slot">T5<br><span class="font-bold">09:00</span></div>
+                        <div class="time-slot unavailable">T5<br><span class="font-bold">13:00</span></div>
+                        <div class="time-slot">T6<br><span class="font-bold">10:00</span></div>
+                        <div class="time-slot">T7<br><span class="font-bold">08:00</span></div>
+                    </div>
+                    <script>
+                        document.querySelectorAll('.time-slot:not(.unavailable)').forEach(slot => {
+                            slot.addEventListener('click', () => {
+                                document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                                slot.classList.add('selected');
+                            });
+                        });
+                    </script>
+                </section>
+
+                <!-- ── REVIEWS ── -->
+                <section class="px-5 pb-5 reveal">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-[10px] uppercase tracking-[0.2em] font-bold opacity-40">Đánh Giá</h3>
+                        <div class="flex items-center gap-1">
+                            <span id="reviewAvgStars" class="text-amber-400 text-xs">★★★★★</span>
+                            <span class="text-xs font-semibold opacity-60">4.9</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="review-card">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <div class="size-8 rounded-full bg-accent/10 flex items-center justify-center">
+                                        <span class="text-xs font-bold">TN</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold">Trân Ngọc</p>
+                                        <p class="text-[10px] opacity-40">15/01/2026</p>
+                                    </div>
+                                </div>
+                                <div class="text-amber-400 text-xs">★★★★★</div>
+                            </div>
+                            <p class="text-xs leading-relaxed opacity-70">"Chụp ảnh cưới cực kỳ chuyên nghiệp và tận
+                                tâm. Ảnh ra đẹp hơn mong đợi nhiều lần! Sẽ giới thiệu cho bạn bè."</p>
+                        </div>
+                        <div class="review-card">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <div class="size-8 rounded-full bg-accent/10 flex items-center justify-center">
+                                        <span class="text-xs font-bold">MH</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold">Minh Hiếu</p>
+                                        <p class="text-[10px] opacity-40">02/01/2026</p>
+                                    </div>
+                                </div>
+                                <div class="text-amber-400 text-xs">★★★★<span class="opacity-30">★</span></div>
+                            </div>
+                            <p class="text-xs leading-relaxed opacity-70">"Phong cách độc đáo, rất sáng tạo. Phản hồi
+                                nhanh và linh hoạt với yêu cầu của khách hàng."</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- ── STICKY CTA BAR ── -->
+        <div class="cta-bar">
+            <div class="flex items-center gap-3">
+                <a href="chat.html"
+                    class="flex items-center justify-center size-12 rounded-full border border-accent/15 hover:bg-accent/5 transition-colors flex-shrink-0">
+                    <span class="material-symbols-outlined text-accent text-xl">chat</span>
+                </a>
+                <a href="checkout.html"
+                    class="flex-1 py-4 rounded-2xl bg-accent text-primary text-center font-semibold text-sm hover:opacity-90 active:scale-[0.98] transition-all">
+                    Đặt Lịch Ngay
+                </a>
+                <button id="favBtnBottom" onclick="toggleFav()"
+                    class="flex items-center justify-center size-12 rounded-full border border-accent/15 hover:bg-accent/5 transition-colors flex-shrink-0">
+                    <span id="favIconBottom" class="material-symbols-outlined text-accent text-xl"
+                        style="font-variation-settings: 'FILL' 0;">favorite</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div id="pickicToast"
+            style="position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:#1a1a0f;color:#f8f8d9;padding:10px 20px;border-radius:50px;font-size:13px;font-weight:600;z-index:9999;opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);white-space:nowrap;pointer-events:none;">
+        </div>
+    </div>
+
+    <script>
+        // ─── PHOTOGRAPHERS DATA (same as discovery.html) ───────────────────────────
+        const PHOTOGRAPHERS = {
+            'ph001': {
+                id: 'ph001', name: 'Elena Vance', studio: 'Kyoto Studio', location: 'Hà Nội',
+                rating: 4.9, price: '2.5M', verified: true,
+                tags: ['Portrait', 'Fashion', 'Editorial'],
+                style: 'High Contrast', experience: 10, completedJobs: 320,
+                quote: 'Ánh sáng là ngôn ngữ của tôi.',
+                about: 'Elena Vance là nhiếp ảnh gia chuyên nghiệp với hơn 10 năm kinh nghiệm fashion editorial. Phong cách kết hợp high-contrast dramatic và ánh sáng tự nhiên, tạo nên những bức ảnh sang trọng và đầy sức sống.',
+                equipment: ['Sony A7R V · 61MP Full Frame', 'Leica 35mm f/1.4 Summilux', 'Profoto B10 Plus 500W'],
+                services: [
+                    { name: 'Portrait Mini Session', duration: '1 giờ', price: '1.200.000₫', desc: '20 ảnh retouched' },
+                    { name: 'Fashion Editorial', duration: '3 giờ', price: '2.500.000₫', desc: '50 ảnh + video BTS' },
+                    { name: 'Full Day Luxury', duration: '8 giờ', price: '5.800.000₫', desc: 'Unlimited ảnh + album' },
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=900&q=85',
+                    'https://images.unsplash.com/photo-1531746020798-e6953c012e44?w=900&q=85',
+                    'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&q=85',
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=85',
+                    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=900&q=85',
+                    'https://images.unsplash.com/photo-1488161628813-04466f872be2?w=900&q=85',
+                    'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=900&q=85',
+                    'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=900&q=85',
+                    'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=900&q=85',
+                ],
+            },
+            'ph002': {
+                id: 'ph002', name: 'Minh Khải', studio: 'Sài Gòn Lens', location: 'TP.HCM',
+                rating: 4.8, price: '1.8M', verified: true,
+                tags: ['Couple', 'Wedding', 'Outdoor'],
+                style: 'Golden Hour', experience: 7, completedJobs: 480,
+                quote: 'Mỗi cặp đôi là một câu chuyện.',
+                about: 'Minh Khải chuyên chụp ảnh cưới và couple với phong cách golden hour lãng mạn. Anh nổi tiếng với khả năng bắt trọn khoảnh khắc thật và cảm xúc tự nhiên, không dàn dựng.',
+                equipment: ['Canon EOS R5 · 45MP', 'RF 85mm f/1.2L USM', 'Godox AD400Pro'],
+                services: [
+                    { name: 'Couple Session', duration: '2 giờ', price: '1.800.000₫', desc: '40 ảnh retouched' },
+                    { name: 'Pre-wedding', duration: '4 giờ', price: '3.500.000₫', desc: '80 ảnh + video highlight' },
+                    { name: 'Wedding Day', duration: 'Cả ngày', price: '8.000.000₫', desc: 'Unlimited + album cao cấp' },
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?w=900&q=85',
+                    'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=900&q=85',
+                    'https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=900&q=85',
+                    'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=900&q=85',
+                    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=900&q=85',
+                    'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=900&q=85',
+                    'https://images.unsplash.com/photo-1502635385003-ee1e6a1a742d?w=900&q=85',
+                    'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=900&q=85',
+                ],
+            },
+            'ph003': {
+                id: 'ph003', name: 'Lisa Nakamura', studio: 'Tokyo Minimal', location: 'Đà Nẵng',
+                rating: 4.9, price: '3.2M', verified: true,
+                tags: ['Minimalist', 'Fine Art', 'Fashion'],
+                style: 'Minimalist', experience: 12, completedJobs: 215,
+                quote: 'Ít là nhiều — trong nhiếp ảnh.',
+                about: 'Lisa Nakamura mang triết lý tối giản Nhật Bản vào nhiếp ảnh Việt Nam. Mỗi bức hình là khoảng trắng, ánh sáng thuần khiết và bố cục thiền định — như một bài thơ haiku bằng ánh sáng.',
+                equipment: ['Fujifilm GFX 100S · 102MP Medium Format', 'GF 63mm f/2.8 R WR', 'Elinchrom ELC Pro HD'],
+                services: [
+                    { name: 'Fine Art Portrait', duration: '2 giờ', price: '2.500.000₫', desc: '30 ảnh medium format' },
+                    { name: 'Fashion Campaign', duration: '5 giờ', price: '6.000.000₫', desc: '100+ ảnh retouched' },
+                    { name: 'Brand Identity', duration: 'Thỏa thuận', price: 'Liên hệ', desc: 'Concept + full execution' },
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=900&q=85',
+                    'https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?w=900&q=85',
+                    'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=900&q=85',
+                    'https://images.unsplash.com/photo-1531746020798-e6953c012e44?w=900&q=85',
+                    'https://images.unsplash.com/photo-1503104132249-a8b98e7de37e?w=900&q=85',
+                    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=900&q=85',
+                    'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=900&q=85',
+                    'https://images.unsplash.com/photo-1585763210742-b9d89f0fe7c4?w=900&q=85',
+                    'https://images.unsplash.com/photo-1520038410233-7141be7e6f97?w=900&q=85',
+                ],
+            },
+            'ph004': {
+                id: 'ph004', name: 'Marcus Chen', studio: 'Studio Noir', location: 'Hà Nội',
+                rating: 4.7, price: '1.8M', verified: false,
+                tags: ['Portrait', 'Product', 'Commercial'],
+                style: 'Chiaroscuro', experience: 6, completedJobs: 390,
+                quote: 'Bóng tối là người bạn đồng hành.',
+                about: 'Marcus Chen là bậc thầy chiaroscuro — nghệ thuật tương phản sáng tối cổ điển. Anh biến studio đơn giản thành rạp chiếu phim, mỗi bức ảnh như một frame từ film noir đỉnh cao.',
+                equipment: ['Sony A7 IV · 33MP', 'Tamron 85mm f/1.8 Di III', 'Aputure 300D II'],
+                services: [
+                    { name: 'Dramatic Portrait', duration: '1.5 giờ', price: '1.500.000₫', desc: '30 ảnh low-key' },
+                    { name: 'Commercial Headshot', duration: '2 giờ', price: '1.800.000₫', desc: '40 ảnh retouched' },
+                    { name: 'Product Photography', duration: '3 giờ', price: '2.800.000₫', desc: 'Unlimited angles' },
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900&q=85',
+                    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=85',
+                    'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=900&q=85',
+                    'https://images.unsplash.com/photo-1488161628813-04466f872be2?w=900&q=85',
+                    'https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=900&q=85',
+                    'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=900&q=85',
+                    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&q=85',
+                    'https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?w=900&q=85',
+                ],
+            },
+            'ph005': {
+                id: 'ph005', name: 'Nguyễn Thảo Ly', studio: 'Bloom Studio', location: 'TP.HCM',
+                rating: 4.8, price: '2.0M', verified: true,
+                tags: ['Maternity', 'Newborn', 'Family'],
+                style: 'Soft & Warm', experience: 5, completedJobs: 560,
+                quote: 'Lưu giữ những khoảnh khắc thiêng liêng nhất.',
+                about: 'Thảo Ly chuyên lưu giữ những khoảnh khắc thiêng liêng nhất của gia đình. Từ bụng bầu đến em bé chào đời, mỗi bức ảnh của cô là một bức thư tình gửi đến tương lai.',
+                equipment: ['Nikon Z7 II · 45.7MP', 'NIKKOR Z 50mm f/1.2 S', 'Rogue FlashBender'],
+                services: [
+                    { name: 'Maternity Session', duration: '2 giờ', price: '1.800.000₫', desc: '35 ảnh soft & warm' },
+                    { name: 'Newborn Session', duration: '3 giờ', price: '2.200.000₫', desc: '40 ảnh baby' },
+                    { name: 'Family Package', duration: '2.5 giờ', price: '2.000.000₫', desc: '50 ảnh cả gia đình' },
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=900&q=85',
+                    'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=900&q=85',
+                    'https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=900&q=85',
+                    'https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=900&q=85',
+                    'https://images.unsplash.com/photo-1520466809213-7b9a56adcd45?w=900&q=85',
+                    'https://images.unsplash.com/photo-1438955948745-1ac7b5bf1f67?w=900&q=85',
+                    'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=900&q=85',
+                    'https://images.unsplash.com/photo-1499744937866-d7e566a20a61?w=900&q=85',
+                ],
+            },
+            'ph006': {
+                id: 'ph006', name: 'Alvaro Reyes', studio: 'Urban Frame', location: 'Đà Nẵng',
+                rating: 4.6, price: '1.5M', verified: false,
+                tags: ['Street', 'Documentary', 'Urban'],
+                style: 'Raw & Gritty', experience: 9, completedJobs: 700,
+                quote: 'Đường phố là studio tốt nhất.',
+                about: 'Alvaro Reyes lang thang qua mọi ngóc ngách của thành phố, bất kể ngày hay đêm. Camera trên tay là vũ khí — mỗi khoảnh khắc ngẫu nhiên đều trở thành một tuyên ngôn nghệ thuật.',
+                equipment: ['Leica Q2 · 47.3MP', 'Summilux 28mm f/1.7 ASPH', 'Ricoh GR IIIx'],
+                services: [
+                    { name: 'Street Documentary', duration: '3 giờ', price: '1.200.000₫', desc: '60+ candid shots' },
+                    { name: 'Urban Portrait', duration: '2 giờ', price: '1.500.000₫', desc: '40 ảnh environmental' },
+                    { name: 'City Storytelling', duration: 'Cả ngày', price: '4.000.000₫', desc: 'Photo essay + print' },
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=900&q=85',
+                    'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=900&q=85',
+                    'https://images.unsplash.com/photo-1414609245224-aea9e2557d3a?w=900&q=85',
+                    'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=900&q=85',
+                    'https://images.unsplash.com/photo-1517960413843-0aee8e2b3285?w=900&q=85',
+                    'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=900&q=85',
+                    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85',
+                    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&q=85',
+                    'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=900&q=85',
+                ],
+            },
+            'ph007': {
+                id: 'ph007', name: 'Sophia Lê', studio: 'Aura Studio', location: 'Hội An',
+                rating: 5.0, price: '4.0M', verified: true,
+                tags: ['Conceptual', 'Fine Art', 'Avant-garde'],
+                style: 'Surrealist', experience: 15, completedJobs: 180,
+                quote: 'Nhiếp ảnh là thơ bằng ánh sáng.',
+                about: 'Sophia Lê là nghệ sĩ nhiếp ảnh fine art với giải thưởng quốc tế. Tác phẩm của cô được trưng bày tại gallery ở Paris, Tokyo và New York. Mỗi buổi chụp là một collaboration sáng tạo giữa nghệ sĩ và chủ thể.',
+                equipment: ['Hasselblad X2D 100C · 100MP', 'XCD 45mm f/3.5', 'Broncolor Siros L'],
+                services: [
+                    { name: 'Conceptual Portrait', duration: '3 giờ', price: '3.500.000₫', desc: '25 ảnh art-directed' },
+                    { name: 'Fine Art Series', duration: '6 giờ', price: '7.000.000₫', desc: '10 ảnh gallery-quality' },
+                    { name: 'Creative Direction', duration: 'Thỏa thuận', price: 'Liên hệ', desc: 'Full art direction' },
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&q=85',
+                    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=900&q=85',
+                    'https://images.unsplash.com/photo-1503104132249-a8b98e7de37e?w=900&q=85',
+                    'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=900&q=85',
+                    'https://images.unsplash.com/photo-1520038410233-7141be7e6f97?w=900&q=85',
+                    'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=900&q=85',
+                    'https://images.unsplash.com/photo-1522252234503-e356532cafd5?w=900&q=85',
+                    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=85',
+                ],
+            },
+            'ph008': {
+                id: 'ph008', name: 'Đình Hoàng', studio: 'Heritage Lens', location: 'Huế',
+                rating: 4.7, price: '1.6M', verified: true,
+                tags: ['Cultural', 'Documentary', 'Landscape'],
+                style: 'Film Grain', experience: 11, completedJobs: 430,
+                quote: 'Di sản qua ống kính hiện đại.',
+                about: 'Đình Hoàng lớn lên ở Huế với niềm đam mê di sản văn hóa. Anh kết hợp film grain của nhiếp ảnh analog cổ điển với công nghệ kỹ thuật số hiện đại, tạo nên rung cảm độc đáo về không gian và thời gian.',
+                equipment: ['Nikon Z9 · 45.7MP', 'NIKKOR Z 24-70mm f/2.8 S', 'Samyang 14mm f/2.8'],
+                services: [
+                    { name: 'Landscape Session', duration: 'Nửa ngày', price: '1.600.000₫', desc: '80+ ảnh landscape' },
+                    { name: 'Cultural Documentary', duration: 'Cả ngày', price: '3.200.000₫', desc: 'Photo essay' },
+                    { name: 'Heritage Collection', duration: '2 ngày', price: '6.000.000₫', desc: 'Bộ sưu tập hoàn chỉnh' },
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=900&q=85',
+                    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=85',
+                    'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=900&q=85',
+                    'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&q=85',
+                    'https://images.unsplash.com/photo-1528164344705-47542687000d?w=900&q=85',
+                    'https://images.unsplash.com/photo-1473773508845-188df298d2d1?w=900&q=85',
+                    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=900&q=85',
+                    'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=900&q=85',
+                    'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=900&q=85',
+                ],
+            },
+            'ph009': {
+                id: 'ph009', name: 'Yuki Tanaka', studio: 'Sakura Frame', location: 'TP.HCM',
+                rating: 4.9, price: '2.8M', verified: true,
+                tags: ['Fashion', 'Editorial', 'Beauty'],
+                style: 'J-aesthetic', experience: 8, completedJobs: 290,
+                quote: 'Vẻ đẹp châu Á — góc nhìn toàn cầu.',
+                about: 'Yuki Tanaka từng làm việc cho Vogue Japan và L\'Officiel Asia. Cô mang thẩm mỹ Nhật Bản tinh tế vào từng bức ảnh — sự kết hợp hoàn hảo giữa vẻ đẹp phương Đông và ngôn ngữ fashion toàn cầu.',
+                equipment: ['Phase One XF IQ4 · 150MP', 'Schneider 80mm LS f/2.8', 'Broncolor Grafit A4'],
+                services: [
+                    { name: 'Beauty Editorial', duration: '2 giờ', price: '2.200.000₫', desc: '35 ảnh high-end beauty' },
+                    { name: 'Fashion Lookbook', duration: '4 giờ', price: '4.500.000₫', desc: '80 ảnh editorial' },
+                    { name: 'Campaign Shoot', duration: 'Cả ngày', price: '9.000.000₫', desc: 'Campaign full package' },
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?w=900&q=85',
+                    'https://images.unsplash.com/photo-1585763210742-b9d89f0fe7c4?w=900&q=85',
+                    'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=900&q=85',
+                    'https://images.unsplash.com/photo-1522252234503-e356532cafd5?w=900&q=85',
+                    'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&q=85',
+                    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=900&q=85',
+                    'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=900&q=85',
+                    'https://images.unsplash.com/photo-1503104132249-a8b98e7de37e?w=900&q=85',
+                ],
+            },
+            'ph010': {
+                id: 'ph010', name: 'Carlos Mendez', studio: 'Vivid Color Lab', location: 'Đà Lạt',
+                rating: 4.6, price: '1.9M', verified: false,
+                tags: ['Landscape', 'Travel', 'Adventure'],
+                style: 'Vibrant', experience: 6, completedJobs: 510,
+                quote: 'Thế giới là bức tranh — tôi là người tô màu.',
+                about: 'Carlos đã đặt chân tới 47 quốc gia với máy ảnh trên vai. Anh tin rằng thiên nhiên là nghệ sĩ vĩ đại nhất, và nhiệm vụ của photographer là bắt trọn khoảnh khắc thiên nhiên tự họa chính mình.',
+                equipment: ['Sony A1 · 50MP', 'Sony 16-35mm f/2.8 GM', 'DJI Mavic 3 Pro Drone'],
+                services: [
+                    { name: 'Landscape Travel', duration: 'Nửa ngày', price: '1.600.000₫', desc: '100+ travel photos' },
+                    { name: 'Adventure Portrait', duration: '3 giờ', price: '2.000.000₫', desc: 'Action + landscape' },
+                    { name: 'Drone Aerial', duration: '2 giờ', price: '2.500.000₫', desc: '4K video + 50 photos' },
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1488085061387-422e29b40080?w=900&q=85',
+                    'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&q=85',
+                    'https://images.unsplash.com/photo-1504608524841-42584120d711?w=900&q=85',
+                    'https://images.unsplash.com/photo-1527856263669-12c3a0af2aa6?w=900&q=85',
+                    'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=900&q=85',
+                    'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=900&q=85',
+                    'https://images.unsplash.com/photo-1448375240586-882707db888b?w=900&q=85',
+                    'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=900&q=85',
+                    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&q=85',
+                ],
+            },
+            'ph011': {
+                id: 'ph011', name: 'Mai Phương', studio: 'Petal Studio', location: 'Hà Nội',
+                rating: 4.8, price: '2.2M', verified: true,
+                tags: ['Bridal', 'Pre-wedding', 'Romantic'],
+                style: 'Dreamy Pastel', experience: 9, completedJobs: 620,
+                quote: 'Tình yêu xứng đáng được lưu lại mãi mãi.',
+                about: 'Mai Phương tin rằng mỗi mối tình yêu đều có màu sắc riêng. Phong cách dreamy pastel của cô tạo ra không gian nhiếp ảnh như trong giấc mơ — nhẹ nhàng, lãng mạn và vĩnh cửu.',
+                equipment: ['Canon EOS R6 Mark II · 24.2MP', 'RF 85mm f/1.2L USM DS', 'MagMod MagBox 24'],
+                services: [
+                    { name: 'Pre-wedding Dreamy', duration: '4 giờ', price: '2.800.000₫', desc: '80 ảnh pastel tone' },
+                    { name: 'Bridal Boudoir', duration: '2 giờ', price: '2.200.000₫', desc: '40 ảnh intimate' },
+                    { name: 'Wedding Full Day', duration: 'Cả ngày', price: '7.500.000₫', desc: 'Unlimited + film' },
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=900&q=85',
+                    'https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=900&q=85',
+                    'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=900&q=85',
+                    'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=900&q=85',
+                    'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=900&q=85',
+                    'https://images.unsplash.com/photo-1502635385003-ee1e6a1a742d?w=900&q=85',
+                    'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=900&q=85',
+                    'https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?w=900&q=85',
+                    'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&q=85',
+                ],
+            },
+            'ph012': {
+                id: 'ph012', name: 'Trần Quang Dũng', studio: 'Mono Vision', location: 'TP.HCM',
+                rating: 4.7, price: '2.0M', verified: true,
+                tags: ['Black & White', 'Portrait', 'Cinematic'],
+                style: 'Monochrome', experience: 13, completedJobs: 380,
+                quote: 'Đen trắng — nơi cảm xúc thuần khiết nhất.',
+                about: 'Quang Dũng tin rằng màu sắc đôi khi che giấu cảm xúc thật. Trong thế giới đen trắng của anh, mỗi ánh nhìn, mỗi nếp nhăn, mỗi bóng đổ đều kể một câu chuyện sâu sắc và trung thực.',
+                equipment: ['Leica M11 Monochrom · 60MP', 'Summicron M 50mm f/2', 'APO-Summicron 90mm f/2'],
+                services: [
+                    { name: 'BW Portrait', duration: '1.5 giờ', price: '1.800.000₫', desc: '35 ảnh monochrome' },
+                    { name: 'Cinematic Session', duration: '3 giờ', price: '2.500.000₫', desc: '60 ảnh film noir' },
+                    { name: 'Fine Art BW', duration: '4 giờ', price: '4.000.000₫', desc: 'Gallery quality prints' },
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1512316609839-ce289d3eba0a?w=900&q=85&grayscale',
+                    'https://images.unsplash.com/photo-1531804055935-76f44d7cabc6?w=900&q=85&grayscale',
+                    'https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=900&q=85&grayscale',
+                    'https://images.unsplash.com/photo-1499557354967-2b2d8910bcca?w=900&q=85&grayscale',
+                    'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=900&q=85&grayscale',
+                    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900&q=85&grayscale',
+                    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=85&grayscale',
+                    'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=900&q=85&grayscale',
+                    'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&q=85&grayscale',
+                ],
+            },
+            // Fallback
+            'default': {
+                id: 'ph001', name: 'Elena Vance', studio: 'Kyoto Studio', location: 'Hà Nội',
+                rating: 4.9, price: '2.5M', verified: true,
+                tags: ['Portrait', 'Fashion', 'Editorial'],
+                style: 'High Contrast', experience: 10, completedJobs: 320,
+                quote: 'Ánh sáng là ngôn ngữ của tôi.',
+                about: 'Elena Vance là nhiếp ảnh gia chuyên nghiệp với hơn 10 năm kinh nghiệm fashion editorial.',
+                equipment: ['Sony A7R V · 61MP', 'Leica 35mm f/1.4', 'Profoto B10'],
+                services: [
+                    { name: 'Portrait Session', duration: '1 giờ', price: '1.200.000₫', desc: '20 ảnh' },
+                    { name: 'Full Session', duration: '3 giờ', price: '2.500.000₫', desc: '50 ảnh' },
+                ],
+                images: [
+                    'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=900&q=85',
+                    'https://images.unsplash.com/photo-1531746020798-e6953c012e44?w=900&q=85',
+                    'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&q=85',
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=900&q=85',
+                    'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=900&q=85',
+                ],
+            },
+        };
+        // ─── LOAD PROFILE ──────────────────────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get photographer ID from sessionStorage (set by discovery.html info button)
+            const pid = sessionStorage.getItem('viewingPhotographer') || 'ph001';
+            const p = PHOTOGRAPHERS[pid] || PHOTOGRAPHERS['default'];
+
+            renderProfile(p);
+            initFavBtn(p);
+
+            // Scroll reveal
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+
+        function renderProfile(p) {
+            // Page title
+            document.getElementById('pageTitle').textContent = p.name + ' - PicKic';
+
+            // Hero
+            document.getElementById('heroBg').style.backgroundImage = `url('${p.images[0]}')`;
+            document.getElementById('heroName').textContent = p.name;
+            document.getElementById('heroStudio').textContent = `${p.studio} · ${p.location}`;
+            document.getElementById('heroRating').textContent = p.rating;
+            document.getElementById('heroPrice').textContent = `${p.price} VNĐ`;
+
+            // Verified badge
+            if (!p.verified) document.getElementById('heroBadge').style.display = 'none';
+
+            // Tags
+            const tagsEl = document.getElementById('heroTags');
+            tagsEl.innerHTML = p.tags.slice(0, 2).map(t =>
+                `<span class="px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-sm text-white text-[9px] font-semibold">${t}</span>`
+            ).join('');
+
+            // Photo strip selector
+            const strip = document.getElementById('photoStrip');
+            strip.innerHTML = p.images.map((img, i) => `
+        <div class="flex-shrink-0 size-14 rounded-xl overflow-hidden cursor-pointer border-2 ${i === 0 ? 'border-accent' : 'border-transparent'} transition-all"
+             onclick="selectHeroPhoto('${img}', this)"
+             style="background-image:url('${img}');background-size:cover;background-position:center;">
+        </div>
+    `).join('');
+
+            // Quote
+            document.getElementById('profileQuote').textContent = p.quote;
+
+            // Stats
+            document.getElementById('statJobs').textContent = p.completedJobs;
+            document.getElementById('statExp').textContent = p.experience;
+            document.getElementById('statRating').textContent = p.rating;
+
+            // Specialties
+            const specsEl = document.getElementById('specialties');
+            specsEl.innerHTML = p.tags.map(t =>
+                `<span class="spec-badge"><span class="material-symbols-outlined text-sm opacity-50">auto_awesome</span>${t}</span>`
+            ).join('') + `<span class="spec-badge"><span class="material-symbols-outlined text-sm opacity-50">palette</span>${p.style}</span>`;
+
+            // About
+            document.getElementById('aboutText').textContent = p.about;
+
+            // Gallery grid
+            const gallery = document.getElementById('galleryGrid');
+            gallery.innerHTML = p.images.map((img, i) => `
+        <div class="gallery-item ${i === 0 ? 'featured' : ''}" 
+             style="background-image:url('${img}');"
+             onclick="viewPhoto('${img}')">
+        </div>
+    `).join('');
+            document.getElementById('portfolioCount').textContent = p.images.length + ' ảnh';
+
+            // Equipment
+            if (p.equipment) {
+                const icons = ['camera', 'settings', 'lightbulb', 'backpack'];
+                document.getElementById('equipList').innerHTML = p.equipment.map((eq, i) => `
+            <div class="equip-item">
+                <span class="material-symbols-outlined text-accent/50 text-lg">${icons[i % icons.length]}</span>
+                <p class="text-sm font-medium">${eq}</p>
+            </div>
+        `).join('');
+            }
+
+            // Services
+            if (p.services) {
+                document.getElementById('servicesList').innerHTML = p.services.map(s => `
+            <div class="flex items-center justify-between p-4 rounded-xl border border-accent/8 hover:border-accent/16 transition-colors">
+                <div>
+                    <p class="font-semibold text-sm">${s.name}</p>
+                    <p class="text-xs opacity-50 mt-0.5">${s.duration} · ${s.desc}</p>
+                </div>
+                <div class="text-right">
+                    <p class="font-bold text-sm">${s.price}</p>
+                </div>
+            </div>
+        `).join('');
+            }
+        }
+
+        function selectHeroPhoto(imgUrl, el) {
+            document.getElementById('heroBg').style.backgroundImage = `url('${imgUrl}')`;
+            document.querySelectorAll('#photoStrip > div').forEach(d => d.classList.replace('border-accent', 'border-transparent'));
+            el.classList.replace('border-transparent', 'border-accent');
+        }
+
+        function viewPhoto(imgUrl) {
+            // Simple full-screen lightbox
+            const overlay = document.createElement('div');
+            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;';
+            overlay.innerHTML = `<img src="${imgUrl}" style="max-width:95%;max-height:95%;object-fit:contain;border-radius:8px;" />`;
+            overlay.addEventListener('click', () => overlay.remove());
+            document.body.appendChild(overlay);
+        }
+
+        // ─── FAVORITE ─────────────────────────────────────────────────────────────
+        function initFavBtn(p) {
+            const isFav = PicKicStore.isFavorite(p.id);
+            updateFavUI(isFav);
+            // Store p in window for toggleFav
+            window._currentPhotographer = p;
+        }
+
+        function updateFavUI(isFav) {
+            const icon = document.getElementById('favIcon');
+            const iconBottom = document.getElementById('favIconBottom');
+            const btn = document.getElementById('favBtn');
+
+            if (isFav) {
+                if (icon) { icon.style.fontVariationSettings = "'FILL' 1"; icon.style.color = '#ef4444'; }
+                if (iconBottom) { iconBottom.style.fontVariationSettings = "'FILL' 1"; iconBottom.style.color = '#ef4444'; }
+                if (btn) btn.classList.add('active');
+            } else {
+                if (icon) { icon.style.fontVariationSettings = "'FILL' 0"; icon.style.color = ''; }
+                if (iconBottom) { iconBottom.style.fontVariationSettings = "'FILL' 0"; iconBottom.style.color = ''; }
+                if (btn) btn.classList.remove('active');
+            }
+        }
+
+        function toggleFav() {
+            const p = window._currentPhotographer;
+            if (!p) return;
+            const added = PicKicStore.toggleFavorite({
+                id: p.id,
+                name: p.name,
+                studio: p.studio,
+                location: p.location,
+                rating: p.rating,
+                price: p.price + ' VNĐ',
+                tags: p.tags,
+                image: `url('${p.images[0]}')`,
+            });
+            updateFavUI(added);
+            showToast(added ? '❤️ Đã lưu vào Yêu Thích' : 'Đã bỏ khỏi Yêu Thích');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('pickicToast');
+            t.textContent = msg;
+            t.style.opacity = '1';
+            t.style.transform = 'translateX(-50%) translateY(-4px)';
+            clearTimeout(t._timer);
+            t._timer = setTimeout(() => {
+                t.style.opacity = '0';
+                t.style.transform = 'translateX(-50%) translateY(0)';
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>

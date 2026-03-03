@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Active Session Tracker - Pickic</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#11b4d4",
+                        "pickic-cream": "#f8f8d9",
+                        "background-light": "#f8f8d9",
+                        "background-dark": "#101f22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'debossed': 'inset 2px 2px 5px rgba(0,0,0,0.05), inset -2px -2px 5px rgba(255,255,255,0.5)',
+                        'embossed': '4px 4px 8px rgba(0,0,0,0.05), -4px -4px 8px rgba(255,255,255,0.8)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>.paper-grain {
+    background-color: #f8f8d9;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuC7Rcu_07z48tcDGXZNZR1p4A6XixVFqiv4_hphvZ0XgxY9JjHlME39GalYM4nYXtdQBc2JbSI8TYEIFJQugmgDCqg3Gel0pF39IazTUcjJQad14iJLd3vBFD7HIz3VZJucGlo789Y1UIiyq0wpGaaAnDcoj2fiG-aK_KbQjjv1J3WJM3EvP2k_yZEZoJOQfnRobEiTw7t5IagXmEnQ58Cpuk-FYdZSGRmhLFHAsB_ojPYapmgAlTmiY2Y4r8uQSQHbe9jvwZqA5JQ);
+    background-repeat: repeat
+    }
+.debossed-surface {
+    background: #f8f8d9;
+    box-shadow: inset 4px 4px 8px rgba(180, 180, 150, 0.3), inset -4px -4px 8px rgba(255, 255, 255, 0.8)
+    }
+.pressed-button {
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1)
+    }</style>
+<style>
+    
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111718] antialiased"><div id="app-shell">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden paper-grain max-w-[430px] mx-auto border-x border-gray-200/20">
+<!-- TopAppBar -->
+<nav class="flex items-center p-4 pb-2 justify-between">
+<div class="text-[#111718] flex size-12 shrink-0 items-center justify-center rounded-full bg-white/40 backdrop-blur-sm">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<div class="flex flex-col items-center">
+<h2 class="text-[#111718] text-sm font-bold leading-tight tracking-widest uppercase">Pickic</h2>
+<span class="text-[10px] text-[#618389] uppercase tracking-tighter">Booking #PK-2044</span>
+</div>
+<div class="flex w-12 items-center justify-end">
+<button class="flex size-12 cursor-pointer items-center justify-center rounded-full bg-white/40 backdrop-blur-sm text-[#111718]">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</nav>
+<!-- HeadlineText: Session Timer -->
+<section class="flex flex-col items-center justify-center py-8">
+<div class="flex items-center gap-2 mb-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="text-[10px] font-semibold text-primary uppercase tracking-[0.2em]">Live Session</span>
+</div>
+<h1 class="text-[#111718] tracking-tight text-[56px] font-light leading-none px-4 text-center">01:24:55</h1>
+<!-- MetaText -->
+<p class="text-[#618389] text-sm font-normal leading-normal pb-3 pt-4 px-4 text-center">
+                Studio A, Soho • <span class="text-[#111718] font-medium">Photographer: Elena R.</span>
+</p>
+</section>
+<!-- Main Dashboard Area (Debossed Section) -->
+<main class="px-6 flex-1 flex flex-col gap-8">
+<!-- Photo Preview -->
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-end">
+<h3 class="text-[#111718] text-xs font-bold uppercase tracking-widest">Instant Preview</h3>
+<span class="text-[10px] text-[#618389]">Updated 2m ago</span>
+</div>
+<div class="aspect-square w-full rounded-xl overflow-hidden border-4 border-white shadow-sm relative group">
+<img alt="Minimalist studio portrait preview" class="w-full h-full object-cover" data-alt="A minimalist high-fashion studio portrait preview with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXaSEk-1js4i-mu_1b3GXYYozxv47MXWTnu42TGVuA3cCNNNRmPikKwC0fXKQWjwu08PhhlRi1X_RSz3HTMeRKeTAKOw0j6TASi3sb9FqSEb-zNX-vYD-WEwio67Q26G-fQ_LVXOhzlU2jbxGT_gs--h4GAMAO4LA_mZNn3KoQwcH4YvmMjsv6G5SuTmW1v3OxwPLfydBXgk_tJxEeR0amk3dFU9Lqgfx-N2TTTytaBoY0RnMqmqsR9dJf4D3Y3ruwDyJ06xRsXFY"/>
+<div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-2 border border-black/5">
+<span class="material-symbols-outlined text-xs">sync</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-[#111718]">Syncing Assets</span>
+</div>
+</div>
+</div>
+<!-- Controls Section -->
+<div class="debossed-surface rounded-[2.5rem] p-6 flex flex-col gap-6">
+<!-- SectionHeader -->
+<div class="flex items-center justify-between">
+<h3 class="text-[#111718] text-sm font-bold tracking-tight">Session Controls</h3>
+<div class="flex items-center gap-1 bg-white/50 px-2 py-1 rounded-full border border-white/20">
+<span class="material-symbols-outlined text-sm text-primary">payments</span>
+<span class="text-xs font-bold text-[#111718]">$240.00</span>
+</div>
+</div>
+<!-- ButtonGroup -->
+<div class="flex flex-col gap-3">
+<button class="group flex items-center justify-between overflow-hidden rounded-full h-16 px-6 bg-white shadow-embossed text-[#111718] transition-all active:shadow-debossed active:scale-[0.98]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">play_arrow</span>
+<span class="text-base font-bold">Start Session</span>
+</div>
+<span class="text-[10px] uppercase font-bold text-[#618389]">09:00 AM</span>
+</button>
+<button class="group flex items-center justify-between overflow-hidden rounded-full h-16 px-6 bg-white/40 border border-white/60 text-[#111718] transition-all active:bg-red-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-gray-400">stop</span>
+<span class="text-base font-bold opacity-40">End Session</span>
+</div>
+<span class="material-symbols-outlined text-sm opacity-30">lock</span>
+</button>
+</div>
+<!-- Extra Hours Control -->
+<div class="pt-2">
+<div class="flex justify-between items-center mb-4">
+<span class="text-xs font-bold text-[#618389] uppercase tracking-widest">Extra Hours</span>
+<span class="text-xs font-bold text-primary">+0.5 HR</span>
+</div>
+<div class="relative h-12 w-full bg-white/50 rounded-full flex items-center p-1 border border-white/40 shadow-debossed">
+<div class="absolute left-1 h-10 w-1/2 bg-white rounded-full shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">unfold_more</span>
+</div>
+<div class="w-full flex justify-around text-[10px] font-bold text-[#111718]/40 uppercase">
+<span class="invisible">Spacer</span>
+<span>Add 1 Hour</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Tab Bar Placeholder -->
+<footer class="mt-8 mb-6 px-6">
+<div class="flex justify-between items-center bg-white/80 backdrop-blur-xl rounded-full px-8 py-4 border border-white shadow-lg">
+<span class="material-symbols-outlined text-primary">dashboard</span>
+<span class="material-symbols-outlined text-gray-400">photo_library</span>
+<span class="material-symbols-outlined text-gray-400">chat_bubble</span>
+<span class="material-symbols-outlined text-gray-400">settings</span>
+</div>
+</footer>
+<!-- Bottom Safe Area Spacer -->
+<div class="h-8"></div>
+</div>
+</div></body></html>

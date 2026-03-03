@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Chat - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#df8f20",
+                        "background-light": "#f8f8d9",
+                        "background-dark": "#1a1a14",
+                        "clay-base": "#f1f1d1",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+    
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#1b150e] dark:text-[#f8f8d9] min-h-screen flex flex-col items-center"><div id="app-shell">
+    <!-- Mobile Container -->
+    <div class="mobile-container relative flex h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-hidden">
+        <!-- Header -->
+        <header class="flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm p-6 pt-12 pb-4 justify-between sticky top-0 z-50">
+            <a href="all-chat.html" class="flex size-10 items-center justify-center rounded-full clay-card hover:opacity-60 transition-opacity">
+                <span class="material-symbols-outlined text-lg">arrow_back_ios_new</span>
+            </a>
+            <div class="flex flex-col items-center">
+                <h2 class="text-[#1b150e] dark:text-[#f8f8d9] text-xs font-semibold uppercase tracking-[0.3em]">Elena Vance</h2>
+                <span class="text-[10px] text-primary font-medium tracking-widest mt-1 uppercase">Kyoto Studio</span>
+            </div>
+            <a href="photo-profile.html" class="flex size-10 items-center justify-center rounded-full clay-card hover:opacity-60 transition-opacity">
+                <span class="material-symbols-outlined text-lg">person</span>
+            </a>
+        </header>
+
+        <!-- Message List -->
+        <main class="flex-1 overflow-y-auto no-scrollbar px-6 py-4 space-y-8 pb-32">
+            <!-- Timestamp -->
+            <div class="flex justify-center my-8">
+                <p class="text-[#957850] text-[10px] font-medium tracking-[0.2em] uppercase">Hôm nay, 11:42</p>
+            </div>
+
+            <!-- Receiver Message -->
+            <div class="flex items-end gap-3">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-8 shrink-0 clay-card grayscale" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBIWRKDnXjM2KaMVaMG4MZ-f2-TDUuI4YDJPVUQZ6huNmjdPINP3GKkKERH51od1peg_63OEN34H6KMOvgyiRRT79MSbEo4sSWQAXvC8gUDp-psRl8zcFrLa1cAlhqy22MyRspLimSt9mw4D4d_oaWhEU46R9edGVcWOnzdeAYYHm68BO2Zv-RyttWCDRP1M9MKxj-Bckj0WUx_58I3mrXrMtHf9WjIiuywAmSTP9dAzE-G-uyazVpV2eGbZ3BcTS52-z61gZ5rhFY");'></div>
+                <div class="flex flex-1 flex-col gap-2 items-start">
+                    <div class="text-[14px] font-light leading-relaxed max-w-[280px] rounded-2xl rounded-bl-none px-5 py-4 clay-card text-[#1b150e]">
+                        The composition for the "Silk & Stone" series requires more negative space in the fourth frame.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sender Message -->
+            <div class="flex items-end gap-3 justify-end">
+                <div class="flex flex-1 flex-col gap-2 items-end">
+                    <div class="text-[14px] font-normal leading-relaxed max-w-[280px] rounded-2xl rounded-br-none px-5 py-4 clay-accent text-white">
+                        Understood. I've adjusted the crop. Does this align with the PicKic vision?
+                    </div>
+                    <span class="text-[10px] text-[#957850] tracking-widest px-1">Đã xem</span>
+                </div>
+            </div>
+
+            <!-- Image Shared -->
+            <div class="flex items-end gap-3">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-8 shrink-0 clay-card grayscale" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBKv61edjPQvLrWJYAeKIQ72bfujXC5Ol7r5I0CkwCSpDAaypNrI-3Wn83NuDhZpkkdiEOzCY4u-nvE0TYN65R7Mk9d1u5maMXADgYomO3GsXo7Flp6gdxOK9xxe4L1SG-bRVXnvI2uxGP3DOSjlClPCZUPbFBQ0o2I07E3HSPXry8ARn-E5f_-EBcmpylFCph-qiBY9nKY5bLavvEXF6y4zZNr8NWf78W6HnXJFWYwNrDQRAjPaRNE3E7vE0eIXWu05t2BfJOrTZU");'></div>
+                <div class="flex flex-1 flex-col gap-3 items-start">
+                    <div class="text-[14px] font-light leading-relaxed max-w-[280px] rounded-2xl rounded-bl-none px-5 py-4 clay-card text-[#1b150e]">
+                        Perfect. Here is the reference for Tuesday's editorial.
+                    </div>
+                    <div class="w-full max-w-[260px] rounded-xl overflow-hidden clay-card aspect-[4/5] bg-center bg-cover grayscale" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBeKmjT7A_x2_6lLkzHPk4mhI5DfMjx2EX4DNBiLEYiKgWY8IA2HknfTLLzXY7fuVJBA0m7oEIzOBfDTUBGiA4j3CDkITCYZgLV22Xnx7-EUuRKKJtPv-8o-Fpk9ipgKppjiN8Pmf9Qk247AaaDscb-BNG9hYwBAfyxwRPUGbOgwkI6t1gCktJ7EdehkW0vkBVrDa0z_G7OuJV_ETdyZ2VuYwxk65KhQ3B1GFFGtT8eqQ1dIwbXhNFgS3YsdFsqqv2Py6iSCsl8DwA');">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Receiver Message (File) -->
+            <div class="flex items-end gap-3">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-8 shrink-0 clay-card invisible"></div>
+                <div class="flex flex-1 flex-col gap-2 items-start">
+                    <div class="flex max-w-[280px] w-full items-center gap-4 rounded-2xl px-5 py-4 clay-card">
+                        <div class="size-10 flex items-center justify-center rounded-full clay-inset">
+                            <span class="material-symbols-outlined text-primary text-xl">description</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <p class="text-[#1b150e] text-xs font-semibold tracking-tight">editorial_brief_v2.pdf</p>
+                            <p class="text-[#957850] text-[10px] uppercase tracking-wider mt-0.5">2.4 MB</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Chat Input -->
+        <footer class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-background-light via-background-light to-transparent">
+            <div class="relative flex flex-col items-center">
+                <!-- Action Icons -->
+                <div class="flex w-full justify-between items-center mb-6 px-4">
+                    <button class="flex items-center justify-center size-10 rounded-full transition-all active:scale-95 text-[#957850] hover:opacity-60">
+                        <span class="material-symbols-outlined text-[22px] font-extralight">add</span>
+                    </button>
+                    <div class="flex gap-8">
+                        <button class="flex items-center justify-center text-[#957850] hover:opacity-60">
+                            <span class="material-symbols-outlined text-[20px] font-extralight">mic</span>
+                        </button>
+                        <button class="flex items-center justify-center text-[#957850] hover:opacity-60">
+                            <span class="material-symbols-outlined text-[20px] font-extralight">photo_library</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Input Line -->
+                <div class="w-full relative px-2">
+                    <input class="w-full bg-transparent border-t-0 border-x-0 border-b border-[#d9d9bc] focus:border-primary focus:ring-0 text-sm font-light tracking-wide py-3 placeholder:text-[#957850]/50 placeholder:italic transition-all outline-none" placeholder="Nhập tin nhắn..." type="text"/>
+                    <button class="absolute right-4 top-1/2 -translate-y-1/2 text-primary hover:opacity-60">
+                        <span class="material-symbols-outlined text-xl">send</span>
+                    </button>
+                </div>
+                <!-- Home Indicator -->
+                <div class="w-32 h-1 bg-[#1b150e]/10 rounded-full mt-10"></div>
+            </div>
+        </footer>
+    </div>
+</div></body>
+</html>

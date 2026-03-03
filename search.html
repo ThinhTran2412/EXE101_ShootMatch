@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Tìm Kiếm - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f8f8d9",
+                        "accent": "#1a1a0f",
+                    },
+                    fontFamily: {
+                        "sans": ["Plus Jakarta Sans", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+    
+    </style>
+</head>
+<body class="bg-primary text-accent"><div id="app-shell">
+    <div class="film-grain"></div>
+    
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-primary/80 backdrop-blur-md px-6 py-4">
+        <div class="flex items-center gap-4">
+            <a href="index.html" class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors">
+                <span class="material-symbols-outlined text-xl">arrow_back</span>
+            </a>
+            <div class="flex-1 relative">
+                <input type="text" placeholder="Tìm photographer, concept, địa điểm..." class="w-full bg-white/50 border border-accent/10 rounded-full px-4 py-3 pl-12 text-sm focus:outline-none focus:border-accent/30 transition-colors" autofocus>
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-accent/40 text-xl">search</span>
+            </div>
+            <a href="filters.html" class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors">
+                <span class="material-symbols-outlined text-xl">tune</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="px-6 pt-6 pb-32">
+        <!-- Recent Searches -->
+        <section class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-sm font-semibold uppercase tracking-wider">Tìm kiếm gần đây</h3>
+                <button class="text-xs opacity-40 hover:opacity-80">Xóa tất cả</button>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <button class="px-4 py-2 rounded-full clay-card text-xs hover:opacity-80 transition-opacity">Portrait Hà Nội</button>
+                <button class="px-4 py-2 rounded-full clay-card text-xs hover:opacity-80 transition-opacity">Couple Session</button>
+                <button class="px-4 py-2 rounded-full clay-card text-xs hover:opacity-80 transition-opacity">Fashion Photography</button>
+                <button class="px-4 py-2 rounded-full clay-card text-xs hover:opacity-80 transition-opacity">Studio Tp.HCM</button>
+            </div>
+        </section>
+
+        <!-- Trending Searches -->
+        <section class="mb-8">
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4">Xu hướng</h3>
+            <div class="space-y-2">
+                <a href="search-results.html" class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-accent/40">trending_up</span>
+                        <span class="text-sm">Minimalist Portrait</span>
+                    </div>
+                    <span class="text-xs opacity-40">1.2K tìm kiếm</span>
+                </a>
+                <a href="search-results.html" class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-accent/40">trending_up</span>
+                        <span class="text-sm">Wedding Photography</span>
+                    </div>
+                    <span class="text-xs opacity-40">856 tìm kiếm</span>
+                </a>
+                <a href="search-results.html" class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-accent/40">trending_up</span>
+                        <span class="text-sm">Commercial Shoot</span>
+                    </div>
+                    <span class="text-xs opacity-40">642 tìm kiếm</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Suggested Categories -->
+        <section>
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4">Danh mục gợi ý</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <a href="search-results.html?category=portrait" class="aspect-[4/3] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA7stdept-0zo8JcTboPUOa46Cd26-k2WtNhKF1lG518v5OTLUElxVn1vEKcSddvr-jwgSgXqvv0wUqLCGMPheD_rKXVIeY1H_veoQv12OmEEJEDza4L6t8OmBjYt6EsT61XNH1DUaQgRHiqhW7dXSFAQXiC0E_jqYuy1mOrR6ZFanItmFtv31WKJ-N4k_EEqH2FcMvZ9yNz1jOgVhi7XBYd5REsRNofju3Xj_4H6apQI__4zpneDrdxviccA7bynYJ1ECL_gYDuiU");'>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+                        <span class="text-white font-semibold">Portrait</span>
+                    </div>
+                </a>
+                <a href="search-results.html?category=couple" class="aspect-[4/3] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBi2ED-JYlxzhl6LMOsSW0qZx-6-oQUc_FlpkAjyJ7A3WzC_Ru8jVzFiUmGcDHELqj7s_2RI0gwgc3dJOota2W6fAbb4x7gyJKPwAfnWOTNuwQbFjRcO1T-iwYUVg9oUGaWESg0a8bS8LxoBVSdqOtIuApVbwRma_XDHaTajL3mBycFFp8JPUoVXADVOiQc2X0_Y6BhsUuYVhklanNWrfWb16ZcClbF52rSSe2PglcRWabkfqH7lLEXVF7SZ7ZtGp2lElLHGtYSlM");'>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+                        <span class="text-white font-semibold">Couple</span>
+                    </div>
+                </a>
+                <a href="search-results.html?category=fashion" class="aspect-[4/3] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBsaUyPKF4GwgE5EdkmUapqDbgQ3_lg8S4Tk75vMyMtz17chW8olhz3T8XQGgo6JuvGJ5rwQXY_ARdKKrhzatboMFgQ_pHhbARXhC3S2lxU3CwL656PfThdcC062R2kckrNC9id5295FlPE0a4lYoeerkMG0-rugR5YApa11n6F1JDNiVBTFxJ_5oWiKQY9DkqOgvYQKUeZSruh5rZBrPFj1C12o9YulS_y3vPkL_SHRQir-fW9mEUb4bavlaY0b_RJh-YejEcZfW0");'>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+                        <span class="text-white font-semibold">Fashion</span>
+                    </div>
+                </a>
+                <a href="search-results.html?category=wedding" class="aspect-[4/3] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCRwHSThZH6h6spE0aPX_rFGudbOYE8isRp30dC4C37G2UNKnKO0oZfIzsU9EnB8AW5kkCDs2dXQwziaxtNRfJ4g6R44gVK-3sevnbn-DdKWKdoRJe0Jz-D2wKEyIPNpwlLExMjrS3SvrLnRkbvmnlKWZJC_MB8Qqr5jdulxr-atv6-OHZy7ujqvdmsYxs1psMHap76bCM_HCNRomyD2EAl71SNTGh3EcMKDKaUFcPUjNyzYkjhJpXbr-KBnkcUkedwTW3D4zggvi4");'>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+                        <span class="text-white font-semibold">Wedding</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3">
+        <div class="flex justify-around items-center max-w-md mx-auto px-6">
+            <a href="index.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                <span class="material-symbols-outlined text-[28px]">home</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
+            </a>
+            <a href="discovery.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                <span class="material-symbols-outlined text-[28px]">explore</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
+            </a>
+            <a href="search.html" class="flex flex-col items-center gap-1 text-accent">
+                <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">search</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
+            </a>
+            <a href="all-chat.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+                <span class="material-symbols-outlined text-[28px]">person</span>
+                <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
+            </a>
+        </div>
+        <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
+    </nav>
+</div></body>
+</html>

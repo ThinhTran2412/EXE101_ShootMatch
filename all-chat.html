@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Tin Nhắn - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#df8f20",
+                        "background-light": "#f8f8d9",
+                        "background-dark": "#1a1a14",
+                        "clay-base": "#f1f1d1",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-[#1b150e] dark:text-[#f8f8d9] min-h-screen">
+    <div id="app-shell">
+        <!-- Mobile Container -->
+        <div
+            class="mobile-container relative flex h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-hidden">
+            <!-- Header -->
+            <header
+                class="flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm p-6 pt-12 pb-4 justify-between sticky top-0 z-50">
+                <a href="index.html"
+                    class="flex size-10 items-center justify-center rounded-full clay-card hover:opacity-60 transition-opacity">
+                    <span class="material-symbols-outlined text-lg">arrow_back_ios_new</span>
+                </a>
+                <div class="flex flex-col items-center">
+                    <h2 class="text-[#1b150e] dark:text-[#f8f8d9] text-lg font-semibold uppercase tracking-[0.1em]">Tin
+                        Nhắn</h2>
+                </div>
+                <div
+                    class="flex size-10 items-center justify-center rounded-full clay-card hover:opacity-60 transition-opacity">
+                    <span class="material-symbols-outlined text-lg">search</span>
+                </div>
+            </header>
+
+            <!-- Chat List -->
+            <main class="flex-1 overflow-y-auto no-scrollbar px-6 py-4 space-y-2 pb-24">
+                <!-- Chat Item 1 -->
+                <a href="chat.html"
+                    class="flex items-center gap-4 p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-14 shrink-0 clay-card"
+                        style='background-image: url("https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80");'>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-[#1b150e] dark:text-[#f8f8d9] font-semibold text-sm">Elena Vance</h3>
+                            <span class="text-[#957850] text-[10px] font-medium">11:42</span>
+                        </div>
+                        <p class="text-[#957850] text-xs truncate">The composition for the "Silk & Stone" series
+                            requires...</p>
+                    </div>
+                    <div class="shrink-0">
+                        <span
+                            class="flex size-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">2</span>
+                    </div>
+                </a>
+
+                <!-- Chat Item 2 -->
+                <a href="chat.html"
+                    class="flex items-center gap-4 p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-14 shrink-0 clay-card"
+                        style='background-image: url("https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?w=600&q=80");'>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-[#1b150e] dark:text-[#f8f8d9] font-semibold text-sm">Minh Khải</h3>
+                            <span class="text-[#957850] text-[10px] font-medium">10:15</span>
+                        </div>
+                        <p class="text-[#957850] text-xs truncate">Chào bạn, buổi chụp hôm nay ở Studio quận 1...</p>
+                    </div>
+                </a>
+
+                <!-- Chat Item 3 -->
+                <a href="chat.html"
+                    class="flex items-center gap-4 p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-14 shrink-0 clay-card"
+                        style='background-image: url("https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80");'>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-[#1b150e] dark:text-[#f8f8d9] font-semibold text-sm">Kyoto Studio</h3>
+                            <span class="text-[#957850] text-[10px] font-medium">Hôm qua</span>
+                        </div>
+                        <p class="text-[#957850] text-xs truncate">Chúng tôi có thể sắp xếp buổi chụp vào...</p>
+                    </div>
+                </a>
+
+                <!-- Chat Item 4 -->
+                <a href="chat.html"
+                    class="flex items-center gap-4 p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-14 shrink-0 clay-card grayscale"
+                        style='background-image: url("https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?w=600&q=80");'>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-[#1b150e] dark:text-[#f8f8d9] font-semibold text-sm">Sài Gòn Lens</h3>
+                            <span class="text-[#957850] text-[10px] font-medium">2 ngày</span>
+                        </div>
+                        <p class="text-[#957850] text-xs truncate">Cảm ơn bạn đã quan tâm đến portfolio...</p>
+                    </div>
+                </a>
+            </main>
+
+            <!-- Bottom Navigation -->
+            <nav
+                class="fixed bottom-0 left-0 right-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-xl border-t border-[#1b150e]/5 pb-8 pt-3">
+                <div class="flex justify-around items-center max-w-md mx-auto px-6">
+                    <a href="index.html"
+                        class="flex flex-col items-center gap-1 text-[#957850]/40 hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-[28px]">home</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
+                    </a>
+                    <a href="discovery.html"
+                        class="flex flex-col items-center gap-1 text-[#957850]/40 hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-[28px]">explore</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
+                    </a>
+                    <a href="search.html"
+                        class="flex flex-col items-center gap-1 text-[#957850]/40 hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-[28px]">search</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
+                    </a>
+                    <a href="all-chat.html" class="flex flex-col items-center gap-1 text-primary">
+                        <span class="material-symbols-outlined text-[28px]"
+                            style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
+                    </a>
+                    <a href="profile.html"
+                        class="flex flex-col items-center gap-1 text-[#957850]/40 hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-[28px]">person</span>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
+                    </a>
+                </div>
+                <div class="w-32 h-1 bg-[#1b150e]/10 mx-auto mt-4 rounded-full"></div>
+            </nav>
+        </div>
+    </div>
+</body>
+
+</html>
