@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Camera body -->
+  <rect x="5" y="14" width="38" height="27" rx="6" fill="#1a1a0f"/>
+  <!-- Viewfinder notch -->
+  <path d="M16 14V10C16 8.9 16.9 8 18 8H26C27.1 8 28 8.9 28 10V14H16Z" fill="#1a1a0f"/>
+  <!-- Lens outer ring -->
+  <circle cx="24" cy="27.5" r="9.5" fill="none" stroke="#FFFBF0" stroke-width="1.5" opacity="0.25"/>
+  <!-- Lens middle ring -->
+  <circle cx="24" cy="27.5" r="6" fill="none" stroke="#FFFBF0" stroke-width="1.5" opacity="0.45"/>
+  <!-- Lens aperture blades -->
+  <circle cx="24" cy="27.5" r="2.8" fill="#FFFBF0"/>
+  <!-- Flash dot -->
+  <circle cx="13" cy="21" r="2.5" fill="#df8f20"/>
+  <!-- Shutter button hint -->
+  <rect x="32" y="17" width="5" height="3" rx="1.5" fill="#FFFBF0" opacity="0.3"/>
+</svg>

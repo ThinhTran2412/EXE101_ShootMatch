@@ -1,456 +1,506 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html class="light" lang="vi">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>PicKic - Kết nối Photographers với Khách hàng</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="css/pickic-design-system.css">
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/pickic-design-system.css" />
     <script src="js/pickic-store.js"></script>
     <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#f8f8d9",
-                        "accent": "#1a1a0f",
-                        "beige-tonal": "#f0f0d0",
-                        "beige-deep": "#e8e8c8"
-                    },
-                    fontFamily: {
-                        "sans": ["Plus Jakarta Sans", "sans-serif"],
-                        "serif": ["Playfair Display", "serif"]
-                    },
-                },
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#FFFBF0",
+              accent: "#1a1a0f",
+              "beige-tonal": "#f0f0d0",
+              "beige-deep": "#e8e8c8",
             },
-        }
+            fontFamily: {
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+          },
+        },
+      };
     </script>
     <style>
-        /* Hero Animation */
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
+      /* Hero Animation */
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
         }
 
-        .float-animation {
-            animation: float 3s ease-in-out infinite;
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .float-animation {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* Card Hover Effect */
+      .feature-card {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.5s;
+      }
+
+      .feature-card:hover::before {
+        left: 100%;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-4px) scale(1.02);
+      }
+
+      /* Stats Counter Animation */
+      @keyframes countUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
         }
 
-        /* Card Hover Effect */
-        .feature-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
 
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
+      .stat-number {
+        animation: countUp 0.6s ease-out;
+      }
 
-        .feature-card:hover::before {
-            left: 100%;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px) scale(1.02);
-        }
-
-        /* Stats Counter Animation */
-        @keyframes countUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .stat-number {
-            animation: countUp 0.6s ease-out;
-        }
-
-        /* Gradient Background */
-        .gradient-bg {
-            background: linear-gradient(135deg, rgba(26, 26, 15, 0.03), rgba(26, 26, 15, 0.01));
-        }
+      /* Gradient Background */
+      .gradient-bg {
+        background: linear-gradient(135deg, rgba(26, 26, 15, 0.03), rgba(26, 26, 15, 0.01));
+      }
     </style>
-</head>
+  </head>
 
-<body class="bg-primary text-accent selection:bg-accent selection:text-primary">
+  <body class="bg-primary text-accent selection:bg-accent selection:text-primary">
     <div id="app-shell">
-        <div class="film-grain"></div>
+      <div class="film-grain"></div>
 
-        <!-- Top Navigation -->
-        <header class="sticky top-0 z-40 bg-primary/80 backdrop-blur-md px-6 py-4 flex items-center justify-between">
-            <h1 class="font-serif italic text-2xl tracking-tighter">PicKic</h1>
-            <div class="flex items-center gap-4">
-                <a href="search.html"
-                    class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors">
-                    <span class="material-symbols-outlined text-xl">search</span>
-                </a>
-                <a href="notifications.html"
-                    class="relative flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors">
-                    <span class="material-symbols-outlined text-xl">notifications</span>
-                    <span id="notifDot"
-                        class="absolute top-1 right-1 size-2 bg-red-500 rounded-full notif-badge"></span>
-                </a>
-                <a href="profile.html"
-                    class="flex items-center justify-center size-10 rounded-full bg-accent text-primary">
-                    <span class="material-symbols-outlined text-xl">person</span>
-                </a>
+      <!-- Top Navigation -->
+      <header
+        class="sticky top-0 z-40 bg-primary/90 backdrop-blur-md px-6 py-5 flex items-center justify-between border-b border-accent/8"
+      >
+        <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="h-16 w-auto" />
+        <div class="flex items-center gap-4">
+          <a
+            href="search.html"
+            class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors"
+          >
+            <span class="material-symbols-outlined text-xl">search</span>
+          </a>
+          <a
+            href="notifications.html"
+            class="relative flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors"
+          >
+            <span class="material-symbols-outlined text-xl">notifications</span>
+            <span id="notifDot" class="absolute top-1 right-1 size-2 bg-red-500 rounded-full notif-badge"></span>
+          </a>
+          <a href="profile.html" class="flex items-center justify-center size-10 rounded-full bg-accent text-primary">
+            <span class="material-symbols-outlined text-xl">person</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Hero Section -->
+      <main class="px-6 pt-12 pb-24 page-transition">
+        <div class="max-w-md mx-auto">
+          <div class="mb-12">
+            <p id="welcomeGreet" class="text-[10px] uppercase tracking-[0.3em] opacity-40 mb-4 animate-fade-in">
+              Welcome
+            </p>
+            <h2 class="font-serif text-5xl leading-[1.1] mb-4 italic gradient-text animate-fade-in">
+              Tìm Photographer<br />Hoàn Hảo Cho Bạn
+            </h2>
+            <p class="text-sm leading-relaxed opacity-60 font-light mb-6">
+              Kết nối với các nhiếp ảnh gia chuyên nghiệp qua cơ chế swipe trực quan. Tìm concept, phong cách và ngân
+              sách phù hợp.
+            </p>
+
+            <!-- Quick Stats -->
+            <div class="flex gap-4 mb-8">
+              <div class="flex-1 clay-card rounded-xl p-4 text-center gradient-bg">
+                <p class="text-2xl font-bold stat-number gradient-text">500+</p>
+                <p class="text-[9px] uppercase tracking-wider opacity-60 mt-1">Photographers</p>
+              </div>
+              <div class="flex-1 clay-card rounded-xl p-4 text-center gradient-bg">
+                <p id="statBookings" class="text-2xl font-bold stat-number gradient-text">...</p>
+                <p class="text-[9px] uppercase tracking-wider opacity-60 mt-1">Bookings</p>
+              </div>
+              <div class="flex-1 clay-card rounded-xl p-4 text-center gradient-bg">
+                <p id="statFavs" class="text-2xl font-bold stat-number gradient-text">...</p>
+                <p class="text-[9px] uppercase tracking-wider opacity-60 mt-1">Yêu thích</p>
+              </div>
             </div>
-        </header>
+          </div>
 
-        <!-- Hero Section -->
-        <main class="px-6 pt-12 pb-24 page-transition">
-            <div class="max-w-md mx-auto">
-                <div class="mb-12">
-                    <p id="welcomeGreet" class="text-[10px] uppercase tracking-[0.3em] opacity-40 mb-4 animate-fade-in">
-                        Welcome</p>
-                    <h2 class="font-serif text-5xl leading-[1.1] mb-4 italic gradient-text animate-fade-in">Tìm
-                        Photographer<br />Hoàn Hảo Cho Bạn</h2>
-                    <p class="text-sm leading-relaxed opacity-60 font-light mb-6">
-                        Kết nối với các nhiếp ảnh gia chuyên nghiệp qua cơ chế swipe trực quan. Tìm concept, phong cách
-                        và ngân sách phù hợp.
-                    </p>
-
-                    <!-- Quick Stats -->
-                    <div class="flex gap-4 mb-8">
-                        <div class="flex-1 clay-card rounded-xl p-4 text-center gradient-bg">
-                            <p class="text-2xl font-bold stat-number gradient-text">500+</p>
-                            <p class="text-[9px] uppercase tracking-wider opacity-60 mt-1">Photographers</p>
-                        </div>
-                        <div class="flex-1 clay-card rounded-xl p-4 text-center gradient-bg">
-                            <p id="statBookings" class="text-2xl font-bold stat-number gradient-text">...</p>
-                            <p class="text-[9px] uppercase tracking-wider opacity-60 mt-1">Bookings</p>
-                        </div>
-                        <div class="flex-1 clay-card rounded-xl p-4 text-center gradient-bg">
-                            <p id="statFavs" class="text-2xl font-bold stat-number gradient-text">...</p>
-                            <p class="text-[9px] uppercase tracking-wider opacity-60 mt-1">Yêu thích</p>
-                        </div>
+          <!-- Quick Actions -->
+          <div class="space-y-4 mb-12">
+            <a href="discovery.html" class="block feature-card">
+              <div class="clay-card rounded-xl p-6 relative overflow-hidden">
+                <div class="flex items-center justify-between relative z-10">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <h3 class="font-semibold text-lg">Khám Phá</h3>
+                      <span class="badge">Mới</span>
                     </div>
+                    <p class="text-xs opacity-60">Quẹt để tìm photographer phù hợp</p>
+                  </div>
+                  <div
+                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center float-animation"
+                  >
+                    <span class="material-symbols-outlined text-2xl text-accent/70">swipe_right</span>
+                  </div>
                 </div>
+              </div>
+            </a>
 
-                <!-- Quick Actions -->
-                <div class="space-y-4 mb-12">
-                    <a href="discovery.html" class="block feature-card">
-                        <div class="clay-card rounded-xl p-6 relative overflow-hidden">
-                            <div class="flex items-center justify-between relative z-10">
-                                <div>
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <h3 class="font-semibold text-lg">Khám Phá</h3>
-                                        <span class="badge">Mới</span>
-                                    </div>
-                                    <p class="text-xs opacity-60">Quẹt để tìm photographer phù hợp</p>
-                                </div>
-                                <div
-                                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center float-animation">
-                                    <span class="material-symbols-outlined text-2xl text-accent/70">swipe_right</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="concept.html" class="block feature-card">
-                        <div class="clay-card rounded-xl p-6 relative overflow-hidden">
-                            <div class="flex items-center justify-between relative z-10">
-                                <div>
-                                    <h3 class="font-semibold text-lg mb-1">Chọn Concept</h3>
-                                    <p class="text-xs opacity-60">Portrait, Couple, Fashion, Wedding...</p>
-                                </div>
-                                <div
-                                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-2xl text-accent/70">palette</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="all-chat.html" class="block feature-card">
-                        <div class="clay-card rounded-xl p-6 relative overflow-hidden">
-                            <div class="flex items-center justify-between relative z-10">
-                                <div class="flex-1">
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <h3 class="font-semibold text-lg">Tin Nhắn</h3>
-                                        <span class="size-2 bg-red-500 rounded-full animate-pulse-slow"></span>
-                                    </div>
-                                    <p class="text-xs opacity-60">3 tin nhắn chưa đọc</p>
-                                </div>
-                                <div
-                                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-2xl text-accent/70">chat_bubble</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="my-bookings.html" class="block feature-card">
-                        <div class="clay-card rounded-xl p-6 relative overflow-hidden">
-                            <div class="flex items-center justify-between relative z-10">
-                                <div class="flex-1">
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <h3 class="font-semibold text-lg">Đặt Lịch Của Tôi</h3>
-                                        <span class="size-2 bg-primary rounded-full animate-pulse-slow"></span>
-                                    </div>
-                                    <p class="text-xs opacity-60">1 session đang tiến hành</p>
-                                </div>
-                                <div
-                                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-2xl text-accent/70">event</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="create-project.html" class="block feature-card">
-                        <div class="clay-card rounded-xl p-6 relative overflow-hidden">
-                            <div class="flex items-center justify-between relative z-10">
-                                <div>
-                                    <h3 class="font-semibold text-lg mb-1">Tạo Dự Án</h3>
-                                    <p class="text-xs opacity-60">Mô tả concept và yêu cầu</p>
-                                </div>
-                                <div
-                                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-2xl text-accent/70">add_circle</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+            <a href="concept.html" class="block feature-card">
+              <div class="clay-card rounded-xl p-6 relative overflow-hidden">
+                <div class="flex items-center justify-between relative z-10">
+                  <div>
+                    <h3 class="font-semibold text-lg mb-1">Chọn Concept</h3>
+                    <p class="text-xs opacity-60">Portrait, Couple, Fashion, Wedding...</p>
+                  </div>
+                  <div
+                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center"
+                  >
+                    <span class="material-symbols-outlined text-2xl text-accent/70">palette</span>
+                  </div>
                 </div>
+              </div>
+            </a>
 
-                <!-- Featured Photographers -->
-                <section class="mb-12">
-                    <div class="flex justify-between items-center mb-6">
-                        <div>
-                            <h3 class="font-serif text-2xl italic gradient-text">Nổi Bật</h3>
-                            <p class="text-xs opacity-60 mt-1">Photographers được yêu thích nhất</p>
-                        </div>
-                        <a href="discovery.html"
-                            class="text-xs uppercase tracking-widest opacity-40 hover:opacity-80 transition-opacity">Xem
-                            tất cả</a>
+            <a href="all-chat.html" class="block feature-card">
+              <div class="clay-card rounded-xl p-6 relative overflow-hidden">
+                <div class="flex items-center justify-between relative z-10">
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                      <h3 class="font-semibold text-lg">Tin Nhắn</h3>
+                      <span class="size-2 bg-red-500 rounded-full animate-pulse-slow"></span>
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div onclick="viewProfile('ph001')" class="block feature-card cursor-pointer">
-                            <div class="aspect-[3/4] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group"
-                                style='background-image: url("https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80");'>
-                                <div class="absolute top-3 right-3">
-                                    <span class="badge bg-white/90 text-accent">
-                                        <span class="material-symbols-outlined text-xs"
-                                            style="font-variation-settings: 'FILL' 1;">verified</span>
-                                        Verified
-                                    </span>
-                                </div>
-                                <div
-                                    class="h-full w-full bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4 transition-all">
-                                    <div class="flex items-center gap-1 mb-2">
-                                        <span class="material-symbols-outlined text-sm"
-                                            style="font-variation-settings: 'FILL' 1; color: #fbbf24;">star</span>
-                                        <span class="text-white text-xs font-semibold">4.9</span>
-                                    </div>
-                                    <p class="text-white font-semibold text-sm">Elena Vance</p>
-                                    <p class="text-white/80 text-xs text-nowrap overflow-hidden">Kyoto Studio • Hà Nội
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div onclick="viewProfile('ph002')" class="block feature-card cursor-pointer">
-                            <div class="aspect-[3/4] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group"
-                                style='background-image: url("https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?w=600&q=80");'>
-                                <div
-                                    class="h-full w-full bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4 transition-all">
-                                    <div class="flex items-center gap-1 mb-2">
-                                        <span class="material-symbols-outlined text-sm"
-                                            style="font-variation-settings: 'FILL' 1; color: #fbbf24;">star</span>
-                                        <span class="text-white text-xs font-semibold">4.8</span>
-                                    </div>
-                                    <p class="text-white font-semibold text-sm">Minh Khải</p>
-                                    <p class="text-white/80 text-xs text-nowrap overflow-hidden">Sài Gòn Lens • TP.HCM
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div onclick="viewProfile('ph003')" class="block feature-card cursor-pointer">
-                            <div class="aspect-[3/4] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group"
-                                style='background-image: url("https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80");'>
-                                <div class="absolute top-3 right-3">
-                                    <span class="badge bg-white/90 text-accent">
-                                        <span class="material-symbols-outlined text-xs"
-                                            style="font-variation-settings: 'FILL' 1;">verified</span>
-                                        Verified
-                                    </span>
-                                </div>
-                                <div
-                                    class="h-full w-full bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4 transition-all">
-                                    <div class="flex items-center gap-1 mb-2">
-                                        <span class="material-symbols-outlined text-sm"
-                                            style="font-variation-settings: 'FILL' 1; color: #fbbf24;">star</span>
-                                        <span class="text-white text-xs font-semibold">4.9</span>
-                                    </div>
-                                    <p class="text-white font-semibold text-sm">Lisa Nakamura</p>
-                                    <p class="text-white/80 text-xs text-nowrap overflow-hidden">Tokyo Minimal • Đà Nẵng
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div onclick="viewProfile('ph004')" class="block feature-card cursor-pointer">
-                            <div class="aspect-[3/4] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group"
-                                style='background-image: url("https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80");'>
-                                <div
-                                    class="h-full w-full bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4 transition-all">
-                                    <div class="flex items-center gap-1 mb-2">
-                                        <span class="material-symbols-outlined text-sm"
-                                            style="font-variation-settings: 'FILL' 1; color: #fbbf24;">star</span>
-                                        <span class="text-white text-xs font-semibold">4.7</span>
-                                    </div>
-                                    <p class="text-white font-semibold text-sm">Marcus Chen</p>
-                                    <p class="text-white/80 text-xs text-nowrap overflow-hidden">Studio Noir • Hà Nội
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Trending Concepts -->
-                <section class="mb-12">
-                    <div class="flex justify-between items-center mb-6">
-                        <div>
-                            <h3 class="font-serif text-xl italic gradient-text">Concept Phổ Biến</h3>
-                            <p class="text-xs opacity-60 mt-1">Được tìm kiếm nhiều nhất</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
-                        <a href="search-results.html?category=portrait" class="flex-shrink-0 feature-card">
-                            <div class="clay-card rounded-xl p-4 min-w-[120px] text-center">
-                                <span class="material-symbols-outlined text-3xl mb-2 block text-accent/70">person</span>
-                                <p class="text-xs font-semibold">Portrait</p>
-                                <p class="text-[10px] opacity-60 mt-1">1.2K tìm kiếm</p>
-                            </div>
-                        </a>
-                        <a href="search-results.html?category=couple" class="flex-shrink-0 feature-card">
-                            <div class="clay-card rounded-xl p-4 min-w-[120px] text-center">
-                                <span
-                                    class="material-symbols-outlined text-3xl mb-2 block text-accent/70">favorite</span>
-                                <p class="text-xs font-semibold">Couple</p>
-                                <p class="text-[10px] opacity-60 mt-1">856 tìm kiếm</p>
-                            </div>
-                        </a>
-                        <a href="search-results.html?category=fashion" class="flex-shrink-0 feature-card">
-                            <div class="clay-card rounded-xl p-4 min-w-[120px] text-center">
-                                <span
-                                    class="material-symbols-outlined text-3xl mb-2 block text-accent/70">checkroom</span>
-                                <p class="text-xs font-semibold">Fashion</p>
-                                <p class="text-[10px] opacity-60 mt-1">642 tìm kiếm</p>
-                            </div>
-                        </a>
-                        <a href="search-results.html?category=wedding" class="flex-shrink-0 feature-card">
-                            <div class="clay-card rounded-xl p-4 min-w-[120px] text-center">
-                                <span
-                                    class="material-symbols-outlined text-3xl mb-2 block text-accent/70">celebration</span>
-                                <p class="text-xs font-semibold">Wedding</p>
-                                <p class="text-[10px] opacity-60 mt-1">534 tìm kiếm</p>
-                            </div>
-                        </a>
-                    </div>
-                </section>
-
-                <!-- CTA Section -->
-                <div class="text-center py-8 border-t border-accent/5">
-                    <p class="text-xs opacity-40 mb-4">Chưa có tài khoản?</p>
-                    <a href="register.html" class="modern-btn-primary inline-block px-8 py-4">
-                        Đăng Ký Ngay
-                    </a>
-                    <p class="text-[10px] opacity-40 mt-4">Miễn phí đăng ký • Xác minh nhanh chóng</p>
+                    <p class="text-xs opacity-60">3 tin nhắn chưa đọc</p>
+                  </div>
+                  <div
+                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center"
+                  >
+                    <span class="material-symbols-outlined text-2xl text-accent/70">chat_bubble</span>
+                  </div>
                 </div>
+              </div>
+            </a>
+
+            <a href="my-bookings.html" class="block feature-card">
+              <div class="clay-card rounded-xl p-6 relative overflow-hidden">
+                <div class="flex items-center justify-between relative z-10">
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-2">
+                      <h3 class="font-semibold text-lg">Đặt Lịch Của Tôi</h3>
+                      <span class="size-2 bg-primary rounded-full animate-pulse-slow"></span>
+                    </div>
+                    <p class="text-xs opacity-60">1 session đang tiến hành</p>
+                  </div>
+                  <div
+                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center"
+                  >
+                    <span class="material-symbols-outlined text-2xl text-accent/70">event</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <a href="create-project.html" class="block feature-card">
+              <div class="clay-card rounded-xl p-6 relative overflow-hidden">
+                <div class="flex items-center justify-between relative z-10">
+                  <div>
+                    <h3 class="font-semibold text-lg mb-1">Tạo Dự Án</h3>
+                    <p class="text-xs opacity-60">Mô tả concept và yêu cầu</p>
+                  </div>
+                  <div
+                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center"
+                  >
+                    <span class="material-symbols-outlined text-2xl text-accent/70">add_circle</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Featured Photographers -->
+          <section class="mb-12">
+            <div class="flex justify-between items-center mb-6">
+              <div>
+                <h3 class="font-serif text-2xl italic gradient-text">Nổi Bật</h3>
+                <p class="text-xs opacity-60 mt-1">Photographers được yêu thích nhất</p>
+              </div>
+              <a
+                href="discovery.html"
+                class="text-xs uppercase tracking-widest opacity-40 hover:opacity-80 transition-opacity"
+                >Xem tất cả</a
+              >
             </div>
-        </main>
-
-        <!-- Bottom Navigation -->
-        <nav
-            class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3">
-            <div class="flex justify-around items-center max-w-md mx-auto px-6">
-                <a href="index.html" class="flex flex-col items-center gap-1 text-accent">
-                    <span class="material-symbols-outlined text-[28px]"
-                        style="font-variation-settings: 'FILL' 1;">home</span>
-                    <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
-                </a>
-                <a href="discovery.html"
-                    class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
-                    <span class="material-symbols-outlined text-[28px]">explore</span>
-                    <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
-                </a>
-                <a href="search.html"
-                    class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
-                    <span class="material-symbols-outlined text-[28px]">search</span>
-                    <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
-                </a>
-                <a href="all-chat.html"
-                    class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
-                    <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
-                    <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
-                </a>
-                <a href="profile.html"
-                    class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
-                    <span class="material-symbols-outlined text-[28px]">person</span>
-                    <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
-                </a>
+            <div class="grid grid-cols-2 gap-4">
+              <div onclick="viewProfile('ph001')" class="block feature-card cursor-pointer">
+                <div
+                  class="aspect-[3/4] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group"
+                  style="
+                    background-image: url(&quot;https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80&quot;);
+                  "
+                >
+                  <div class="absolute top-3 right-3">
+                    <span class="badge bg-white/90 text-accent">
+                      <span
+                        class="material-symbols-outlined text-xs"
+                        style="font-variation-settings: &quot;FILL&quot; 1"
+                        >verified</span
+                      >
+                      Verified
+                    </span>
+                  </div>
+                  <div
+                    class="h-full w-full bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4 transition-all"
+                  >
+                    <div class="flex items-center gap-1 mb-2">
+                      <span
+                        class="material-symbols-outlined text-sm"
+                        style="font-variation-settings: &quot;FILL&quot; 1; color: #fbbf24"
+                        >star</span
+                      >
+                      <span class="text-white text-xs font-semibold">4.9</span>
+                    </div>
+                    <p class="text-white font-semibold text-sm">Elena Vance</p>
+                    <p class="text-white/80 text-xs text-nowrap overflow-hidden">Kyoto Studio • Hà Nội</p>
+                  </div>
+                </div>
+              </div>
+              <div onclick="viewProfile('ph002')" class="block feature-card cursor-pointer">
+                <div
+                  class="aspect-[3/4] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group"
+                  style="
+                    background-image: url(&quot;https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?w=600&q=80&quot;);
+                  "
+                >
+                  <div
+                    class="h-full w-full bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4 transition-all"
+                  >
+                    <div class="flex items-center gap-1 mb-2">
+                      <span
+                        class="material-symbols-outlined text-sm"
+                        style="font-variation-settings: &quot;FILL&quot; 1; color: #fbbf24"
+                        >star</span
+                      >
+                      <span class="text-white text-xs font-semibold">4.8</span>
+                    </div>
+                    <p class="text-white font-semibold text-sm">Minh Khải</p>
+                    <p class="text-white/80 text-xs text-nowrap overflow-hidden">Sài Gòn Lens • TP.HCM</p>
+                  </div>
+                </div>
+              </div>
+              <div onclick="viewProfile('ph003')" class="block feature-card cursor-pointer">
+                <div
+                  class="aspect-[3/4] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group"
+                  style="
+                    background-image: url(&quot;https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80&quot;);
+                  "
+                >
+                  <div class="absolute top-3 right-3">
+                    <span class="badge bg-white/90 text-accent">
+                      <span
+                        class="material-symbols-outlined text-xs"
+                        style="font-variation-settings: &quot;FILL&quot; 1"
+                        >verified</span
+                      >
+                      Verified
+                    </span>
+                  </div>
+                  <div
+                    class="h-full w-full bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4 transition-all"
+                  >
+                    <div class="flex items-center gap-1 mb-2">
+                      <span
+                        class="material-symbols-outlined text-sm"
+                        style="font-variation-settings: &quot;FILL&quot; 1; color: #fbbf24"
+                        >star</span
+                      >
+                      <span class="text-white text-xs font-semibold">4.9</span>
+                    </div>
+                    <p class="text-white font-semibold text-sm">Lisa Nakamura</p>
+                    <p class="text-white/80 text-xs text-nowrap overflow-hidden">Tokyo Minimal • Đà Nẵng</p>
+                  </div>
+                </div>
+              </div>
+              <div onclick="viewProfile('ph004')" class="block feature-card cursor-pointer">
+                <div
+                  class="aspect-[3/4] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group"
+                  style="
+                    background-image: url(&quot;https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80&quot;);
+                  "
+                >
+                  <div
+                    class="h-full w-full bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4 transition-all"
+                  >
+                    <div class="flex items-center gap-1 mb-2">
+                      <span
+                        class="material-symbols-outlined text-sm"
+                        style="font-variation-settings: &quot;FILL&quot; 1; color: #fbbf24"
+                        >star</span
+                      >
+                      <span class="text-white text-xs font-semibold">4.7</span>
+                    </div>
+                    <p class="text-white font-semibold text-sm">Marcus Chen</p>
+                    <p class="text-white/80 text-xs text-nowrap overflow-hidden">Studio Noir • Hà Nội</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
-        </nav>
+          </section>
+
+          <!-- Trending Concepts -->
+          <section class="mb-12">
+            <div class="flex justify-between items-center mb-6">
+              <div>
+                <h3 class="font-serif text-xl italic gradient-text">Concept Phổ Biến</h3>
+                <p class="text-xs opacity-60 mt-1">Được tìm kiếm nhiều nhất</p>
+              </div>
+            </div>
+            <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+              <a href="search-results.html?category=portrait" class="flex-shrink-0 feature-card">
+                <div class="clay-card rounded-xl p-4 min-w-[120px] text-center">
+                  <span class="material-symbols-outlined text-3xl mb-2 block text-accent/70">person</span>
+                  <p class="text-xs font-semibold">Portrait</p>
+                  <p class="text-[10px] opacity-60 mt-1">1.2K tìm kiếm</p>
+                </div>
+              </a>
+              <a href="search-results.html?category=couple" class="flex-shrink-0 feature-card">
+                <div class="clay-card rounded-xl p-4 min-w-[120px] text-center">
+                  <span class="material-symbols-outlined text-3xl mb-2 block text-accent/70">favorite</span>
+                  <p class="text-xs font-semibold">Couple</p>
+                  <p class="text-[10px] opacity-60 mt-1">856 tìm kiếm</p>
+                </div>
+              </a>
+              <a href="search-results.html?category=fashion" class="flex-shrink-0 feature-card">
+                <div class="clay-card rounded-xl p-4 min-w-[120px] text-center">
+                  <span class="material-symbols-outlined text-3xl mb-2 block text-accent/70">checkroom</span>
+                  <p class="text-xs font-semibold">Fashion</p>
+                  <p class="text-[10px] opacity-60 mt-1">642 tìm kiếm</p>
+                </div>
+              </a>
+              <a href="search-results.html?category=wedding" class="flex-shrink-0 feature-card">
+                <div class="clay-card rounded-xl p-4 min-w-[120px] text-center">
+                  <span class="material-symbols-outlined text-3xl mb-2 block text-accent/70">celebration</span>
+                  <p class="text-xs font-semibold">Wedding</p>
+                  <p class="text-[10px] opacity-60 mt-1">534 tìm kiếm</p>
+                </div>
+              </a>
+            </div>
+          </section>
+
+          <!-- CTA Section -->
+          <div class="text-center py-8 border-t border-accent/5">
+            <p class="text-xs opacity-40 mb-4">Chưa có tài khoản?</p>
+            <a href="register.html" class="modern-btn-primary inline-block px-8 py-4"> Đăng Ký Ngay </a>
+            <p class="text-[10px] opacity-40 mt-4">Miễn phí đăng ký • Xác minh nhanh chóng</p>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation -->
+      <nav class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3">
+        <div class="flex justify-around items-center max-w-md mx-auto px-6">
+          <a href="index.html" class="flex flex-col items-center gap-1 text-accent">
+            <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: &quot;FILL&quot; 1"
+              >home</span
+            >
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
+          </a>
+          <a
+            href="discovery.html"
+            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
+          >
+            <span class="material-symbols-outlined text-[28px]">explore</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
+          </a>
+          <a
+            href="search.html"
+            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
+          >
+            <span class="material-symbols-outlined text-[28px]">search</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
+          </a>
+          <a
+            href="all-chat.html"
+            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
+          >
+            <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
+          </a>
+          <a
+            href="profile.html"
+            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
+          >
+            <span class="material-symbols-outlined text-[28px]">person</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
+          </a>
+        </div>
+        <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
+      </nav>
     </div>
     <script>
-        function viewProfile(id) {
-            sessionStorage.setItem('viewingPhotographer', id);
-            window.location.href = 'photo-profile.html';
+      function viewProfile(id) {
+        sessionStorage.setItem("viewingPhotographer", id);
+        window.location.href = "photo-profile.html";
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Notification badge
+        PicKicStore.refreshNotifBadge();
+
+        // Welcome greeting với tên user
+        const user = PicKicStore.getUser();
+        if (user) {
+          const firstName = user.name.split(" ").pop(); // Tên cuối (tên gọi)
+          document.getElementById("welcomeGreet").textContent = "Chào, " + firstName + " 👋";
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            // Notification badge
-            PicKicStore.refreshNotifBadge();
-
-            // Welcome greeting với tên user
-            const user = PicKicStore.getUser();
-            if (user) {
-                const firstName = user.name.split(' ').pop(); // Tên cuối (tên gọi)
-                document.getElementById('welcomeGreet').textContent = 'Chào, ' + firstName + ' 👋';
-            }
-
-            // Stats động từ localStorage
-            const bookings = PicKicStore.getBookings();
-            const favs = PicKicStore.getFavorites();
-            const bEl = document.getElementById('statBookings');
-            const fEl = document.getElementById('statFavs');
-            if (bEl) bEl.textContent = bookings.length;
-            if (fEl) fEl.textContent = favs.length;
-        });
+        // Stats động từ localStorage
+        const bookings = PicKicStore.getBookings();
+        const favs = PicKicStore.getFavorites();
+        const bEl = document.getElementById("statBookings");
+        const fEl = document.getElementById("statFavs");
+        if (bEl) bEl.textContent = bookings.length;
+        if (fEl) fEl.textContent = favs.length;
+      });
     </script>
-</body>
-
+  </body>
 </html>

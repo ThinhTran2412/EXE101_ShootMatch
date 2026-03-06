@@ -1,91 +1,120 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html class="light" lang="vi">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Đặt Lịch Thành Công - PicKic</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/pickic-design-system.css" />
     <script id="tailwind-config">
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#f8f8d9",
-                        "accent": "#1a1a0f",
-                    },
-                    fontFamily: {
-                        "sans": ["Plus Jakarta Sans", "sans-serif"],
-                        "serif": ["Playfair Display", "serif"]
-                    },
-                },
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#FFFBF0",
+              accent: "#1a1a0f",
             },
-        }
+            fontFamily: {
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+          },
+        },
+      };
     </script>
     <style>
-    
-        @keyframes checkmark {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+      @keyframes checkmark {
+        0% {
+          transform: scale(0);
         }
-        .checkmark {
-            animation: checkmark 0.6s ease-out;
+        50% {
+          transform: scale(1.2);
         }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .checkmark {
+        animation: checkmark 0.6s ease-out;
+      }
     </style>
-</head>
-<body class="bg-primary text-accent flex items-center justify-center min-h-screen"><div id="app-shell">
-    <div class="film-grain"></div>
-    <div class="max-w-md mx-auto px-6 text-center">
+  </head>
+  <body class="bg-primary text-accent flex items-center justify-center min-h-screen">
+    <div id="app-shell">
+      <div class="film-grain"></div>
+      <div class="max-w-md mx-auto px-6 text-center">
+        <!-- Brand Logo -->
+        <div class="flex justify-center pt-10 mb-10">
+          <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="h-16 w-auto" />
+        </div>
+
         <!-- Success Icon -->
         <div class="mb-8 flex justify-center">
-            <div class="size-24 rounded-full clay-card flex items-center justify-center checkmark">
-                <span class="material-symbols-outlined text-5xl text-accent">check_circle</span>
-            </div>
+          <div class="size-24 rounded-full clay-card flex items-center justify-center checkmark">
+            <span class="material-symbols-outlined text-5xl text-accent">check_circle</span>
+          </div>
         </div>
 
         <!-- Success Message -->
         <h1 class="font-serif text-4xl italic mb-4">Đặt Lịch Thành Công!</h1>
         <p class="text-sm opacity-60 mb-8 leading-relaxed">
-            Bạn đã đặt lịch chụp ảnh thành công với Elena Vance. Chúng tôi đã gửi thông tin chi tiết đến email của bạn.
+          Bạn đã đặt lịch chụp ảnh thành công với Elena Vance. Chúng tôi đã gửi thông tin chi tiết đến email của bạn.
         </p>
 
         <!-- Booking Details -->
         <div class="clay-card rounded-xl p-6 mb-8 text-left">
-            <div class="flex items-center gap-4 mb-6">
-                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-16" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBIWRKDnXjM2KaMVaMG4MZ-f2-TDUuI4YDJPVUQZ6huNmjdPINP3GKkKERH51od1peg_63OEN34H6KMOvgyiRRT79MSbEo4sSWQAXvC8gUDp-psRl8zcFrLa1cAlhqy22MyRspLimSt9mw4D4d_oaWhEU46R9edGVcWOnzdeAYYHm68BO2Zv-RyttWCDRP1M9MKxj-Bckj0WUx_58I3mrXrMtHf9WjIiuywAmSTP9dAzE-G-uyazVpV2eGbZ3BcTS52-z61gZ5rhFY");'></div>
-                <div>
-                    <h3 class="font-semibold text-lg">Elena Vance</h3>
-                    <p class="text-xs opacity-60">Kyoto Studio</p>
-                </div>
+          <div class="flex items-center gap-4 mb-6">
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-16"
+              style="
+                background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBIWRKDnXjM2KaMVaMG4MZ-f2-TDUuI4YDJPVUQZ6huNmjdPINP3GKkKERH51od1peg_63OEN34H6KMOvgyiRRT79MSbEo4sSWQAXvC8gUDp-psRl8zcFrLa1cAlhqy22MyRspLimSt9mw4D4d_oaWhEU46R9edGVcWOnzdeAYYHm68BO2Zv-RyttWCDRP1M9MKxj-Bckj0WUx_58I3mrXrMtHf9WjIiuywAmSTP9dAzE-G-uyazVpV2eGbZ3BcTS52-z61gZ5rhFY&quot;);
+              "
+            ></div>
+            <div>
+              <h3 class="font-semibold text-lg">Elena Vance</h3>
+              <p class="text-xs opacity-60">Kyoto Studio</p>
             </div>
-            <div class="space-y-3 border-t border-accent/5 pt-4">
-                <div class="flex justify-between">
-                    <span class="text-xs opacity-60">Ngày</span>
-                    <span class="text-sm font-medium">25/01/2026</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-xs opacity-60">Thời gian</span>
-                    <span class="text-sm font-medium">14:00 - 16:00</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-xs opacity-60">Địa điểm</span>
-                    <span class="text-sm font-medium">12 Nguyễn Du, Hà Nội</span>
-                </div>
+          </div>
+          <div class="space-y-3 border-t border-accent/5 pt-4">
+            <div class="flex justify-between">
+              <span class="text-xs opacity-60">Ngày</span>
+              <span class="text-sm font-medium">25/01/2026</span>
             </div>
+            <div class="flex justify-between">
+              <span class="text-xs opacity-60">Thời gian</span>
+              <span class="text-sm font-medium">14:00 - 16:00</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-xs opacity-60">Địa điểm</span>
+              <span class="text-sm font-medium">12 Nguyễn Du, Hà Nội</span>
+            </div>
+          </div>
         </div>
 
         <!-- Action Buttons -->
         <div class="space-y-3">
-            <a href="chat.html" class="block textured-btn py-4 rounded-sm text-xs font-bold tracking-[0.3em] uppercase text-center">
-                Nhắn Tin Photographer
-            </a>
-            <a href="index.html" class="block text-xs uppercase tracking-widest opacity-40 hover:opacity-80 transition-opacity py-4">
-                Về Trang Chủ
-            </a>
+          <a
+            href="chat.html"
+            class="block textured-btn py-4 rounded-sm text-xs font-bold tracking-[0.3em] uppercase text-center"
+          >
+            Nhắn Tin Photographer
+          </a>
+          <a
+            href="index.html"
+            class="block text-xs uppercase tracking-widest opacity-40 hover:opacity-80 transition-opacity py-4"
+          >
+            Về Trang Chủ
+          </a>
         </div>
+      </div>
     </div>
-</div></body>
+  </body>
 </html>

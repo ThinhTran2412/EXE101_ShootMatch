@@ -1,148 +1,185 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html class="light" lang="vi">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Về PicKic - PicKic</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/pickic-design-system.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/pickic-design-system.css" />
     <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#f8f8d9",
-                        "accent": "#1a1a0f",
-                    },
-                    fontFamily: {
-                        "sans": ["Plus Jakarta Sans", "sans-serif"],
-                        "serif": ["Playfair Display", "serif"]
-                    },
-                },
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#FFFBF0",
+              accent: "#1a1a0f",
             },
-        }
+            fontFamily: {
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+              serif: ["Playfair Display", "serif"],
+            },
+          },
+        },
+      };
     </script>
-    <style>
-    
-    </style>
-</head>
-<body class="bg-primary text-accent"><div id="app-shell">
-    <div class="film-grain"></div>
-    
-    <!-- Header -->
-    <header class="sticky top-0 z-40 bg-primary/80 backdrop-blur-md px-6 py-4 flex items-center justify-between">
-        <a href="settings.html" class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors">
-            <span class="material-symbols-outlined text-xl">arrow_back</span>
+    <style></style>
+  </head>
+  <body class="bg-primary text-accent">
+    <div id="app-shell">
+      <div class="film-grain"></div>
+
+      <!-- Header -->
+      <header class="sticky top-0 z-40 bg-primary/80 backdrop-blur-md px-6 py-4 flex items-center justify-between">
+        <a
+          href="settings.html"
+          class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors"
+        >
+          <span class="material-symbols-outlined text-xl">arrow_back</span>
         </a>
         <h2 class="text-lg font-semibold">Về PicKic</h2>
         <div class="size-10"></div>
-    </header>
+      </header>
 
-    <main class="px-6 pt-6 pb-32">
+      <main class="px-6 pt-6 pb-32">
         <!-- Hero Section -->
         <section class="mb-12 text-center">
-            <div class="size-24 rounded-full clay-card mx-auto mb-6 flex items-center justify-center">
-                <span class="font-serif italic text-3xl">P.</span>
-            </div>
-            <h1 class="font-serif text-4xl italic mb-4 gradient-text">PicKic</h1>
-            <p class="text-sm opacity-60">Phiên bản 1.0.0</p>
+          <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="h-24 w-auto mx-auto mb-4" />
+          <p class="text-sm opacity-60">Phiên bản 1.0.0</p>
         </section>
 
         <!-- About Content -->
         <section class="mb-8 space-y-6">
-            <div>
-                <h3 class="text-sm font-semibold uppercase tracking-wider mb-3 opacity-60">Về Chúng Tôi</h3>
-                <p class="text-sm leading-relaxed opacity-80">
-                    PicKic là nền tảng kết nối photographers và studio với khách hàng thông qua cơ chế swipe trực quan. Chúng tôi tạo ra một cộng đồng minh bạch, an toàn và đáng tin cậy cho việc tìm kiếm và đặt lịch chụp ảnh.
-                </p>
-            </div>
+          <div>
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-3 opacity-60">Về Chúng Tôi</h3>
+            <p class="text-sm leading-relaxed opacity-80">
+              PicKic là nền tảng kết nối photographers và studio với khách hàng thông qua cơ chế swipe trực quan. Chúng
+              tôi tạo ra một cộng đồng minh bạch, an toàn và đáng tin cậy cho việc tìm kiếm và đặt lịch chụp ảnh.
+            </p>
+          </div>
 
-            <div>
-                <h3 class="text-sm font-semibold uppercase tracking-wider mb-3 opacity-60">Sứ Mệnh</h3>
-                <p class="text-sm leading-relaxed opacity-80">
-                    Làm cho việc tìm kiếm photographer phù hợp trở nên dễ dàng, nhanh chóng và thú vị. Chúng tôi tin rằng mỗi khoảnh khắc đều xứng đáng được ghi lại bởi người phù hợp nhất.
-                </p>
-            </div>
+          <div>
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-3 opacity-60">Sứ Mệnh</h3>
+            <p class="text-sm leading-relaxed opacity-80">
+              Làm cho việc tìm kiếm photographer phù hợp trở nên dễ dàng, nhanh chóng và thú vị. Chúng tôi tin rằng mỗi
+              khoảnh khắc đều xứng đáng được ghi lại bởi người phù hợp nhất.
+            </p>
+          </div>
 
-            <div>
-                <h3 class="text-sm font-semibold uppercase tracking-wider mb-3 opacity-60">Đội Ngũ</h3>
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="text-center">
-                        <div class="size-16 rounded-full clay-card mx-auto mb-2"></div>
-                        <p class="text-xs font-semibold">CEO</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="size-16 rounded-full clay-card mx-auto mb-2"></div>
-                        <p class="text-xs font-semibold">CTO</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="size-16 rounded-full clay-card mx-auto mb-2"></div>
-                        <p class="text-xs font-semibold">Design</p>
-                    </div>
-                </div>
+          <div>
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-3 opacity-60">Đội Ngũ</h3>
+            <div class="grid grid-cols-3 gap-4">
+              <div class="text-center">
+                <div class="size-16 rounded-full clay-card mx-auto mb-2"></div>
+                <p class="text-xs font-semibold">CEO</p>
+              </div>
+              <div class="text-center">
+                <div class="size-16 rounded-full clay-card mx-auto mb-2"></div>
+                <p class="text-xs font-semibold">CTO</p>
+              </div>
+              <div class="text-center">
+                <div class="size-16 rounded-full clay-card mx-auto mb-2"></div>
+                <p class="text-xs font-semibold">Design</p>
+              </div>
             </div>
+          </div>
         </section>
 
         <!-- Contact -->
         <section class="mb-8">
-            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4 opacity-60">Liên Hệ</h3>
-            <div class="space-y-3">
-                <a href="mailto:hello@pickic.vn" class="flex items-center gap-4 p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
-                    <span class="material-symbols-outlined text-accent/60">email</span>
-                    <span class="flex-1">hello@pickic.vn</span>
-                </a>
-                <a href="tel:+84987654321" class="flex items-center gap-4 p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
-                    <span class="material-symbols-outlined text-accent/60">phone</span>
-                    <span class="flex-1">0987 654 321</span>
-                </a>
-            </div>
+          <h3 class="text-sm font-semibold uppercase tracking-wider mb-4 opacity-60">Liên Hệ</h3>
+          <div class="space-y-3">
+            <a
+              href="mailto:hello@pickic.vn"
+              class="flex items-center gap-4 p-4 rounded-xl clay-card hover:opacity-80 transition-opacity"
+            >
+              <span class="material-symbols-outlined text-accent/60">email</span>
+              <span class="flex-1">hello@pickic.vn</span>
+            </a>
+            <a
+              href="tel:+84987654321"
+              class="flex items-center gap-4 p-4 rounded-xl clay-card hover:opacity-80 transition-opacity"
+            >
+              <span class="material-symbols-outlined text-accent/60">phone</span>
+              <span class="flex-1">0987 654 321</span>
+            </a>
+          </div>
         </section>
 
         <!-- Social Links -->
         <section>
-            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4 opacity-60">Mạng Xã Hội</h3>
-            <div class="flex gap-4">
-                <a href="#" class="size-12 rounded-full clay-card flex items-center justify-center hover:opacity-80 transition-opacity">
-                    <span class="material-symbols-outlined">facebook</span>
-                </a>
-                <a href="#" class="size-12 rounded-full clay-card flex items-center justify-center hover:opacity-80 transition-opacity">
-                    <span class="material-symbols-outlined">instagram</span>
-                </a>
-                <a href="#" class="size-12 rounded-full clay-card flex items-center justify-center hover:opacity-80 transition-opacity">
-                    <span class="material-symbols-outlined">language</span>
-                </a>
-            </div>
+          <h3 class="text-sm font-semibold uppercase tracking-wider mb-4 opacity-60">Mạng Xã Hội</h3>
+          <div class="flex gap-4">
+            <a
+              href="#"
+              class="size-12 rounded-full clay-card flex items-center justify-center hover:opacity-80 transition-opacity"
+            >
+              <span class="material-symbols-outlined">facebook</span>
+            </a>
+            <a
+              href="#"
+              class="size-12 rounded-full clay-card flex items-center justify-center hover:opacity-80 transition-opacity"
+            >
+              <span class="material-symbols-outlined">instagram</span>
+            </a>
+            <a
+              href="#"
+              class="size-12 rounded-full clay-card flex items-center justify-center hover:opacity-80 transition-opacity"
+            >
+              <span class="material-symbols-outlined">language</span>
+            </a>
+          </div>
         </section>
-    </main>
+      </main>
 
-    <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3">
+      <!-- Bottom Navigation -->
+      <nav class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3">
         <div class="flex justify-around items-center max-w-md mx-auto px-6">
-            <a href="index.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
-                <span class="material-symbols-outlined text-[28px]">home</span>
-                <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
-            </a>
-            <a href="discovery.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
-                <span class="material-symbols-outlined text-[28px]">explore</span>
-                <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
-            </a>
-            <a href="search.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
-                <span class="material-symbols-outlined text-[28px]">search</span>
-                <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
-            </a>
-            <a href="all-chat.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
-                <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
-                <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
-            </a>
-            <a href="profile.html" class="flex flex-col items-center gap-1 text-accent">
-                <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">person</span>
-                <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
-            </a>
+          <a
+            href="index.html"
+            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
+          >
+            <span class="material-symbols-outlined text-[28px]">home</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
+          </a>
+          <a
+            href="discovery.html"
+            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
+          >
+            <span class="material-symbols-outlined text-[28px]">explore</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
+          </a>
+          <a
+            href="search.html"
+            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
+          >
+            <span class="material-symbols-outlined text-[28px]">search</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
+          </a>
+          <a
+            href="all-chat.html"
+            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
+          >
+            <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
+          </a>
+          <a href="profile.html" class="flex flex-col items-center gap-1 text-accent">
+            <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: &quot;FILL&quot; 1"
+              >person</span
+            >
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
+          </a>
         </div>
         <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
-    </nav>
-</div></body>
+      </nav>
+    </div>
+  </body>
 </html>
