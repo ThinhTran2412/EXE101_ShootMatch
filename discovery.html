@@ -324,7 +324,7 @@
 </head>
 
 <body class="bg-background-light text-accent font-sans antialiased">
-    <div id="app-shell">
+    <div id="app-shell" style="min-height: 100dvh;">
         <div class="film-grain"></div>
         <!-- Bọc toàn bộ ứng dụng bằng luồng FlexBox 100vh tự nhiên, không tràn -->
         <div class="relative flex h-[100dvh] w-full flex-col overflow-hidden bg-background-light">
@@ -376,34 +376,11 @@
                 </div>
             </div>
 
-            <!-- Phần 4: Vùng điều khiển (Giữ nguyên kích thước - flex-shrink-0) -->
-            <!-- Luôn nổi lên trên khoảng cách vừa đủ, không bị chồng đè -->
-            <div class="flex-shrink-0 w-full max-w-sm mx-auto flex flex-col gap-4 px-6 pt-2 pb-4">
-                <!-- Action Buttons Area -->
-                <div class="flex justify-between items-center w-full px-2">
-                    <button id="nopeBtn" class="action-btn nope hover:scale-105 transition-transform"
-                        onclick="swipeNope()" title="Bỏ qua">
-                        <span class="material-symbols-outlined text-3xl text-accent/50"
-                            style="font-variation-settings: 'FILL' 0;">close</span>
-                    </button>
-
-                    <button id="infoBtn"
-                        class="action-btn info w-12 h-12 rounded-full bg-accent/5 flex items-center justify-center hover:bg-accent/10 transition-colors"
-                        onclick="goToProfile()" title="Xem hồ sơ">
-                        <span class="material-symbols-outlined text-[22px] text-accent/70">person</span>
-                    </button>
-
-                    <button id="likeBtn" class="action-btn like hover:scale-105 transition-transform"
-                        onclick="swipeLike()" title="Yêu thích ❤️">
-                        <span class="material-symbols-outlined text-3xl text-red-500/90"
-                            style="font-variation-settings: 'FILL' 1;">favorite</span>
-                    </button>
-                </div>
-            </div>
+            <!-- Viewport optimized - buttons removed to maximize image height -->
 
             <!-- Phần 5: Thanh Điều hướng (Giữ nguyên kích thước - flex-shrink-0 thay vì fixed) -->
             <nav
-                class="flex-shrink-0 w-full bg-background-light/95 backdrop-blur-xl border-t border-accent/5 pb-5 pt-2 relative z-50">
+                class="flex-shrink-0 w-full bg-background-light/95 backdrop-blur-xl border-t border-accent/5 pb-3 pt-1 relative z-50">
                 <div class="flex justify-around items-center max-w-md mx-auto px-6">
                     <a href="index.html"
                         class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
@@ -1028,13 +1005,16 @@
 
             if (currentX > 40) {
                 likeEl.classList.add('active'); nopeEl.classList.remove('active');
-                likeBtn.classList.add('active'); nopeBtn.classList.remove('active');
+                if (likeBtn) likeBtn.classList.add('active');
+                if (nopeBtn) nopeBtn.classList.remove('active');
             } else if (currentX < -40) {
                 nopeEl.classList.add('active'); likeEl.classList.remove('active');
-                nopeBtn.classList.add('active'); likeBtn.classList.remove('active');
+                if (nopeBtn) nopeBtn.classList.add('active');
+                if (likeBtn) likeBtn.classList.remove('active');
             } else {
                 likeEl.classList.remove('active'); nopeEl.classList.remove('active');
-                likeBtn.classList.remove('active'); nopeBtn.classList.remove('active');
+                if (likeBtn) likeBtn.classList.remove('active');
+                if (nopeBtn) nopeBtn.classList.remove('active');
             }
             e.preventDefault();
         }
@@ -1054,8 +1034,10 @@
                 activeCard.style.transform = 'translate(0,0) rotate(0deg)';
                 activeCard.querySelector('.swipe-overlay.like').classList.remove('active');
                 activeCard.querySelector('.swipe-overlay.nope').classList.remove('active');
-                document.getElementById('likeBtn').classList.remove('active');
-                document.getElementById('nopeBtn').classList.remove('active');
+                const likeBtn = document.getElementById('likeBtn');
+                const nopeBtn = document.getElementById('nopeBtn');
+                if (likeBtn) likeBtn.classList.remove('active');
+                if (nopeBtn) nopeBtn.classList.remove('active');
             }
             currentX = 0; currentY = 0;
         }
@@ -1082,10 +1064,12 @@
                 image: `url('${p.images[0]}')`,
             });
 
-            // Pulse like button
+            // Pulse like button if exists
             const likeBtn = document.getElementById('likeBtn');
-            likeBtn.classList.add('like-burst');
-            setTimeout(() => likeBtn.classList.remove('like-burst'), 500);
+            if (likeBtn) {
+                likeBtn.classList.add('like-burst');
+                setTimeout(() => likeBtn.classList.remove('like-burst'), 500);
+            }
 
             showToast(added ? `❤️ Đã lưu ${p.name} vào Yêu Thích!` : `💔 Đã bỏ ${p.name} khỏi Yêu Thích`);
 
