@@ -985,7 +985,7 @@
             const pt = e.touches ? e.touches[0] : e;
             startX = pt.clientX; startY = pt.clientY;
             currentX = 0; currentY = 0;
-            e.preventDefault();
+            // Removed e.preventDefault() to allow browser-synthesized clicks on mobile
         }
 
         function onDragMove(e) {
@@ -993,8 +993,16 @@
             const pt = e.touches ? e.touches[0] : e;
             currentX = pt.clientX - startX;
             currentY = pt.clientY - startY;
-            const rot = currentX * 0.08;
 
+            // Only prevent default if we've moved enough to be considered a drag
+            // This allows taps to pass through on mobile
+            if (Math.abs(currentX) > 5 || Math.abs(currentY) > 5) {
+                if (e.cancelable) e.preventDefault();
+            } else {
+                return; // Don't update transform for micro-movements
+            }
+
+            const rot = currentX * 0.08;
             activeCard.style.transition = 'none';
             activeCard.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rot}deg)`;
 
@@ -1016,7 +1024,6 @@
                 if (likeBtn) likeBtn.classList.remove('active');
                 if (nopeBtn) nopeBtn.classList.remove('active');
             }
-            e.preventDefault();
         }
 
         function onDragEnd() {
