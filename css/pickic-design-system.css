@@ -1,5 +1,12 @@
 /* PicKic Design System - Shared Styles */
 
+@font-face {
+  font-family: 'Fz Anton Round';
+  src: url('../fronts/Anton-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* Film Grain Overlay */
 .film-grain {
   position: fixed;
@@ -165,7 +172,7 @@
 /* Anton Display Font */
 .font-anton,
 .hero-title {
-  font-family: 'Anton', sans-serif;
+  font-family: 'Fz Anton Round', 'Anton', sans-serif;
   font-weight: 400;
   letter-spacing: 0.02em;
 }
@@ -280,7 +287,7 @@
 
 /* Typography Helpers */
 .editorial-text {
-  font-family: 'Anton', sans-serif;
+  font-family: 'Fz Anton Round', 'Anton', sans-serif;
   font-weight: 400;
   letter-spacing: 0.02em;
 }
