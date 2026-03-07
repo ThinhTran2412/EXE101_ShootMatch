@@ -359,7 +359,7 @@ h1 {
   color: #cf4028;
 }
 
-h2.font-serif {
+h2.font-display {
   color: #cf4028;
 }
 
@@ -369,7 +369,7 @@ h3.uppercase {
 
 /* Override gradient-text for headings to use red */
 h1.gradient-text,
-h2.font-serif.gradient-text {
+h2.font-display.gradient-text {
   background: linear-gradient(135deg, #cf4028, #a03320);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

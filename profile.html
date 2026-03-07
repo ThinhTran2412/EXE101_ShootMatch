@@ -1,304 +1,267 @@
 ﻿<!doctype html>
 <html class="light" lang="vi">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>Hồ Sơ Của Tôi - PicKic</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/pickic-design-system.css" />
-    <script src="js/pickic-store.js"></script>
-    <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#FFFBF0",
-              accent: "#1a1a0f",
-            },
-            fontFamily: {
-              sans: ["Plus Jakarta Sans", "sans-serif"],
-              serif: ["Playfair Display", "serif"],
-            },
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Hồ Sơ Của Tôi - PicKic</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/pickic-design-system.css" />
+  <script src="js/pickic-store.js"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#FFFBF0",
+            accent: "#1a1a0f",
+          },
+          fontFamily: {
+            sans: ["Plus Jakarta Sans", "sans-serif"],
+            display: ["'Fz Anton Round'", "Anton", "sans-serif"],
           },
         },
-      };
-    </script>
-    <style></style>
-  </head>
+      },
+    };
+  </script>
+  <style></style>
+</head>
 
-  <body class="bg-primary text-accent">
-    <div id="app-shell">
-      <div class="film-grain"></div>
-      <div class="mobile-container">
-        <!-- Header -->
-        <header
-          class="sticky top-0 z-40 bg-primary/90 backdrop-blur-md px-6 py-5 flex items-center justify-between border-b border-accent/8"
-        >
-          <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="h-16 w-auto" />
-          <div class="flex items-center gap-4">
-            <a
-              href="notifications.html"
-              class="relative flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors"
-            >
-              <span class="material-symbols-outlined text-xl">notifications</span>
-              <span id="notifDot" class="absolute top-1 right-1 size-2 bg-red-500 rounded-full notif-badge"></span>
-            </a>
-            <a
-              href="settings.html"
-              class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors"
-            >
-              <span class="material-symbols-outlined text-xl">settings</span>
-            </a>
-          </div>
-        </header>
+<body class="bg-primary text-accent">
+  <div id="app-shell">
+    <div class="film-grain"></div>
+    <div class="mobile-container">
+      <!-- Header -->
+      <header
+        class="sticky top-0 z-40 bg-primary/90 backdrop-blur-md px-6 py-5 flex items-center justify-between border-b border-accent/8">
+        <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="h-16 w-auto" />
+        <div class="flex items-center gap-4">
+          <a href="notifications.html"
+            class="relative flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors">
+            <span class="material-symbols-outlined text-xl">notifications</span>
+            <span id="notifDot" class="absolute top-1 right-1 size-2 bg-red-500 rounded-full notif-badge"></span>
+          </a>
+          <a href="settings.html"
+            class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors">
+            <span class="material-symbols-outlined text-xl">settings</span>
+          </a>
+        </div>
+      </header>
 
-        <main class="px-6 pt-6 pb-32">
-          <!-- Profile Header -->
-          <section class="mb-8">
-            <div class="flex items-center gap-6 mb-6">
-              <div class="relative">
-                <div
-                  id="profileAvatar"
-                  class="size-24 bg-center bg-cover rounded-full clay-card border-4 border-primary"
-                  style="
+      <main class="px-6 pt-6 pb-32">
+        <!-- Profile Header -->
+        <section class="mb-8">
+          <div class="flex items-center gap-6 mb-6">
+            <div class="relative">
+              <div id="profileAvatar" class="size-24 bg-center bg-cover rounded-full clay-card border-4 border-primary"
+                style="
                     background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBIWRKDnXjM2KaMVaMG4MZ-f2-TDUuI4YDJPVUQZ6huNmjdPINP3GKkKERH51od1peg_63OEN34H6KMOvgyiRRT79MSbEo4sSWQAXvC8gUDp-psRl8zcFrLa1cAlhqy22MyRspLimSt9mw4D4d_oaWhEU46R9edGVcWOnzdeAYYHm68BO2Zv-RyttWCDRP1M9MKxj-Bckj0WUx_58I3mrXrMtHf9WjIiuywAmSTP9dAzE-G-uyazVpV2eGbZ3BcTS52-z61gZ5rhFY&quot;);
-                  "
-                ></div>
-                <button
-                  class="absolute bottom-0 right-0 size-8 rounded-full clay-card flex items-center justify-center border-2 border-primary"
-                >
-                  <span class="material-symbols-outlined text-sm">camera_alt</span>
-                </button>
-              </div>
-              <div class="flex-1">
-                <h2 id="profileName" class="text-2xl font-semibold mb-1">Nguyễn Văn A</h2>
-                <p id="profileRole" class="text-sm opacity-60 mb-2">Khách hàng</p>
-                <div class="flex items-center gap-4 text-xs">
-                  <div>
-                    <span id="profileBookingCount" class="font-semibold">...</span>
-                    <span class="opacity-60"> Bookings</span>
-                  </div>
-                  <div>
-                    <span id="profileFavCount" class="font-semibold">...</span>
-                    <span class="opacity-60"> Yêu thích</span>
-                  </div>
+                  "></div>
+              <button
+                class="absolute bottom-0 right-0 size-8 rounded-full clay-card flex items-center justify-center border-2 border-primary">
+                <span class="material-symbols-outlined text-sm">camera_alt</span>
+              </button>
+            </div>
+            <div class="flex-1">
+              <h2 id="profileName" class="text-2xl font-display mb-1">Nguyễn Văn A</h2>
+              <p id="profileRole" class="text-sm opacity-60 mb-2">Khách hàng</p>
+              <div class="flex items-center gap-4 text-xs">
+                <div>
+                  <span id="profileBookingCount" class="font-semibold">...</span>
+                  <span class="opacity-60"> Bookings</span>
+                </div>
+                <div>
+                  <span id="profileFavCount" class="font-semibold">...</span>
+                  <span class="opacity-60"> Yêu thích</span>
                 </div>
               </div>
             </div>
-            <a
-              href="edit-profile.html"
-              class="block w-full py-3 rounded-xl clay-card text-center text-sm font-semibold hover:opacity-80 transition-opacity"
-            >
-              Chỉnh Sửa Hồ Sơ
-            </a>
-          </section>
+          </div>
+          <a href="edit-profile.html"
+            class="block w-full py-3 rounded-xl clay-card text-center text-sm font-semibold hover:opacity-80 transition-opacity">
+            Chỉnh Sửa Hồ Sơ
+          </a>
+        </section>
 
-          <!-- Quick Stats -->
-          <section class="mb-8">
-            <div class="grid grid-cols-3 gap-4">
-              <div class="clay-card rounded-xl p-4 text-center">
-                <p id="statBookings" class="text-2xl font-bold mb-1">...</p>
-                <p class="text-xs opacity-60 uppercase tracking-wider">Bookings</p>
+        <!-- Quick Stats -->
+        <section class="mb-8">
+          <div class="grid grid-cols-3 gap-4">
+            <div class="clay-card rounded-xl p-4 text-center">
+              <p id="statBookings" class="text-2xl font-bold mb-1">...</p>
+              <p class="text-xs opacity-60 uppercase tracking-wider">Bookings</p>
+            </div>
+            <div class="clay-card rounded-xl p-4 text-center">
+              <p id="statReviews" class="text-2xl font-bold mb-1">...</p>
+              <p class="text-xs opacity-60 uppercase tracking-wider">Reviews</p>
+            </div>
+            <div class="clay-card rounded-xl p-4 text-center">
+              <p id="statFavs" class="text-2xl font-bold mb-1">...</p>
+              <p class="text-xs opacity-60 uppercase tracking-wider">Yêu thích</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Menu Items -->
+        <section class="space-y-2">
+          <a href="my-bookings.html"
+            class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+            <div class="flex items-center gap-4">
+              <div class="size-12 rounded-full clay-inset flex items-center justify-center">
+                <span class="material-symbols-outlined text-accent">event</span>
               </div>
-              <div class="clay-card rounded-xl p-4 text-center">
-                <p id="statReviews" class="text-2xl font-bold mb-1">...</p>
-                <p class="text-xs opacity-60 uppercase tracking-wider">Reviews</p>
-              </div>
-              <div class="clay-card rounded-xl p-4 text-center">
-                <p id="statFavs" class="text-2xl font-bold mb-1">...</p>
-                <p class="text-xs opacity-60 uppercase tracking-wider">Yêu thích</p>
+              <div>
+                <p class="font-display">Đặt Lịch Của Tôi</p>
+                <p class="text-xs opacity-60">Xem lịch sử đặt lịch</p>
               </div>
             </div>
-          </section>
+            <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+          </a>
 
-          <!-- Menu Items -->
-          <section class="space-y-2">
-            <a
-              href="my-bookings.html"
-              class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity"
-            >
-              <div class="flex items-center gap-4">
-                <div class="size-12 rounded-full clay-inset flex items-center justify-center">
-                  <span class="material-symbols-outlined text-accent">event</span>
-                </div>
-                <div>
-                  <p class="font-semibold">Đặt Lịch Của Tôi</p>
-                  <p class="text-xs opacity-60">Xem lịch sử đặt lịch</p>
-                </div>
+          <a href="favorites.html"
+            class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+            <div class="flex items-center gap-4">
+              <div class="size-12 rounded-full clay-inset flex items-center justify-center">
+                <span class="material-symbols-outlined text-accent">favorite</span>
               </div>
-              <span class="material-symbols-outlined text-accent/40">chevron_right</span>
-            </a>
-
-            <a
-              href="favorites.html"
-              class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity"
-            >
-              <div class="flex items-center gap-4">
-                <div class="size-12 rounded-full clay-inset flex items-center justify-center">
-                  <span class="material-symbols-outlined text-accent">favorite</span>
-                </div>
-                <div>
-                  <p class="font-semibold">Yêu Thích</p>
-                  <p class="text-xs opacity-60">Photographers đã lưu</p>
-                </div>
+              <div>
+                <p class="font-display">Yêu Thích</p>
+                <p class="text-xs opacity-60">Photographers đã lưu</p>
               </div>
-              <span class="material-symbols-outlined text-accent/40">chevron_right</span>
-            </a>
+            </div>
+            <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+          </a>
 
-            <a
-              href="reviews.html"
-              class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity"
-            >
-              <div class="flex items-center gap-4">
-                <div class="size-12 rounded-full clay-inset flex items-center justify-center">
-                  <span class="material-symbols-outlined text-accent">rate_review</span>
-                </div>
-                <div>
-                  <p class="font-semibold">Đánh Giá Của Tôi</p>
-                  <p class="text-xs opacity-60">Xem và chỉnh sửa đánh giá</p>
-                </div>
+          <a href="reviews.html"
+            class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+            <div class="flex items-center gap-4">
+              <div class="size-12 rounded-full clay-inset flex items-center justify-center">
+                <span class="material-symbols-outlined text-accent">rate_review</span>
               </div>
-              <span class="material-symbols-outlined text-accent/40">chevron_right</span>
-            </a>
-
-            <a
-              href="payment-methods.html"
-              class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity"
-            >
-              <div class="flex items-center gap-4">
-                <div class="size-12 rounded-full clay-inset flex items-center justify-center">
-                  <span class="material-symbols-outlined text-accent">payment</span>
-                </div>
-                <div>
-                  <p class="font-semibold">Phương Thức Thanh Toán</p>
-                  <p class="text-xs opacity-60">Quản lý thẻ và ví</p>
-                </div>
+              <div>
+                <p class="font-display">Đánh Giá Của Tôi</p>
+                <p class="text-xs opacity-60">Xem và chỉnh sửa đánh giá</p>
               </div>
-              <span class="material-symbols-outlined text-accent/40">chevron_right</span>
-            </a>
+            </div>
+            <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+          </a>
 
-            <a
-              href="help.html"
-              class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity"
-            >
-              <div class="flex items-center gap-4">
-                <div class="size-12 rounded-full clay-inset flex items-center justify-center">
-                  <span class="material-symbols-outlined text-accent">help</span>
-                </div>
-                <div>
-                  <p class="font-semibold">Trợ Giúp & Hỗ Trợ</p>
-                  <p class="text-xs opacity-60">FAQ và liên hệ</p>
-                </div>
+          <a href="payment-methods.html"
+            class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+            <div class="flex items-center gap-4">
+              <div class="size-12 rounded-full clay-inset flex items-center justify-center">
+                <span class="material-symbols-outlined text-accent">payment</span>
               </div>
-              <span class="material-symbols-outlined text-accent/40">chevron_right</span>
-            </a>
-
-            <a
-              href="settings.html"
-              class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity"
-            >
-              <div class="flex items-center gap-4">
-                <div class="size-12 rounded-full clay-inset flex items-center justify-center">
-                  <span class="material-symbols-outlined text-accent">settings</span>
-                </div>
-                <div>
-                  <p class="font-semibold">Cài Đặt</p>
-                  <p class="text-xs opacity-60">Tùy chỉnh ứng dụng</p>
-                </div>
+              <div>
+                <p class="font-display">Phương Thức Thanh Toán</p>
+                <p class="text-xs opacity-60">Quản lý thẻ và ví</p>
               </div>
-              <span class="material-symbols-outlined text-accent/40">chevron_right</span>
-            </a>
-          </section>
+            </div>
+            <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+          </a>
 
-          <!-- Logout -->
-          <div class="mt-8">
-            <button
-              onclick="PicKicStore.logout()"
-              class="w-full py-4 rounded-xl clay-card text-center text-sm font-semibold text-red-600 hover:opacity-80 transition-opacity"
-            >
-              Đăng Xuất
-            </button>
-          </div>
-        </main>
+          <a href="help.html"
+            class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+            <div class="flex items-center gap-4">
+              <div class="size-12 rounded-full clay-inset flex items-center justify-center">
+                <span class="material-symbols-outlined text-accent">help</span>
+              </div>
+              <div>
+                <p class="font-display">Trợ Giúp & Hỗ Trợ</p>
+                <p class="text-xs opacity-60">FAQ và liên hệ</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+          </a>
 
-        <!-- Bottom Navigation -->
-        <nav
-          class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3"
-        >
-          <div class="flex justify-around items-center max-w-md mx-auto px-6">
-            <a
-              href="index.html"
-              class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
-            >
-              <span class="material-symbols-outlined text-[28px]">home</span>
-              <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
-            </a>
-            <a
-              href="discovery.html"
-              class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
-            >
-              <span class="material-symbols-outlined text-[28px]">explore</span>
-              <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
-            </a>
-            <a
-              href="search.html"
-              class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
-            >
-              <span class="material-symbols-outlined text-[28px]">search</span>
-              <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
-            </a>
-            <a
-              href="all-chat.html"
-              class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
-            >
-              <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
-              <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
-            </a>
-            <a href="profile.html" class="flex flex-col items-center gap-1 text-accent">
-              <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: &quot;FILL&quot; 1"
-                >person</span
-              >
-              <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
-            </a>
-          </div>
-          <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
-        </nav>
-      </div>
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          PicKicStore.refreshNotifBadge();
+          <a href="settings.html"
+            class="flex items-center justify-between p-4 rounded-xl clay-card hover:opacity-80 transition-opacity">
+            <div class="flex items-center gap-4">
+              <div class="size-12 rounded-full clay-inset flex items-center justify-center">
+                <span class="material-symbols-outlined text-accent">settings</span>
+              </div>
+              <div>
+                <p class="font-display">Cài Đặt</p>
+                <p class="text-xs opacity-60">Tùy chỉnh ứng dụng</p>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-accent/40">chevron_right</span>
+          </a>
+        </section>
 
-          const user = PicKicStore.getUser();
-          if (user) {
-            document.getElementById("profileName").textContent = user.name || "Người dùng";
-            document.getElementById("profileRole").textContent = user.role || "Khách hàng";
-            if (user.avatar) {
-              document.getElementById("profileAvatar").style.backgroundImage = "url(" + user.avatar + ")";
-            }
-          }
+        <!-- Logout -->
+        <div class="mt-8">
+          <button onclick="PicKicStore.logout()"
+            class="w-full py-4 rounded-xl clay-card text-center text-sm font-semibold text-red-600 hover:opacity-80 transition-opacity">
+            Đăng Xuất
+          </button>
+        </div>
+      </main>
 
-          const bookings = PicKicStore.getBookings();
-          const favs = PicKicStore.getFavorites();
-          const completedBookings = bookings.filter((b) => b.status === "completed");
-
-          document.getElementById("profileBookingCount").textContent = bookings.length;
-          document.getElementById("profileFavCount").textContent = favs.length;
-          document.getElementById("statBookings").textContent = bookings.length;
-          document.getElementById("statReviews").textContent = completedBookings.length;
-          document.getElementById("statFavs").textContent = favs.length;
-        });
-      </script>
+      <!-- Bottom Navigation -->
+      <nav class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3">
+        <div class="flex justify-around items-center max-w-md mx-auto px-6">
+          <a href="index.html"
+            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+            <span class="material-symbols-outlined text-[28px]">home</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
+          </a>
+          <a href="discovery.html"
+            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+            <span class="material-symbols-outlined text-[28px]">explore</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
+          </a>
+          <a href="search.html"
+            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+            <span class="material-symbols-outlined text-[28px]">search</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
+          </a>
+          <a href="all-chat.html"
+            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+            <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
+          </a>
+          <a href="profile.html" class="flex flex-col items-center gap-1 text-accent">
+            <span class="material-symbols-outlined text-[28px]"
+              style="font-variation-settings: &quot;FILL&quot; 1">person</span>
+            <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
+          </a>
+        </div>
+        <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
+      </nav>
     </div>
-  </body>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        PicKicStore.refreshNotifBadge();
+
+        const user = PicKicStore.getUser();
+        if (user) {
+          document.getElementById("profileName").textContent = user.name || "Người dùng";
+          document.getElementById("profileRole").textContent = user.role || "Khách hàng";
+          if (user.avatar) {
+            document.getElementById("profileAvatar").style.backgroundImage = "url(" + user.avatar + ")";
+          }
+        }
+
+        const bookings = PicKicStore.getBookings();
+        const favs = PicKicStore.getFavorites();
+        const completedBookings = bookings.filter((b) => b.status === "completed");
+
+        document.getElementById("profileBookingCount").textContent = bookings.length;
+        document.getElementById("profileFavCount").textContent = favs.length;
+        document.getElementById("statBookings").textContent = bookings.length;
+        document.getElementById("statReviews").textContent = completedBookings.length;
+        document.getElementById("statFavs").textContent = favs.length;
+      });
+    </script>
+  </div>
+</body>
+
 </html>
