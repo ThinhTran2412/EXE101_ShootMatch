@@ -15,39 +15,38 @@
 
 /* Claymorphic Card */
 .clay-card {
-  background: #fffbf0;
+  background: #fff7e1;
   box-shadow:
-    6px 6px 12px #d9d9bc,
+    6px 6px 12px #d9d4b8,
     -6px -6px 12px #ffffff;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .clay-card:hover {
   box-shadow:
-    8px 8px 16px #d9d9bc,
-    -8px -8px 16px #ffffff;
-  transform: translateY(-2px);
+    10px 10px 20px #d9d4b8,
+    -10px -10px 20px #ffffff;
 }
 
 .clay-inset {
-  background: #fffbf0;
+  background: #fff7e1;
   box-shadow:
-    inset 4px 4px 8px #d9d9bc,
+    inset 4px 4px 8px #d9d4b8,
     inset -4px -4px 8px #ffffff;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .clay-inset:hover {
   box-shadow:
-    inset 6px 6px 12px #d9d9bc,
+    inset 6px 6px 12px #d9d4b8,
     inset -6px -6px 12px #ffffff;
 }
 
 .clay-accent {
-  background: #df8f20;
+  background: #ff4200;
   box-shadow:
-    4px 4px 10px #be7a1b,
-    -4px -4px 10px #ffa426;
+    4px 4px 10px #cc3600,
+    -4px -4px 10px #ff6a34;
 }
 
 /* Debossed Effect */
@@ -60,7 +59,7 @@
 
 /* Textured Button */
 .textured-btn {
-  background: linear-gradient(145deg, #fffbf0, #f0f0d0);
+  background: linear-gradient(145deg, #fff7e1, #ffe8c0);
   box-shadow:
     0.5px 0.5px 2px rgba(0, 0, 0, 0.02),
     inset 0 0 0 0.5px rgba(26, 26, 15, 0.08);
@@ -77,7 +76,7 @@
   position: relative;
   padding: 14px 28px;
   background: linear-gradient(135deg, #1a1a0f, #2a2a24);
-  color: #fffbf0;
+  color: #fff7e1;
   border: none;
   border-radius: 50px;
   font-weight: 600;
@@ -120,7 +119,7 @@
 }
 
 .modern-btn-secondary {
-  background: linear-gradient(135deg, #fffbf0, #f0f0d0);
+  background: linear-gradient(135deg, #fff7e1, #ffe8c0);
   color: #1a1a0f;
   box-shadow: 0 4px 20px rgba(26, 26, 15, 0.1);
   border: 1px solid rgba(26, 26, 15, 0.1);
@@ -163,9 +162,17 @@
   border-radius: 40% 60% 70% 30% / 40% 50% 60% 40%;
 }
 
+/* Anton Display Font */
+.font-anton,
+.hero-title {
+  font-family: 'Anton', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
 /* Glass Card */
 .glass-card {
-  background: rgba(255, 251, 240, 0.1);
+  background: rgba(255, 247, 225, 0.1);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
@@ -180,12 +187,7 @@
   scrollbar-width: none;
 }
 
-/* Smooth Transitions */
-* {
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
-}
+/* Smooth Transitions — applied selectively, not globally to avoid flickering */
 
 /* Enhanced Animations */
 @keyframes slideInRight {
@@ -225,6 +227,7 @@
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 1;
@@ -251,10 +254,8 @@
   animation: pulse 2s ease-in-out infinite;
 }
 
-/* Page Transitions */
-.page-transition {
-  animation: fadeIn 0.4s ease-in-out;
-}
+/* Page Transitions — opacity fade removed to prevent flickering */
+/* .page-transition used to have fadeIn animation; disabled as it conflicts with child animations */
 
 @keyframes fadeIn {
   from {
@@ -270,7 +271,7 @@
 
 /* Hover Effects */
 .hover-lift:hover {
-  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(26, 26, 15, 0.12);
 }
 
 .hover-scale:active {
@@ -279,8 +280,9 @@
 
 /* Typography Helpers */
 .editorial-text {
-  font-family: "Playfair Display", serif;
-  font-style: italic;
+  font-family: 'Anton', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 .technical-text {
@@ -303,7 +305,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .badge:hover {
@@ -321,7 +323,7 @@
 
 /* Glass Morphism */
 .glass-morphism {
-  background: rgba(255, 251, 240, 0.7);
+  background: rgba(255, 247, 225, 0.7);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -330,12 +332,12 @@
 
 /* Interactive Elements */
 .interactive-element {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
 .interactive-element:hover {
-  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(26, 26, 15, 0.1);
 }
 
 .interactive-element:active {
@@ -372,7 +374,7 @@ h2.font-serif.gradient-text {
    ======================================== */
 
 html {
-  background: #c4c4a8;
+  background: #2a2a1e;
   min-height: 100%;
 }
 
@@ -381,7 +383,7 @@ body {
   justify-content: center;
   align-items: flex-start;
   min-height: 100dvh;
-  background: #c4c4a8;
+  background: #2a2a1e;
 }
 
 #app-shell {
@@ -389,7 +391,7 @@ body {
   width: 430px;
   max-width: 100%;
   min-height: max(884px, 100dvh);
-  background: #fffbf0;
+  background: #fff7e1;
   overflow-x: hidden;
   box-shadow:
     0 0 80px rgba(0, 0, 0, 0.3),
@@ -401,9 +403,10 @@ body {
 
 /* Trên điện thoại thật (< 430px): bỏ outer frame */
 @media (max-width: 430px) {
+
   html,
   body {
-    background: #fffbf0;
+    background: #fff7e1;
   }
 
   #app-shell {

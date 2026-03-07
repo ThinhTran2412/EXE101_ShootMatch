@@ -1,0 +1,400 @@
+<!doctype html>
+<html class="light" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Thợ Chụp Ảnh - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/pickic-design-system.css" />
+    <script src="../js/pickic-store.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: { extend: { colors: { primary: "#fff7e1", accent: "#1a1a0f", orange: "#ff4200" }, fontFamily: { sans: ["Plus Jakarta Sans", "sans-serif"], display: ["Anton", "sans-serif"] } } }
+        };
+    </script>
+    <style>
+        .font-anton {
+            font-family: 'Anton', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
+        .photo-card {
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-3px) scale(1.01);
+        }
+
+        .photographer-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .photographer-card .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.1) 50%, transparent 100%);
+            transition: background 0.3s;
+        }
+
+        .photographer-card:hover .overlay {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 60%, transparent 100%);
+        }
+
+        .filter-chip {
+            padding: 7px 16px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1.5px solid rgba(26, 26, 15, 0.12);
+        }
+
+        .filter-chip.active {
+            background: #ff4200;
+            color: #fff7e1;
+            border-color: #ff4200;
+        }
+
+        .filter-chip:not(.active):hover {
+            background: rgba(26, 26, 15, 0.06);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .masonry {
+            columns: 2;
+            gap: 8px;
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 8px;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .page-enter {
+            animation: fadeInUp 0.4s ease both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-primary text-accent">
+    <div id="app-shell">
+        <div class="film-grain"></div>
+
+        <!-- Header -->
+        <header
+            class="sticky top-0 z-40 bg-primary/90 backdrop-blur-md px-5 py-4 flex items-center justify-between border-b border-accent/8">
+            <div class="flex items-center gap-3">
+                <button onclick="history.back()"
+                    class="flex items-center justify-center size-9 rounded-full border border-accent/10 hover:bg-accent/5 transition-colors">
+                    <span class="material-symbols-outlined text-lg">arrow_back</span>
+                </button>
+                <h1 class="font-anton text-2xl">THỢ CHỤP ẢNH</h1>
+            </div>
+            <a href="../search.html"
+                class="flex items-center justify-center size-9 rounded-full border border-accent/10 hover:bg-accent/5 transition-colors">
+                <span class="material-symbols-outlined text-lg">search</span>
+            </a>
+        </header>
+
+        <main class="pb-24 page-enter">
+
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden" style="height:200px;">
+                <div class="absolute inset-0 bg-cover bg-center"
+                    style="background-image:url('../Picture/ebe8812dd5dd5b8302cc19.jpg');">
+                </div>
+                <div class="absolute inset-0"
+                    style="background:linear-gradient(135deg,rgba(255,66,0,0.75),rgba(26,26,15,0.7));"></div>
+                <div class="absolute inset-0 flex flex-col justify-end px-6 pb-6">
+                    <p class="text-white/60 text-[10px] uppercase tracking-[0.3em] mb-1">Khám phá</p>
+                    <p class="text-white font-anton text-4xl leading-none">500+<br />PHOTOGRAPHERS</p>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="px-5 pt-4 pb-2">
+                <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+                    <button class="filter-chip active flex-shrink-0" onclick="setFilter(this,'all')">Tất cả</button>
+                    <button class="filter-chip flex-shrink-0" onclick="setFilter(this,'portrait')">Portrait</button>
+                    <button class="filter-chip flex-shrink-0" onclick="setFilter(this,'couple')">Couple</button>
+                    <button class="filter-chip flex-shrink-0" onclick="setFilter(this,'wedding')">Wedding</button>
+                    <button class="filter-chip flex-shrink-0" onclick="setFilter(this,'fashion')">Fashion</button>
+                    <button class="filter-chip flex-shrink-0" onclick="setFilter(this,'fineart')">Fine Art</button>
+                    <button class="filter-chip flex-shrink-0" onclick="setFilter(this,'landscape')">Landscape</button>
+                </div>
+            </div>
+
+            <!-- Sort row -->
+            <div class="px-5 py-2 flex items-center justify-between">
+                <p class="text-[11px] opacity-40 font-mono">120 Kết quả</p>
+                <button
+                    class="flex items-center gap-1 text-[11px] font-bold opacity-60 hover:opacity-100 transition-opacity">
+                    <span class="material-symbols-outlined text-sm">swap_vert</span>
+                    Sắp xếp
+                </button>
+            </div>
+
+            <!-- Photographer Grid (masonry-like) -->
+            <div class="px-5" id="photographerGrid">
+
+                <!-- Row 1: Featured big card + small -->
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <!-- Big card ph001 -->
+                    <div class="photographer-card col-span-1" style="height:260px;" onclick="viewProfile('ph001')">
+                        <div class="w-full h-full bg-cover bg-center"
+                            style="background-image:url('../Picture/928cf20bbffb31a568ea35.jpg');">
+                        </div>
+                        <div class="overlay"></div>
+                        <div class="absolute top-3 left-3">
+                            <span
+                                class="text-[9px] font-bold uppercase tracking-wider text-white bg-green-500/80 px-2 py-0.5 rounded-full">Verified</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4">
+                            <div class="flex items-center gap-1 mb-1">
+                                <span class="text-amber-400 text-xs">★</span>
+                                <span class="text-white text-xs font-bold">4.9</span>
+                            </div>
+                            <p class="text-white font-bold text-sm">Elena Vance</p>
+                            <p class="text-white/60 text-[10px]">Kyoto Studio · Hà Nội</p>
+                            <div class="flex gap-1 mt-1.5 flex-wrap">
+                                <span
+                                    class="text-[9px] text-white/80 bg-white/15 rounded-full px-2 py-0.5">Portrait</span>
+                                <span
+                                    class="text-[9px] text-white/80 bg-white/15 rounded-full px-2 py-0.5">Fashion</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Stack 2 small -->
+                    <div class="flex flex-col gap-3">
+                        <div class="photographer-card" style="height:124px;" onclick="viewProfile('ph002')">
+                            <div class="w-full h-full bg-cover bg-center"
+                                style="background-image:url('../Picture/e64e9293c663483d117210.jpg');">
+                            </div>
+                            <div class="overlay"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-3">
+                                <p class="text-white font-bold text-xs">Minh Khải</p>
+                                <p class="text-white/60 text-[9px]">Sài Gòn Lens</p>
+                            </div>
+                        </div>
+                        <div class="photographer-card" style="height:124px;" onclick="viewProfile('ph003')">
+                            <div class="w-full h-full bg-cover bg-center"
+                                style="background-image:url('../Picture/208a3fac6b5ce502bc4d4.jpg');">
+                            </div>
+                            <div class="overlay"></div>
+                            <div class="absolute top-2 right-2">
+                                <span class="text-[9px] font-bold text-white bg-green-500/80 px-2 py-0.5 rounded-full">★
+                                    4.9</span>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-3">
+                                <p class="text-white font-bold text-xs">Lisa Nakamura</p>
+                                <p class="text-white/60 text-[9px]">Tokyo Minimal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2: 2 equal -->
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <div class="photographer-card" style="height:190px;" onclick="viewProfile('ph007')">
+                        <div class="w-full h-full bg-cover bg-center"
+                            style="background-image:url('../Picture/a3eecd2b99db17854eca20.jpg');">
+                        </div>
+                        <div class="overlay"></div>
+                        <div class="absolute top-3 left-3"><span
+                                class="text-[9px] text-white bg-green-500/80 font-bold px-2 py-0.5 rounded-full">Verified</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-3">
+                            <p class="text-white font-bold text-xs">Sophia Lê</p>
+                            <p class="text-white/60 text-[9px]">Aura Studio · Hội An</p>
+                            <span
+                                class="text-[9px] text-white/80 bg-white/15 rounded-full px-2 py-0.5 mt-1 inline-block">Fine
+                                Art</span>
+                        </div>
+                    </div>
+                    <div class="photographer-card" style="height:190px;" onclick="viewProfile('ph004')">
+                        <div class="w-full h-full bg-cover bg-center"
+                            style="background-image:url('../Picture/0cf423426eb2e0ecb9a328.jpg');">
+                        </div>
+                        <div class="overlay"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-3">
+                            <p class="text-white font-bold text-xs">Marcus Chen</p>
+                            <p class="text-white/60 text-[9px]">Studio Noir · Hà Nội</p>
+                            <span
+                                class="text-[9px] text-white/80 bg-white/15 rounded-full px-2 py-0.5 mt-1 inline-block">Portrait</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3: wide + small -->
+                <div class="grid grid-cols-3 gap-3 mb-3">
+                    <div class="photographer-card col-span-2" style="height:160px;" onclick="viewProfile('ph009')">
+                        <div class="w-full h-full bg-cover bg-center"
+                            style="background-image:url('../Picture/8ca3508804788a26d3697.jpg');">
+                        </div>
+                        <div class="overlay"></div>
+                        <div class="absolute top-3 left-3"><span
+                                class="text-[9px] text-white bg-green-500/80 font-bold px-2 py-0.5 rounded-full">Verified</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-3">
+                            <p class="text-white font-bold text-sm">Yuki Tanaka</p>
+                            <p class="text-white/60 text-[10px]">Sakura Frame · TP.HCM</p>
+                        </div>
+                    </div>
+                    <div class="photographer-card" style="height:160px;" onclick="viewProfile('ph005')">
+                        <div class="w-full h-full bg-cover bg-center"
+                            style="background-image:url('../Picture/46ead19796671839417641.jpg');">
+                        </div>
+                        <div class="overlay"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2">
+                            <p class="text-white font-bold text-[10px]">Thảo Ly</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 4: 2 equal -->
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <div class="photographer-card" style="height:190px;" onclick="viewProfile('ph011')">
+                        <div class="w-full h-full bg-cover bg-center"
+                            style="background-image:url('../Picture/2d5c71802570ab2ef26111.jpg');">
+                        </div>
+                        <div class="overlay"></div>
+                        <div class="absolute top-3 left-3"><span
+                                class="text-[9px] text-white bg-green-500/80 font-bold px-2 py-0.5 rounded-full">Verified</span>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-3">
+                            <p class="text-white font-bold text-xs">Mai Phương</p>
+                            <p class="text-white/60 text-[9px]">Petal Studio · Hà Nội</p>
+                        </div>
+                    </div>
+                    <div class="photographer-card" style="height:190px;" onclick="viewProfile('ph006')">
+                        <div class="w-full h-full bg-cover bg-center"
+                            style="background-image:url('../Picture/58b0bb9aef6a6134387b9.jpg');">
+                        </div>
+                        <div class="overlay"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-3">
+                            <p class="text-white font-bold text-xs">Alvaro Reyes</p>
+                            <p class="text-white/60 text-[9px]">Urban Frame · Đà Nẵng</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 5: 3 equal small -->
+                <div class="grid grid-cols-3 gap-3 mb-6">
+                    <div class="photographer-card" style="height:130px;" onclick="viewProfile('ph008')">
+                        <div class="w-full h-full bg-cover bg-center"
+                            style="background-image:url('../Picture/74b924c76337ed69b42639.jpg');">
+                        </div>
+                        <div class="overlay"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2">
+                            <p class="text-white font-bold text-[10px]">Đình Hoàng</p>
+                            <p class="text-white/60 text-[9px]">Huế</p>
+                        </div>
+                    </div>
+                    <div class="photographer-card" style="height:130px;" onclick="viewProfile('ph010')">
+                        <div class="w-full h-full bg-cover bg-center"
+                            style="background-image:url('../Picture/757e58af0c5f8201db4e14.jpg');">
+                        </div>
+                        <div class="overlay"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2">
+                            <p class="text-white font-bold text-[10px]">Carlos Mendez</p>
+                            <p class="text-white/60 text-[9px]">Đà Lạt</p>
+                        </div>
+                    </div>
+                    <div class="photographer-card" style="height:130px;" onclick="viewProfile('ph012')">
+                        <div class="w-full h-full bg-cover bg-center"
+                            style="background-image:url('../Picture/d868161651e6dfb886f740.jpg');">
+                        </div>
+                        <div class="overlay"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-2">
+                            <p class="text-white font-bold text-[10px]">Quang Dũng</p>
+                            <p class="text-white/60 text-[9px]">Mono Vision</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Bottom Nav -->
+        <nav
+            class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3">
+            <div class="flex justify-around items-center max-w-md mx-auto px-6">
+                <a href="../index.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent">
+                    <span class="material-symbols-outlined text-[28px]">home</span>
+                    <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
+                </a>
+                <a href="../discovery.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent">
+                    <span class="material-symbols-outlined text-[28px]">explore</span>
+                    <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
+                </a>
+                <a href="../search.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent">
+                    <span class="material-symbols-outlined text-[28px]">search</span>
+                    <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
+                </a>
+                <a href="../all-chat.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent">
+                    <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
+                    <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
+                </a>
+                <a href="../profile.html" class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent">
+                    <span class="material-symbols-outlined text-[28px]">person</span>
+                    <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
+                </a>
+            </div>
+            <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
+        </nav>
+    </div>
+    <script>
+        function viewProfile(id) {
+            sessionStorage.setItem('viewingPhotographer', id);
+            window.location.href = '../photo-profile.html';
+        }
+
+        function setFilter(btn, filter) {
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,506 +1,528 @@
 ﻿<!doctype html>
 <html class="light" lang="vi">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>PicKic - Kết nối Photographers với Khách hàng</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/pickic-design-system.css" />
-    <script src="js/pickic-store.js"></script>
-    <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#FFFBF0",
-              accent: "#1a1a0f",
-              "beige-tonal": "#f0f0d0",
-              "beige-deep": "#e8e8c8",
-            },
-            fontFamily: {
-              sans: ["Plus Jakarta Sans", "sans-serif"],
-              serif: ["Playfair Display", "serif"],
-            },
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>PicKic - Kết nối Photographers với Khách hàng</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/pickic-design-system.css" />
+  <script src="js/pickic-store.js"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#fff7e1",
+            accent: "#1a1a0f",
+            orange: "#ff4200",
+          },
+          fontFamily: {
+            sans: ["Plus Jakarta Sans", "sans-serif"],
+            display: ["Anton", "sans-serif"],
           },
         },
-      };
-    </script>
-    <style>
-      /* Hero Animation */
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
+      },
+    };
+  </script>
+  <style>
+    @keyframes float {
 
-        50% {
-          transform: translateY(-10px);
-        }
+      0%,
+      100% {
+        transform: translateY(0);
       }
 
-      .float-animation {
-        animation: float 3s ease-in-out infinite;
+      50% {
+        transform: translateY(-8px);
       }
+    }
 
-      /* Card Hover Effect */
-      .feature-card {
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-      }
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
 
-      .feature-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        transition: left 0.5s;
-      }
+    /* Photo card hover */
+    .photo-card {
+      transition: box-shadow 0.3s ease;
+      overflow: hidden;
+      border-radius: 16px;
+      position: relative;
+    }
 
-      .feature-card:hover::before {
-        left: 100%;
-      }
+    .photo-card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    }
 
-      .feature-card:hover {
-        transform: translateY(-4px) scale(1.02);
-      }
+    .photo-card img,
+    .photo-card .photo-bg {
+      transition: transform 0.5s ease;
+    }
 
-      /* Stats Counter Animation */
-      @keyframes countUp {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
-        }
+    .photo-card:hover img,
+    .photo-card:hover .photo-bg {
+      transform: scale(1.06);
+    }
 
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+    /* Action chips — no shimmer to avoid white flash */
+    .action-chip {
+      position: relative;
+      overflow: hidden;
+    }
 
-      .stat-number {
-        animation: countUp 0.6s ease-out;
-      }
+    /* Hero title style */
+    .hero-headline {
+      font-family: 'Anton', sans-serif;
+      font-weight: 400;
+      line-height: 0.95;
+      letter-spacing: 0.01em;
+    }
 
-      /* Gradient Background */
-      .gradient-bg {
-        background: linear-gradient(135deg, rgba(26, 26, 15, 0.03), rgba(26, 26, 15, 0.01));
-      }
-    </style>
-  </head>
+    /* Orange accent pill */
+    .orange-pill {
+      background: #ff4200;
+      color: #fff7e1;
+      border-radius: 50px;
+    }
 
-  <body class="bg-primary text-accent selection:bg-accent selection:text-primary">
-    <div id="app-shell">
-      <div class="film-grain"></div>
+    /* Scrolling category strip */
+    .cat-strip {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
 
-      <!-- Top Navigation -->
-      <header
-        class="sticky top-0 z-40 bg-primary/90 backdrop-blur-md px-6 py-5 flex items-center justify-between border-b border-accent/8"
-      >
-        <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="h-16 w-auto" />
-        <div class="flex items-center gap-4">
-          <a
-            href="search.html"
-            class="flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors"
-          >
-            <span class="material-symbols-outlined text-xl">search</span>
+    .cat-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Mosaic grid */
+    .mosaic-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 6px;
+    }
+
+    .mosaic-tall {
+      grid-row: span 2;
+    }
+
+    .mosaic-wide {
+      grid-column: span 2;
+    }
+
+    /* Story ring */
+    .story-ring {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2.5px solid #ff4200;
+      padding: 2px;
+      overflow: hidden;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .story-ring img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    /* Section header */
+    .section-label {
+      font-family: 'Anton', sans-serif;
+      font-size: 22px;
+      letter-spacing: 0.02em;
+      color: #1a1a0f;
+    }
+  </style>
+</head>
+
+<body class="bg-primary text-accent selection:bg-accent selection:text-primary">
+  <div id="app-shell">
+    <div class="film-grain"></div>
+
+    <!-- Top Navigation -->
+    <header
+      class="sticky top-0 z-40 bg-primary/90 backdrop-blur-md px-5 py-4 flex items-center justify-between border-b border-accent/8">
+      <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="h-14 w-auto" />
+      <div class="flex items-center gap-3">
+        <a href="search.html"
+          class="flex items-center justify-center size-9 rounded-full border border-accent/10 hover:bg-accent/5 transition-colors">
+          <span class="material-symbols-outlined text-lg">search</span>
+        </a>
+        <a href="notifications.html"
+          class="relative flex items-center justify-center size-9 rounded-full border border-accent/10 hover:bg-accent/5 transition-colors">
+          <span class="material-symbols-outlined text-lg">notifications</span>
+          <span id="notifDot" class="absolute top-1 right-1 size-2 bg-red-500 rounded-full notif-badge"></span>
+        </a>
+        <a href="profile.html" class="flex items-center justify-center size-9 rounded-full bg-accent text-primary">
+          <span class="material-symbols-outlined text-lg">person</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="pb-28">
+
+      <!-- ── HERO ── -->
+      <section class="px-5 pt-6 pb-4">
+        <p id="welcomeGreet" class="text-[10px] uppercase tracking-[0.3em] opacity-40 mb-3">Welcome back</p>
+        <div class="hero-headline text-[52px] text-accent mb-4">
+          PICK<br />
+          <span style="color:#ff4200;">NGƯỜI</span><br />
+          PICK ĐÚNG<br />
+          <span style="color:#ff4200;">KHOẢNH</span><br />KHẮC
+        </div>
+        <div class="flex gap-3 mb-5">
+          <div class="orange-pill px-4 py-2 text-center">
+            <p class="text-lg font-bold leading-none">500+</p>
+            <p class="text-[9px] uppercase tracking-wider opacity-80">Photographers</p>
+          </div>
+          <div class="border border-accent/10 rounded-full px-4 py-2 text-center">
+            <p id="statBookings" class="text-lg font-bold leading-none">...</p>
+            <p class="text-[9px] uppercase tracking-wider opacity-50">Bookings</p>
+          </div>
+          <div class="border border-accent/10 rounded-full px-4 py-2 text-center">
+            <p id="statFavs" class="text-lg font-bold leading-none">...</p>
+            <p class="text-[9px] uppercase tracking-wider opacity-50">Yêu thích</p>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <a href="discovery.html"
+            class="action-chip flex-1 flex items-center justify-center gap-2 bg-accent text-primary rounded-full py-3 px-4 text-xs font-bold uppercase tracking-wider">
+            <span class="material-symbols-outlined text-base">explore</span>Khám phá
           </a>
-          <a
-            href="notifications.html"
-            class="relative flex items-center justify-center size-10 rounded-full border border-accent/5 hover:bg-accent/5 transition-colors"
-          >
-            <span class="material-symbols-outlined text-xl">notifications</span>
-            <span id="notifDot" class="absolute top-1 right-1 size-2 bg-red-500 rounded-full notif-badge"></span>
-          </a>
-          <a href="profile.html" class="flex items-center justify-center size-10 rounded-full bg-accent text-primary">
-            <span class="material-symbols-outlined text-xl">person</span>
+          <a href="search.html"
+            class="action-chip flex items-center justify-center gap-2 border border-accent/15 rounded-full py-3 px-4 text-xs font-bold uppercase tracking-wider hover:bg-accent/5">
+            <span class="material-symbols-outlined text-base">tune</span>Lọc
           </a>
         </div>
-      </header>
+      </section>
 
-      <!-- Hero Section -->
-      <main class="px-6 pt-12 pb-24 page-transition">
-        <div class="max-w-md mx-auto">
-          <div class="mb-12">
-            <p id="welcomeGreet" class="text-[10px] uppercase tracking-[0.3em] opacity-40 mb-4 animate-fade-in">
-              Welcome
-            </p>
-            <h2 class="font-serif text-5xl leading-[1.1] mb-4 italic gradient-text animate-fade-in">
-              Tìm Photographer<br />Hoàn Hảo Cho Bạn
-            </h2>
-            <p class="text-sm leading-relaxed opacity-60 font-light mb-6">
-              Kết nối với các nhiếp ảnh gia chuyên nghiệp qua cơ chế swipe trực quan. Tìm concept, phong cách và ngân
-              sách phù hợp.
-            </p>
+      <!-- ── FEATURED STRIP ── -->
+      <section class="px-5 mb-6">
+        <div class="flex items-center justify-between mb-3">
+          <span class="section-label">Nổi Bật</span>
+          <a href="discovery.html" class="text-[10px] uppercase tracking-widest opacity-40 hover:opacity-80">Xem tất
+            cả</a>
+        </div>
+        <div class="cat-strip">
+          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph001')">
+            <div class="story-ring" style="background:url('Picture/ebe8812dd5dd5b8302cc19.jpg') center/cover;"></div>
+            <span class="text-[10px] font-semibold text-center leading-none">Elena<br />Vance</span>
+          </div>
+          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph002')">
+            <div class="story-ring" style="background:url('Picture/e64e9293c663483d117210.jpg') center/cover;"></div>
+            <span class="text-[10px] font-semibold text-center leading-none">Minh<br />Khải</span>
+          </div>
+          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph003')">
+            <div class="story-ring" style="background:url('Picture/208a3fac6b5ce502bc4d4.jpg') center/cover;"></div>
+            <span class="text-[10px] font-semibold text-center leading-none">Lisa<br />Nakamura</span>
+          </div>
+          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph007')">
+            <div class="story-ring" style="background:url('Picture/aedee057ada723f97ab630.jpg') center/cover;"></div>
+            <span class="text-[10px] font-semibold text-center leading-none">Sophia<br />Lê</span>
+          </div>
+          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph009')">
+            <div class="story-ring" style="background:url('Picture/8ca3508804788a26d3697.jpg') center/cover;"></div>
+            <span class="text-[10px] font-semibold text-center leading-none">Yuki<br />Tanaka</span>
+          </div>
+          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph011')">
+            <div class="story-ring" style="background:url('Picture/2d5c71802570ab2ef26111.jpg') center/cover;"></div>
+            <span class="text-[10px] font-semibold text-center leading-none">Mai<br />Phương</span>
+          </div>
+          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph006')">
+            <div class="story-ring" style="background:url('Picture/46ead19796671839417641.jpg') center/cover;"></div>
+            <span class="text-[10px] font-semibold text-center leading-none">Alvaro<br />Reyes</span>
+          </div>
+        </div>
+      </section>
 
-            <!-- Quick Stats -->
-            <div class="flex gap-4 mb-8">
-              <div class="flex-1 clay-card rounded-xl p-4 text-center gradient-bg">
-                <p class="text-2xl font-bold stat-number gradient-text">500+</p>
-                <p class="text-[9px] uppercase tracking-wider opacity-60 mt-1">Photographers</p>
+      <!-- ── PORTFOLIO MỚI — editorial 2-col asymmetric ── -->
+      <section class="px-5 mb-6">
+        <div class="flex items-center justify-between mb-3">
+          <span class="section-label">Portfolio Mới</span>
+          <a href="picture/index.html" class="text-[10px] uppercase tracking-widest opacity-40 hover:opacity-80"
+            style="color:#ff4200;">Xem tất cả</a>
+        </div>
+
+        <!-- Row 1: tall left + 2 stacked right -->
+        <div class="grid gap-2 mb-2" style="grid-template-columns:1.4fr 1fr;">
+          <div class="photo-card cursor-pointer" onclick="viewProfile('ph001')" style="height:280px;">
+            <div class="absolute inset-0 bg-cover bg-center"
+              style="background-image:url('Picture/928cf20bbffb31a568ea35.jpg');background-size:cover;"></div>
+            <div class="absolute inset-0 flex flex-col justify-end p-3"
+              style="background:linear-gradient(to top,rgba(0,0,0,0.7),transparent);">
+              <p class="text-white text-xs font-bold">Elena Vance</p>
+              <p class="text-white/60 text-[10px]">Portrait · HN</p>
+            </div>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="photo-card cursor-pointer flex-1" onclick="viewProfile('ph002')" style="height:135px;">
+              <div class="absolute inset-0 bg-cover bg-center"
+                style="background-image:url('Picture/c10a06db522bdc75853a13.jpg');background-size:cover;"></div>
+              <div class="absolute inset-0 flex flex-col justify-end p-2.5"
+                style="background:linear-gradient(to top,rgba(0,0,0,0.65),transparent);">
+                <p class="text-white text-[11px] font-bold">Minh Khải</p>
+                <p class="text-white/60 text-[9px]">Couple</p>
               </div>
-              <div class="flex-1 clay-card rounded-xl p-4 text-center gradient-bg">
-                <p id="statBookings" class="text-2xl font-bold stat-number gradient-text">...</p>
-                <p class="text-[9px] uppercase tracking-wider opacity-60 mt-1">Bookings</p>
-              </div>
-              <div class="flex-1 clay-card rounded-xl p-4 text-center gradient-bg">
-                <p id="statFavs" class="text-2xl font-bold stat-number gradient-text">...</p>
-                <p class="text-[9px] uppercase tracking-wider opacity-60 mt-1">Yêu thích</p>
+            </div>
+            <div class="photo-card cursor-pointer flex-1" onclick="viewProfile('ph009')" style="height:135px;">
+              <div class="absolute inset-0 bg-cover bg-center"
+                style="background-image:url('Picture/8282dd4689b607e85ea723.jpg');background-size:cover;"></div>
+              <div class="absolute inset-0 flex flex-col justify-end p-2.5"
+                style="background:linear-gradient(to top,rgba(0,0,0,0.65),transparent);">
+                <p class="text-white text-[11px] font-bold">Yuki Tanaka</p>
+                <p class="text-white/60 text-[9px]">Fashion</p>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Quick Actions -->
-          <div class="space-y-4 mb-12">
-            <a href="discovery.html" class="block feature-card">
-              <div class="clay-card rounded-xl p-6 relative overflow-hidden">
-                <div class="flex items-center justify-between relative z-10">
-                  <div>
-                    <div class="flex items-center gap-2 mb-2">
-                      <h3 class="font-semibold text-lg">Khám Phá</h3>
-                      <span class="badge">Mới</span>
-                    </div>
-                    <p class="text-xs opacity-60">Quẹt để tìm photographer phù hợp</p>
-                  </div>
-                  <div
-                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center float-animation"
-                  >
-                    <span class="material-symbols-outlined text-2xl text-accent/70">swipe_right</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-            <a href="concept.html" class="block feature-card">
-              <div class="clay-card rounded-xl p-6 relative overflow-hidden">
-                <div class="flex items-center justify-between relative z-10">
-                  <div>
-                    <h3 class="font-semibold text-lg mb-1">Chọn Concept</h3>
-                    <p class="text-xs opacity-60">Portrait, Couple, Fashion, Wedding...</p>
-                  </div>
-                  <div
-                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center"
-                  >
-                    <span class="material-symbols-outlined text-2xl text-accent/70">palette</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-            <a href="all-chat.html" class="block feature-card">
-              <div class="clay-card rounded-xl p-6 relative overflow-hidden">
-                <div class="flex items-center justify-between relative z-10">
-                  <div class="flex-1">
-                    <div class="flex items-center gap-2 mb-2">
-                      <h3 class="font-semibold text-lg">Tin Nhắn</h3>
-                      <span class="size-2 bg-red-500 rounded-full animate-pulse-slow"></span>
-                    </div>
-                    <p class="text-xs opacity-60">3 tin nhắn chưa đọc</p>
-                  </div>
-                  <div
-                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center"
-                  >
-                    <span class="material-symbols-outlined text-2xl text-accent/70">chat_bubble</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-            <a href="my-bookings.html" class="block feature-card">
-              <div class="clay-card rounded-xl p-6 relative overflow-hidden">
-                <div class="flex items-center justify-between relative z-10">
-                  <div class="flex-1">
-                    <div class="flex items-center gap-2 mb-2">
-                      <h3 class="font-semibold text-lg">Đặt Lịch Của Tôi</h3>
-                      <span class="size-2 bg-primary rounded-full animate-pulse-slow"></span>
-                    </div>
-                    <p class="text-xs opacity-60">1 session đang tiến hành</p>
-                  </div>
-                  <div
-                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center"
-                  >
-                    <span class="material-symbols-outlined text-2xl text-accent/70">event</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-            <a href="create-project.html" class="block feature-card">
-              <div class="clay-card rounded-xl p-6 relative overflow-hidden">
-                <div class="flex items-center justify-between relative z-10">
-                  <div>
-                    <h3 class="font-semibold text-lg mb-1">Tạo Dự Án</h3>
-                    <p class="text-xs opacity-60">Mô tả concept và yêu cầu</p>
-                  </div>
-                  <div
-                    class="size-14 rounded-full bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center"
-                  >
-                    <span class="material-symbols-outlined text-2xl text-accent/70">add_circle</span>
-                  </div>
-                </div>
-              </div>
-            </a>
+        <!-- Row 2: wide single + small -->
+        <div class="grid gap-2" style="grid-template-columns:1fr 1.4fr;">
+          <div class="photo-card cursor-pointer" onclick="viewProfile('ph003')" style="height:160px;">
+            <div class="absolute inset-0 bg-cover bg-center"
+              style="background-image:url('Picture/0cf423426eb2e0ecb9a328.jpg');background-size:cover;"></div>
+            <div class="absolute inset-0 flex flex-col justify-end p-3"
+              style="background:linear-gradient(to top,rgba(0,0,0,0.65),transparent);">
+              <p class="text-white text-xs font-bold">Lisa Nakamura</p>
+              <p class="text-white/60 text-[10px]">Minimalist</p>
+            </div>
           </div>
-
-          <!-- Featured Photographers -->
-          <section class="mb-12">
-            <div class="flex justify-between items-center mb-6">
-              <div>
-                <h3 class="font-serif text-2xl italic gradient-text">Nổi Bật</h3>
-                <p class="text-xs opacity-60 mt-1">Photographers được yêu thích nhất</p>
-              </div>
-              <a
-                href="discovery.html"
-                class="text-xs uppercase tracking-widest opacity-40 hover:opacity-80 transition-opacity"
-                >Xem tất cả</a
-              >
+          <div class="photo-card cursor-pointer" onclick="viewProfile('ph007')" style="height:160px;">
+            <div class="absolute inset-0 bg-cover bg-center"
+              style="background-image:url('Picture/a3eecd2b99db17854eca20.jpg');background-size:cover;"></div>
+            <div class="absolute inset-0 flex flex-col justify-end p-3"
+              style="background:linear-gradient(to top,rgba(0,0,0,0.65),transparent);">
+              <p class="text-white text-xs font-bold">Sophia Lê</p>
+              <p class="text-white/60 text-[10px]">Fine Art · Hội An</p>
             </div>
-            <div class="grid grid-cols-2 gap-4">
-              <div onclick="viewProfile('ph001')" class="block feature-card cursor-pointer">
-                <div
-                  class="aspect-[3/4] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group"
-                  style="
-                    background-image: url(&quot;https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80&quot;);
-                  "
-                >
-                  <div class="absolute top-3 right-3">
-                    <span class="badge bg-white/90 text-accent">
-                      <span
-                        class="material-symbols-outlined text-xs"
-                        style="font-variation-settings: &quot;FILL&quot; 1"
-                        >verified</span
-                      >
-                      Verified
-                    </span>
-                  </div>
-                  <div
-                    class="h-full w-full bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4 transition-all"
-                  >
-                    <div class="flex items-center gap-1 mb-2">
-                      <span
-                        class="material-symbols-outlined text-sm"
-                        style="font-variation-settings: &quot;FILL&quot; 1; color: #fbbf24"
-                        >star</span
-                      >
-                      <span class="text-white text-xs font-semibold">4.9</span>
-                    </div>
-                    <p class="text-white font-semibold text-sm">Elena Vance</p>
-                    <p class="text-white/80 text-xs text-nowrap overflow-hidden">Kyoto Studio • Hà Nội</p>
-                  </div>
-                </div>
-              </div>
-              <div onclick="viewProfile('ph002')" class="block feature-card cursor-pointer">
-                <div
-                  class="aspect-[3/4] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group"
-                  style="
-                    background-image: url(&quot;https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?w=600&q=80&quot;);
-                  "
-                >
-                  <div
-                    class="h-full w-full bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4 transition-all"
-                  >
-                    <div class="flex items-center gap-1 mb-2">
-                      <span
-                        class="material-symbols-outlined text-sm"
-                        style="font-variation-settings: &quot;FILL&quot; 1; color: #fbbf24"
-                        >star</span
-                      >
-                      <span class="text-white text-xs font-semibold">4.8</span>
-                    </div>
-                    <p class="text-white font-semibold text-sm">Minh Khải</p>
-                    <p class="text-white/80 text-xs text-nowrap overflow-hidden">Sài Gòn Lens • TP.HCM</p>
-                  </div>
-                </div>
-              </div>
-              <div onclick="viewProfile('ph003')" class="block feature-card cursor-pointer">
-                <div
-                  class="aspect-[3/4] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group"
-                  style="
-                    background-image: url(&quot;https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80&quot;);
-                  "
-                >
-                  <div class="absolute top-3 right-3">
-                    <span class="badge bg-white/90 text-accent">
-                      <span
-                        class="material-symbols-outlined text-xs"
-                        style="font-variation-settings: &quot;FILL&quot; 1"
-                        >verified</span
-                      >
-                      Verified
-                    </span>
-                  </div>
-                  <div
-                    class="h-full w-full bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4 transition-all"
-                  >
-                    <div class="flex items-center gap-1 mb-2">
-                      <span
-                        class="material-symbols-outlined text-sm"
-                        style="font-variation-settings: &quot;FILL&quot; 1; color: #fbbf24"
-                        >star</span
-                      >
-                      <span class="text-white text-xs font-semibold">4.9</span>
-                    </div>
-                    <p class="text-white font-semibold text-sm">Lisa Nakamura</p>
-                    <p class="text-white/80 text-xs text-nowrap overflow-hidden">Tokyo Minimal • Đà Nẵng</p>
-                  </div>
-                </div>
-              </div>
-              <div onclick="viewProfile('ph004')" class="block feature-card cursor-pointer">
-                <div
-                  class="aspect-[3/4] bg-center bg-cover rounded-xl clay-card overflow-hidden relative group"
-                  style="
-                    background-image: url(&quot;https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80&quot;);
-                  "
-                >
-                  <div
-                    class="h-full w-full bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4 transition-all"
-                  >
-                    <div class="flex items-center gap-1 mb-2">
-                      <span
-                        class="material-symbols-outlined text-sm"
-                        style="font-variation-settings: &quot;FILL&quot; 1; color: #fbbf24"
-                        >star</span
-                      >
-                      <span class="text-white text-xs font-semibold">4.7</span>
-                    </div>
-                    <p class="text-white font-semibold text-sm">Marcus Chen</p>
-                    <p class="text-white/80 text-xs text-nowrap overflow-hidden">Studio Noir • Hà Nội</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Trending Concepts -->
-          <section class="mb-12">
-            <div class="flex justify-between items-center mb-6">
-              <div>
-                <h3 class="font-serif text-xl italic gradient-text">Concept Phổ Biến</h3>
-                <p class="text-xs opacity-60 mt-1">Được tìm kiếm nhiều nhất</p>
-              </div>
-            </div>
-            <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
-              <a href="search-results.html?category=portrait" class="flex-shrink-0 feature-card">
-                <div class="clay-card rounded-xl p-4 min-w-[120px] text-center">
-                  <span class="material-symbols-outlined text-3xl mb-2 block text-accent/70">person</span>
-                  <p class="text-xs font-semibold">Portrait</p>
-                  <p class="text-[10px] opacity-60 mt-1">1.2K tìm kiếm</p>
-                </div>
-              </a>
-              <a href="search-results.html?category=couple" class="flex-shrink-0 feature-card">
-                <div class="clay-card rounded-xl p-4 min-w-[120px] text-center">
-                  <span class="material-symbols-outlined text-3xl mb-2 block text-accent/70">favorite</span>
-                  <p class="text-xs font-semibold">Couple</p>
-                  <p class="text-[10px] opacity-60 mt-1">856 tìm kiếm</p>
-                </div>
-              </a>
-              <a href="search-results.html?category=fashion" class="flex-shrink-0 feature-card">
-                <div class="clay-card rounded-xl p-4 min-w-[120px] text-center">
-                  <span class="material-symbols-outlined text-3xl mb-2 block text-accent/70">checkroom</span>
-                  <p class="text-xs font-semibold">Fashion</p>
-                  <p class="text-[10px] opacity-60 mt-1">642 tìm kiếm</p>
-                </div>
-              </a>
-              <a href="search-results.html?category=wedding" class="flex-shrink-0 feature-card">
-                <div class="clay-card rounded-xl p-4 min-w-[120px] text-center">
-                  <span class="material-symbols-outlined text-3xl mb-2 block text-accent/70">celebration</span>
-                  <p class="text-xs font-semibold">Wedding</p>
-                  <p class="text-[10px] opacity-60 mt-1">534 tìm kiếm</p>
-                </div>
-              </a>
-            </div>
-          </section>
-
-          <!-- CTA Section -->
-          <div class="text-center py-8 border-t border-accent/5">
-            <p class="text-xs opacity-40 mb-4">Chưa có tài khoản?</p>
-            <a href="register.html" class="modern-btn-primary inline-block px-8 py-4"> Đăng Ký Ngay </a>
-            <p class="text-[10px] opacity-40 mt-4">Miễn phí đăng ký • Xác minh nhanh chóng</p>
           </div>
         </div>
-      </main>
+      </section>
 
-      <!-- Bottom Navigation -->
-      <nav class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3">
-        <div class="flex justify-around items-center max-w-md mx-auto px-6">
-          <a href="index.html" class="flex flex-col items-center gap-1 text-accent">
-            <span class="material-symbols-outlined text-[28px]" style="font-variation-settings: &quot;FILL&quot; 1"
-              >home</span
-            >
-            <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
+      <!-- ── DISCOVERY BANNER ── -->
+      <section class="px-5 mb-6">
+        <a href="discovery.html" class="block photo-card" style="height:190px;">
+          <div class="absolute inset-0 bg-cover bg-center"
+            style="background-image:url('Picture/ebe8812dd5dd5b8302cc19.jpg');background-size:cover;"></div>
+          <div class="absolute inset-0"
+            style="background:linear-gradient(135deg,rgba(255,66,0,0.85),rgba(26,26,15,0.55));"></div>
+          <div class="absolute inset-0 flex flex-col justify-center px-6">
+            <p class="text-white/70 text-[10px] uppercase tracking-[0.3em] mb-2">Bắt đầu ngay hôm nay</p>
+            <p class="text-white hero-headline text-4xl leading-none mb-4">SWIPE<br />&amp; MATCH</p>
+            <div class="inline-flex items-center gap-2 bg-white/20 rounded-full px-4 py-2 backdrop-blur-sm w-fit">
+              <span class="text-white text-xs font-bold">Khám Phá</span>
+              <span class="material-symbols-outlined text-white text-sm">arrow_forward</span>
+            </div>
+          </div>
+        </a>
+      </section>
+
+      <!-- ── QUICK ACTIONS ── -->
+      <section class="px-5 mb-6">
+        <span class="section-label block mb-3">Dành Cho Bạn</span>
+        <div class="grid grid-cols-2 gap-3">
+          <a href="all-chat.html" class="photo-card" style="height:140px;background:#1a1a0f;">
+            <div class="absolute inset-0 bg-cover bg-center opacity-40"
+              style="background-image:url('Picture/cd188166c69648c8118742.jpg');background-size:cover;"></div>
+            <div class="absolute inset-0 flex flex-col justify-end p-3">
+              <div class="flex items-center gap-1 mb-0.5">
+                <span class="material-symbols-outlined text-white text-sm">chat_bubble</span>
+                <span class="text-white text-xs font-bold">Tin Nhắn</span>
+                <span class="size-1.5 bg-red-400 rounded-full ml-0.5"></span>
+              </div>
+              <p class="text-white/60 text-[10px]">3 chưa đọc</p>
+            </div>
           </a>
-          <a
-            href="discovery.html"
-            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
-          >
-            <span class="material-symbols-outlined text-[28px]">explore</span>
-            <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
+          <a href="my-bookings.html" class="photo-card" style="height:140px;background:#1a1a0f;">
+            <div class="absolute inset-0 bg-cover bg-center opacity-40"
+              style="background-image:url('Picture/ac8e0f0642f6cca895e729.jpg');background-size:cover;"></div>
+            <div class="absolute inset-0 flex flex-col justify-end p-3">
+              <div class="flex items-center gap-1 mb-0.5">
+                <span class="material-symbols-outlined text-white text-sm">event</span>
+                <span class="text-white text-xs font-bold">Đặt Lịch</span>
+              </div>
+              <p class="text-white/60 text-[10px]">1 đang tiến hành</p>
+            </div>
           </a>
-          <a
-            href="search.html"
-            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
-          >
-            <span class="material-symbols-outlined text-[28px]">search</span>
-            <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
+          <a href="create-project.html" class="photo-card" style="height:140px;background:#1a1a0f;">
+            <div class="absolute inset-0 bg-cover bg-center opacity-40"
+              style="background-image:url('Picture/bc1fc89585650b3b527426.jpg');background-size:cover;"></div>
+            <div class="absolute inset-0 flex flex-col justify-end p-3">
+              <div class="flex items-center gap-1 mb-0.5">
+                <span class="material-symbols-outlined text-white text-sm">add_circle</span>
+                <span class="text-white text-xs font-bold">Tạo Dự Án</span>
+              </div>
+              <p class="text-white/60 text-[10px]">Mô tả concept</p>
+            </div>
           </a>
-          <a
-            href="all-chat.html"
-            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
-          >
-            <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
-            <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
-          </a>
-          <a
-            href="profile.html"
-            class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors"
-          >
-            <span class="material-symbols-outlined text-[28px]">person</span>
-            <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
+          <!-- Thợ chụp ảnh — with background image and orange overlay -->
+          <a href="picture/index.html" class="photo-card" style="height:140px; background:#1a1a0f;">
+            <div class="absolute inset-0 bg-cover bg-center opacity-40"
+              style="background-image:url('Picture/173fd2fa860a0854511b16.jpg');"></div>
+
+            <div class="absolute inset-0 flex flex-col justify-end p-3">
+              <div class="float-animation mb-2" style="width:fit-content;">
+                <span class="material-symbols-outlined text-white text-3xl">photo_camera</span>
+              </div>
+              <p class="text-white text-xs font-bold">Thợ Chụp Ảnh</p>
+              <p class="text-white/70 text-[10px]">Tìm photographer</p>
+            </div>
           </a>
         </div>
-        <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
-      </nav>
-    </div>
-    <script>
-      function viewProfile(id) {
-        sessionStorage.setItem("viewingPhotographer", id);
-        window.location.href = "photo-profile.html";
+      </section>
+
+      <!-- ── KHOẢNH KHẮC — 14 local images masonry ── -->
+      <section class="mb-6">
+        <div class="flex items-center justify-between mb-3 px-5">
+          <span class="section-label">Khoảnh Khắc</span>
+          <a href="picture/index.html" class="text-[10px] uppercase tracking-widest opacity-40 hover:opacity-80"
+            style="color:#ff4200;">Xem tất cả</a>
+        </div>
+        <div style="columns:3;gap:4px;padding:0 16px;">
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/36dbd1f185010b5f52108.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/3fb13c9a686ae634bf7b6.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/58b0bb9aef6a6134387b9.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/74b924c76337ed69b42639.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/757e58af0c5f8201db4e14.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/22469bccd63c5862012d24.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/d590bc1af1ea7fb426fb33.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/ebcda847e5b76be932a625.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/ee7c00775487dad983961.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/ff497ac33733b96de02237.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/ad33f8b9b5493b17625836.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/47aac1208cd0028e5bc134.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/9e471ace573ed960802f31.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/a6608cb3d843561d0f5215.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/1de35fa31853960dcf4243.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+          <a href="picture/index.html"
+            style="break-inside:avoid;display:block;margin-bottom:4px;border-radius:10px;overflow:hidden;">
+            <img src="Picture/2d5c71802570ab2ef26111.jpg" style="width:100%;display:block;" loading="lazy" />
+          </a>
+        </div>
+      </section>
+
+      <!-- ── CTA ── -->
+      <div class="text-center py-6 mx-5 border-t border-accent/5">
+        <p class="text-xs opacity-40 mb-4">Chưa có tài khoản?</p>
+        <a href="register.html" class="modern-btn-primary inline-block px-8 py-4">Đăng Ký Ngay</a>
+        <p class="text-[10px] opacity-40 mt-4">Miễn phí • Xác minh nhanh chóng</p>
+      </div>
+
+    </main>
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3">
+      <div class="flex justify-around items-center max-w-md mx-auto px-6">
+        <a href="index.html" class="flex flex-col items-center gap-1 text-accent">
+          <span class="material-symbols-outlined text-[28px]"
+            style="font-variation-settings: &quot;FILL&quot; 1">home</span>
+          <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
+        </a>
+        <a href="discovery.html"
+          class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+          <span class="material-symbols-outlined text-[28px]">explore</span>
+          <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
+        </a>
+        <a href="search.html"
+          class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+          <span class="material-symbols-outlined text-[28px]">search</span>
+          <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
+        </a>
+        <a href="all-chat.html"
+          class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+          <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
+          <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
+        </a>
+        <a href="profile.html"
+          class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
+          <span class="material-symbols-outlined text-[28px]">person</span>
+          <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
+        </a>
+      </div>
+      <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
+    </nav>
+  </div>
+  <script>
+    function viewProfile(id) {
+      sessionStorage.setItem("viewingPhotographer", id);
+      window.location.href = "photo-profile.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      PicKicStore.refreshNotifBadge();
+      const user = PicKicStore.getUser();
+      if (user) {
+        const firstName = user.name.split(" ").pop();
+        document.getElementById("welcomeGreet").textContent = "Chào, " + firstName + " 👋";
       }
+      const bookings = PicKicStore.getBookings();
+      const favs = PicKicStore.getFavorites();
+      const bEl = document.getElementById("statBookings");
+      const fEl = document.getElementById("statFavs");
+      if (bEl) bEl.textContent = bookings.length;
+      if (fEl) fEl.textContent = favs.length;
+    });
+  </script>
+</body>
 
-      document.addEventListener("DOMContentLoaded", function () {
-        // Notification badge
-        PicKicStore.refreshNotifBadge();
-
-        // Welcome greeting với tên user
-        const user = PicKicStore.getUser();
-        if (user) {
-          const firstName = user.name.split(" ").pop(); // Tên cuối (tên gọi)
-          document.getElementById("welcomeGreet").textContent = "Chào, " + firstName + " 👋";
-        }
-
-        // Stats động từ localStorage
-        const bookings = PicKicStore.getBookings();
-        const favs = PicKicStore.getFavorites();
-        const bEl = document.getElementById("statBookings");
-        const fEl = document.getElementById("statFavs");
-        if (bEl) bEl.textContent = bookings.length;
-        if (fEl) fEl.textContent = favs.length;
-      });
-    </script>
-  </body>
 </html>

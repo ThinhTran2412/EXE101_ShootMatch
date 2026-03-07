@@ -1,0 +1,302 @@
+<!doctype html>
+<html class="light" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <title>Portfolio - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/pickic-design-system.css" />
+    <script src="../js/pickic-store.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = { darkMode: "class", theme: { extend: { colors: { primary: "#fff7e1", accent: "#1a1a0f", orange: "#ff4200" }, fontFamily: { sans: ["Plus Jakarta Sans", "sans-serif"], display: ["Anton", "sans-serif"] } } } };
+    </script>
+    <style>
+        .font-anton {
+            font-family: 'Anton', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
+        /* Masonry-like photo wall */
+        .photo-wall {
+            columns: 2;
+            gap: 6px;
+            padding: 0 16px;
+        }
+
+        .photo-wall .wall-item {
+            break-inside: avoid;
+            margin-bottom: 6px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .wall-item img {
+            width: 100%;
+            display: block;
+            transition: transform 0.45s ease;
+        }
+
+        .wall-item:hover img {
+            transform: scale(1.06);
+        }
+
+        .wall-item .photo-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: flex-end;
+            padding: 10px;
+        }
+
+        .wall-item:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        /* Lightbox */
+        #lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.93);
+            z-index: 9999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #lightbox.open {
+            display: flex;
+        }
+
+        #lightboxImg {
+            max-width: 95%;
+            max-height: 80vh;
+            border-radius: 12px;
+            object-fit: contain;
+        }
+
+        #lightboxClose {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 247, 225, 0.15);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Tab strip */
+        .tab-strip {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid rgba(26, 26, 15, 0.08);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            text-align: center;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            opacity: 0.4;
+        }
+
+        .tab-btn.active {
+            opacity: 1;
+            border-bottom-color: #ff4200;
+            color: #ff4200;
+        }
+
+        .tab-btn:hover:not(.active) {
+            opacity: 0.7;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-primary text-accent font-sans">
+    <div id="app-shell">
+        <div class="film-grain"></div>
+
+        <!-- Header -->
+        <header
+            class="sticky top-0 z-40 bg-primary/90 backdrop-blur-md px-5 py-4 flex items-center justify-between border-b border-accent/8">
+            <div class="flex items-center gap-3">
+                <button onclick="history.back()"
+                    class="flex items-center justify-center size-9 rounded-full border border-accent/10 hover:bg-accent/5 transition-colors">
+                    <span class="material-symbols-outlined text-lg">arrow_back</span>
+                </button>
+                <div>
+                    <h1 id="pageTitle" class="font-anton text-xl leading-none">PORTFOLIO</h1>
+                    <p id="pageSubtitle" class="text-[10px] opacity-40 mt-0.5">Elena Vance · 26 ảnh</p>
+                </div>
+            </div>
+            <button
+                class="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider opacity-60 hover:opacity-100">
+                <span class="material-symbols-outlined text-sm">share</span>
+                Chia sẻ
+            </button>
+        </header>
+
+        <!-- Photographer mini card -->
+        <div class="px-5 pt-4 pb-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div id="photoAvatar" class="size-12 rounded-full bg-cover bg-center"
+                    style="background-image:url('https://images.unsplash.com/photo-1509631179647-0177331693ae?w=200&q=80');border:2px solid #ff4200;">
+                </div>
+                <div>
+                    <p id="photoName" class="font-bold text-sm">Elena Vance</p>
+                    <p id="photoStudio" class="text-[11px] opacity-50">Kyoto Studio · Hà Nội</p>
+                </div>
+            </div>
+            <a id="bookBtn" href="../checkout.html"
+                class="text-primary rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider"
+                style="background:#ff4200;">
+                Đặt Lịch
+            </a>
+        </div>
+
+        <!-- Tab strip -->
+        <div class="tab-strip px-0 mb-3">
+            <button class="tab-btn active" onclick="setTab(this,'all')">Tất cả</button>
+            <button class="tab-btn" onclick="setTab(this,'portrait')">Portrait</button>
+            <button class="tab-btn" onclick="setTab(this,'couple')">Couple</button>
+            <button class="tab-btn" onclick="setTab(this,'fashion')">Fashion</button>
+        </div>
+
+        <!-- Photo Wall -->
+        <div class="photo-wall pb-28" id="photoWall">
+            <!-- Generated by JS -->
+        </div>
+
+        <!-- Lightbox -->
+        <div id="lightbox">
+            <button id="lightboxClose" onclick="closeLightbox()">
+                <span class="material-symbols-outlined text-white text-xl">close</span>
+            </button>
+            <img id="lightboxImg" src="" alt="Photo" />
+            <p id="lightboxCaption" class="text-white/60 text-xs mt-3 text-center"></p>
+        </div>
+
+        <!-- Bottom CTA -->
+        <div class="fixed bottom-0 left-0 right-0 z-50 pb-8 pt-3 px-5"
+            style="background:rgba(255,247,225,0.92);backdrop-filter:blur(20px);border-top:1px solid rgba(26,26,15,0.07);">
+            <div class="flex gap-3">
+                <a href="../chat.html"
+                    class="flex items-center justify-center size-12 rounded-full border border-accent/15 hover:bg-accent/5 flex-shrink-0">
+                    <span class="material-symbols-outlined text-accent text-xl">chat</span>
+                </a>
+                <a href="../checkout.html"
+                    class="flex-1 py-3.5 rounded-2xl text-primary text-center font-bold text-sm hover:opacity-90 transition-all"
+                    style="background:#ff4200;">
+                    Đặt Lịch Ngay
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const PHOTO_DATA = {
+            ph001: {
+                name: 'Elena Vance', studio: 'Kyoto Studio', location: 'Hà Nội',
+                images: [
+                    { url: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=85', category: 'portrait', caption: 'Portrait · Natural Light' },
+                    { url: 'https://images.unsplash.com/photo-1531746020798-e6953c012e44?w=800&q=85', category: 'portrait', caption: 'Editorial · Studio' },
+                    { url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=85', category: 'fashion', caption: 'Fashion · Outdoor' },
+                    { url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=85', category: 'portrait', caption: 'Portrait · Golden Hour' },
+                    { url: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&q=85', category: 'fashion', caption: 'Fashion · Editorial' },
+                    { url: 'https://images.unsplash.com/photo-1488161628813-04466f872be2?w=800&q=85', category: 'couple', caption: 'Couple · Sunset' },
+                    { url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=85', category: 'portrait', caption: 'BW Portrait' },
+                    { url: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=85', category: 'fashion', caption: 'Fashion Week' },
+                    { url: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=85', category: 'couple', caption: 'Pre-wedding' },
+                    { url: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=85', category: 'couple', caption: 'Romantic · Golden Hour' },
+                    { url: 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800&q=85', category: 'couple', caption: 'Wedding Day' },
+                    { url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=85', category: 'portrait', caption: 'Minimal Portrait' },
+                ]
+            }
+        };
+
+        let allImages = [];
+        let currentFilter = 'all';
+
+        function openLightbox(url, caption) {
+            document.getElementById('lightboxImg').src = url;
+            document.getElementById('lightboxCaption').textContent = caption || '';
+            document.getElementById('lightbox').classList.add('open');
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('open');
+        }
+
+        function renderWall(filter) {
+            const wall = document.getElementById('photoWall');
+            wall.innerHTML = '';
+            const filtered = filter === 'all' ? allImages : allImages.filter(img => img.category === filter);
+            filtered.forEach(img => {
+                const item = document.createElement('div');
+                item.className = 'wall-item';
+                item.innerHTML = `
+          <img src="${img.url}" alt="${img.caption}" loading="lazy" />
+          <div class="photo-overlay">
+            <span class="text-white text-[10px] font-semibold">${img.caption}</span>
+          </div>
+        `;
+                item.addEventListener('click', () => openLightbox(img.url, img.caption));
+                wall.appendChild(item);
+            });
+        }
+
+        function setTab(btn, filter) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = filter;
+            renderWall(filter);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const id = sessionStorage.getItem('viewingPhotographer') || 'ph001';
+            const data = PHOTO_DATA[id] || PHOTO_DATA['ph001'];
+            allImages = data.images;
+
+            document.getElementById('pageTitle').textContent = 'PORTFOLIO';
+            document.getElementById('pageSubtitle').textContent = `${data.name} · ${data.images.length} ảnh`;
+            document.getElementById('photoName').textContent = data.name;
+            document.getElementById('photoStudio').textContent = `${data.studio} · ${data.location}`;
+            if (data.images.length) document.getElementById('photoAvatar').style.backgroundImage = `url('${data.images[0].url}')`;
+
+            renderWall('all');
+
+            // Lightbox keyboard close
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+        });
+    </script>
+</body>
+
+</html>

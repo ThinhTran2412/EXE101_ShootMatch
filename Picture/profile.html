@@ -1,0 +1,486 @@
+<!doctype html>
+<html class="light" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <title>Hồ Sơ Photographer - PicKic</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/pickic-design-system.css" />
+    <script src="../js/pickic-store.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = { darkMode: "class", theme: { extend: { colors: { primary: "#fff7e1", accent: "#1a1a0f", orange: "#ff4200" }, fontFamily: { sans: ["Plus Jakarta Sans", "sans-serif"], display: ["Anton", "sans-serif"] } } } };
+    </script>
+    <style>
+        .font-anton {
+            font-family: 'Anton', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-section {
+            position: relative;
+            height: 72vw;
+            max-height: 340px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.6s ease;
+        }
+
+        .hero-section:hover .hero-bg {
+            transform: scale(1.03);
+        }
+
+        .hero-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, transparent 35%, rgba(26, 26, 15, 0.92) 100%);
+        }
+
+        .stat-card {
+            background: rgba(26, 26, 15, 0.04);
+            border: 1px solid rgba(26, 26, 15, 0.07);
+            border-radius: 14px;
+            padding: 14px 10px;
+            text-align: center;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            border-radius: 4px;
+        }
+
+        .gallery-item:hover {
+            opacity: 0.82;
+        }
+
+        .gallery-item.featured {
+            grid-column: span 2;
+            grid-row: span 2;
+            aspect-ratio: auto;
+        }
+
+        .float-back,
+        .float-fav {
+            position: absolute;
+            top: 16px;
+            z-index: 30;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 247, 225, 0.88);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .float-back {
+            left: 16px;
+        }
+
+        .float-fav {
+            right: 16px;
+        }
+
+        .float-back:hover,
+        .float-fav:hover {
+            transform: scale(1.07);
+        }
+
+        .float-fav.active {
+            background: rgba(255, 66, 0, 0.9);
+        }
+
+        .float-fav.active .fav-icon {
+            color: white;
+        }
+
+        .cta-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 430px;
+            max-width: 100%;
+            background: rgba(255, 247, 225, 0.94);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(26, 26, 15, 0.07);
+            padding: 16px 24px 32px;
+            z-index: 50;
+        }
+
+        .spec-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            background: rgba(26, 26, 15, 0.06);
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .spec-badge:hover {
+            background: rgba(26, 26, 15, 0.12);
+        }
+
+        .time-slot {
+            padding: 8px 12px;
+            border-radius: 10px;
+            background: rgba(26, 26, 15, 0.04);
+            border: 1px solid rgba(26, 26, 15, 0.08);
+            font-size: 11px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .time-slot:hover {
+            background: rgba(26, 26, 15, 0.08);
+        }
+
+        .time-slot.selected {
+            background: #ff4200;
+            color: #fff7e1;
+            border-color: #ff4200;
+        }
+
+        .time-slot.unavailable {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body class="bg-primary text-accent font-sans">
+    <div id="app-shell">
+        <div class="film-grain"></div>
+        <div class="pb-36">
+
+            <!-- HERO -->
+            <section class="hero-section">
+                <div id="heroBg" class="hero-bg"
+                    style="background-image:url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=900&q=85');">
+                </div>
+                <div class="hero-gradient"></div>
+
+                <button onclick="history.back()" class="float-back">
+                    <span class="material-symbols-outlined text-accent text-xl">arrow_back</span>
+                </button>
+
+                <button id="favBtn" onclick="toggleFav()" class="float-fav">
+                    <span id="favIcon" class="material-symbols-outlined text-accent fav-icon text-xl"
+                        style="font-variation-settings:'FILL' 0;">favorite</span>
+                </button>
+
+                <div class="absolute bottom-0 left-0 right-0 px-5 pb-5 z-10">
+                    <div id="heroBadge" class="flex items-center gap-2 mb-1.5">
+                        <span class="material-symbols-outlined text-green-400 text-sm"
+                            style="font-variation-settings:'FILL' 1;">verified</span>
+                        <span class="text-white/90 text-xs font-bold tracking-wider">Verified</span>
+                    </div>
+                    <h1 id="heroName" class="text-white font-anton text-4xl leading-none mb-1.5 drop-shadow-xl">Elena
+                        Vance</h1>
+                    <p id="heroStudio" class="text-white/70 text-xs tracking-[0.18em] uppercase mb-3">Kyoto Studio · Hà
+                        Nội</p>
+                    <div class="flex items-center gap-3">
+                        <span id="heroRating" class="text-amber-400 font-bold text-sm">4.9</span>
+                        <span class="text-white/30">·</span>
+                        <span id="heroPrice" class="text-white/90 text-sm font-semibold">2.5M VNĐ</span>
+                        <span class="text-white/30">·</span>
+                        <div id="heroTags" class="flex gap-1.5"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PHOTO STRIP -->
+            <section class="px-4 pt-4 pb-2 reveal">
+                <div id="photoStrip" class="flex gap-2 overflow-x-auto no-scrollbar"></div>
+            </section>
+
+            <section class="px-5 py-5 reveal">
+                <blockquote class="text-xl font-semibold italic leading-relaxed text-accent/80 border-l-4 pl-4"
+                    style="border-color:#ff4200; font-family:'Plus Jakarta Sans',sans-serif;">
+                    “<span id="profileQuote">Ánh sáng là ngôn ngữ của tôi.</span>”
+                </blockquote>
+            </section>
+
+            <!-- STATS -->
+            <section class="px-5 pb-4 reveal">
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="stat-card">
+                        <p id="statJobs" class="text-2xl font-bold font-anton" style="color:#ff4200;">320</p>
+                        <p class="text-[10px] uppercase tracking-wider opacity-50 mt-1">Buổi chụp</p>
+                    </div>
+                    <div class="stat-card">
+                        <p id="statExp" class="text-2xl font-bold font-anton" style="color:#ff4200;">10</p>
+                        <p class="text-[10px] uppercase tracking-wider opacity-50 mt-1">Năm KN</p>
+                    </div>
+                    <div class="stat-card">
+                        <p id="statRating" class="text-2xl font-bold font-anton" style="color:#ff4200;">4.9</p>
+                        <p class="text-[10px] uppercase tracking-wider opacity-50 mt-1">Đánh giá</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SPECIALTIES -->
+            <section class="px-5 pb-5 reveal">
+                <h3 class="font-anton text-base opacity-40 mb-3" style="letter-spacing:0.08em;">CHUYÊN MÔN</h3>
+                <div id="specialties" class="flex flex-wrap gap-2"></div>
+            </section>
+
+            <!-- ABOUT -->
+            <section class="px-5 pb-5 reveal">
+                <h3 class="font-anton text-base opacity-40 mb-3" style="letter-spacing:0.08em;">GIỚI THIỆU</h3>
+                <p id="aboutText" class="text-sm leading-relaxed opacity-70">Elena Vance là nhiếp ảnh gia chuyên nghiệp.
+                </p>
+            </section>
+
+            <!-- PORTFOLIO -->
+            <section class="pb-5 reveal">
+                <div class="px-5 mb-3 flex items-center justify-between">
+                    <h3 class="font-anton text-base opacity-40" style="letter-spacing:0.08em;">PORTFOLIO</h3>
+                    <a href="portfolio.html" class="text-[10px] uppercase tracking-widest opacity-40 hover:opacity-80"
+                        style="color:#ff4200;">Xem thêm</a>
+                </div>
+                <div id="galleryGrid" class="gallery-grid px-1"></div>
+            </section>
+
+            <!-- SCHEDULE -->
+            <section class="px-5 pb-5 reveal">
+                <h3 class="font-anton text-base opacity-40 mb-3" style="letter-spacing:0.08em;">LỊCH TRỐNG</h3>
+                <div class="grid grid-cols-4 gap-2">
+                    <div class="time-slot">T3<br><span class="font-bold">09:00</span></div>
+                    <div class="time-slot selected">T3<br><span class="font-bold">14:00</span></div>
+                    <div class="time-slot unavailable">T4<br><span class="font-bold">10:00</span></div>
+                    <div class="time-slot">T4<br><span class="font-bold">15:00</span></div>
+                    <div class="time-slot">T5<br><span class="font-bold">09:00</span></div>
+                    <div class="time-slot unavailable">T5<br><span class="font-bold">13:00</span></div>
+                    <div class="time-slot">T6<br><span class="font-bold">10:00</span></div>
+                    <div class="time-slot">T7<br><span class="font-bold">08:00</span></div>
+                </div>
+            </section>
+
+            <!-- REVIEWS -->
+            <section class="px-5 pb-5 reveal">
+                <h3 class="font-anton text-base opacity-40 mb-3" style="letter-spacing:0.08em;">ĐÁNH GIÁ</h3>
+                <div class="space-y-3">
+                    <div class="bg-accent/3 border border-accent/6 rounded-2xl p-4"
+                        style="background:rgba(26,26,15,0.03);border:1px solid rgba(26,26,15,0.06);">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-2">
+                                <div class="size-8 rounded-full bg-accent/10 flex items-center justify-center">
+                                    <span class="text-xs font-bold">TN</span>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold">Trân Ngọc</p>
+                                    <p class="text-[10px] opacity-40">15/01/2026</p>
+                                </div>
+                            </div>
+                            <div class="text-amber-400 text-xs">★★★★★</div>
+                        </div>
+                        <p class="text-xs leading-relaxed opacity-70">"Chụp ảnh cưới cực kỳ chuyên nghiệp và tận tâm.
+                            Ảnh ra đẹp hơn mong đợi nhiều lần!"</p>
+                    </div>
+                    <div class="bg-accent/3 border border-accent/6 rounded-2xl p-4"
+                        style="background:rgba(26,26,15,0.03);border:1px solid rgba(26,26,15,0.06);">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-2">
+                                <div class="size-8 rounded-full bg-accent/10 flex items-center justify-center">
+                                    <span class="text-xs font-bold">MH</span>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold">Minh Hiếu</p>
+                                    <p class="text-[10px] opacity-40">02/01/2026</p>
+                                </div>
+                            </div>
+                            <div class="text-amber-400 text-xs">★★★★<span class="opacity-30">★</span></div>
+                        </div>
+                        <p class="text-xs leading-relaxed opacity-70">"Phong cách độc đáo, rất sáng tạo. Phản hồi nhanh
+                            và linh hoạt với yêu cầu của khách hàng."</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- CTA BAR -->
+        <div class="cta-bar">
+            <div class="flex items-center gap-3">
+                <a href="../chat.html"
+                    class="flex items-center justify-center size-12 rounded-full border border-accent/15 hover:bg-accent/5 transition-colors flex-shrink-0">
+                    <span class="material-symbols-outlined text-accent text-xl">chat</span>
+                </a>
+                <a href="../checkout.html"
+                    class="flex-1 py-4 rounded-2xl text-primary text-center font-bold text-sm hover:opacity-90 active:scale-[0.98] transition-all"
+                    style="background:#ff4200;">
+                    Đặt Lịch Ngay
+                </a>
+                <button id="favBtnBottom" onclick="toggleFav()"
+                    class="flex items-center justify-center size-12 rounded-full border border-accent/15 hover:bg-accent/5 transition-colors flex-shrink-0">
+                    <span id="favIconBottom" class="material-symbols-outlined text-accent text-xl"
+                        style="font-variation-settings:'FILL' 0;">favorite</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="pickicToast"
+            style="position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:#1a1a0f;color:#fff7e1;padding:10px 20px;border-radius:50px;font-size:13px;font-weight:600;z-index:9999;opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);white-space:nowrap;pointer-events:none;">
+        </div>
+    </div>
+
+    <script>
+        // Photographer data (simplified for this profile page)
+        const PHOTOGRAPHERS = {
+            'ph001': { id: 'ph001', name: 'Elena Vance', studio: 'Kyoto Studio', location: 'Hà Nội', rating: 4.9, price: '2.5M', verified: true, tags: ['Portrait', 'Fashion', 'Editorial'], experience: 10, completedJobs: 320, quote: 'Ánh sáng là ngôn ngữ của tôi.', about: 'Elena Vance là nhiếp ảnh gia chuyên nghiệp với hơn 10 năm kinh nghiệm trong lĩnh vực portrait và fashion. Phong cách của cô kết hợp giữa ánh sáng tự nhiên và chỉnh màu nghệ thuật.', images: ['Picture/928cf20bbffb31a568ea35.jpg', 'Picture/ebe8812dd5dd5b8302cc19.jpg', 'Picture/36dbd1f185010b5f52108.jpg', 'Picture/3fb13c9a686ae634bf7b6.jpg', 'Picture/58b0bb9aef6a6134387b9.jpg', 'Picture/74b924c76337ed69b42639.jpg'] },
+            'ph002': { id: 'ph002', name: 'Minh Khải', studio: 'Sài Gòn Lens', location: 'TP.HCM', rating: 4.8, price: '1.8M', verified: true, tags: ['Couple', 'Wedding', 'Outdoor'], experience: 7, completedJobs: 480, quote: 'Mỗi cặp đôi là một câu chuyện.', about: 'Minh Khải chuyên chụp ảnh cưới và couple với phong cách golden hour lãng mạn.', images: ['Picture/e64e9293c663483d117210.jpg', 'Picture/c10a06db522bdc75853a13.jpg', 'Picture/08ef9fc5cb35456b1c245.jpg', 'Picture/0cf423426eb2e0ecb9a328.jpg', 'Picture/208a3fac6b5ce502bc4d4.jpg'] },
+        };
+
+        function showToast(msg) {
+            const t = document.getElementById('pickicToast');
+            t.textContent = msg; t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(-6px)';
+            setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(-50%) translateY(0)'; }, 2200);
+        }
+
+        function toggleFav() {
+            const id = sessionStorage.getItem('viewingPhotographer') || 'ph001';
+            const favs = PicKicStore.getFavorites();
+            const isFav = favs.includes(id);
+            if (isFav) { PicKicStore.removeFavorite(id); showToast('Đã bỏ yêu thích'); }
+            else { PicKicStore.addFavorite(id); showToast('Đã thêm yêu thích ❤️'); }
+            updateFavUI(!isFav);
+        }
+
+        function updateFavUI(active) {
+            const btn = document.getElementById('favBtn');
+            const icon = document.getElementById('favIcon');
+            const btnB = document.getElementById('favBtnBottom');
+            const iconB = document.getElementById('favIconBottom');
+            if (active) {
+                btn.classList.add('active'); icon.style.fontVariationSettings = "'FILL' 1";
+                if (iconB) iconB.style.fontVariationSettings = "'FILL' 1";
+            } else {
+                btn.classList.remove('active'); icon.style.fontVariationSettings = "'FILL' 0";
+                if (iconB) iconB.style.fontVariationSettings = "'FILL' 0";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const id = sessionStorage.getItem('viewingPhotographer') || 'ph001';
+            const ph = PHOTOGRAPHERS[id] || PHOTOGRAPHERS['ph001'];
+
+            // Populate hero
+            document.getElementById('heroName').textContent = ph.name;
+            document.getElementById('heroStudio').textContent = ph.studio + ' · ' + ph.location;
+            document.getElementById('heroRating').textContent = ph.rating;
+            document.getElementById('heroPrice').textContent = ph.price + ' VNĐ';
+            document.getElementById('profileQuote').textContent = ph.quote;
+            document.getElementById('aboutText').textContent = ph.about;
+            document.getElementById('statJobs').textContent = ph.completedJobs;
+            document.getElementById('statExp').textContent = ph.experience;
+            document.getElementById('statRating').textContent = ph.rating;
+
+            if (ph.images && ph.images.length) {
+                document.getElementById('heroBg').style.backgroundImage = `url('${ph.images[0]}')`;
+            }
+
+            // Photo strip
+            const strip = document.getElementById('photoStrip');
+            (ph.images || []).forEach((img, i) => {
+                const div = document.createElement('div');
+                div.className = 'flex-shrink-0 rounded-xl overflow-hidden cursor-pointer';
+                div.style.cssText = `width:72px;height:72px;background:url('${img}') center/cover;border:2px solid ${i === 0 ? '#ff4200' : 'transparent'};border-radius:12px;`;
+                div.onclick = () => {
+                    document.getElementById('heroBg').style.backgroundImage = `url('${img}')`;
+                    strip.querySelectorAll('div').forEach(d => d.style.borderColor = 'transparent');
+                    div.style.borderColor = '#ff4200';
+                };
+                strip.appendChild(div);
+            });
+
+            // Specialties
+            const spEl = document.getElementById('specialties');
+            (ph.tags || []).forEach(tag => {
+                const s = document.createElement('span');
+                s.className = 'spec-badge';
+                s.textContent = tag;
+                spEl.appendChild(s);
+            });
+
+            // Gallery
+            const grid = document.getElementById('galleryGrid');
+            (ph.images || []).forEach((img, i) => {
+                const d = document.createElement('div');
+                d.className = 'gallery-item' + (i === 0 ? ' featured' : '');
+                d.style.backgroundImage = `url('${img}')`;
+                grid.appendChild(d);
+            });
+
+            // Fav state
+            const favs = PicKicStore.getFavorites();
+            updateFavUI(favs.includes(ph.id));
+
+            // Scroll reveal
+            const revEls = document.querySelectorAll('.reveal');
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+            }, { threshold: 0.1 });
+            revEls.forEach(el => obs.observe(el));
+
+            // Time slot selection
+            document.querySelectorAll('.time-slot:not(.unavailable)').forEach(slot => {
+                slot.addEventListener('click', () => {
+                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                    slot.classList.add('selected');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
