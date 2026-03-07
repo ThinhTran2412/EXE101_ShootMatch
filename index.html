@@ -83,7 +83,7 @@
     .hero-headline {
       font-family: 'Anton', sans-serif;
       font-weight: 400;
-      line-height: 0.95;
+      line-height: 1.4;
       letter-spacing: 0.01em;
     }
 
@@ -122,23 +122,46 @@
       grid-column: span 2;
     }
 
-    /* Story ring */
-    .story-ring {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      border: 2.5px solid #ff4200;
-      padding: 2px;
+    /* Featured photographer block (rectangular) */
+    .featured-block {
+      width: 140px;
+      height: 180px;
+      border-radius: 24px;
       overflow: hidden;
       flex-shrink: 0;
       cursor: pointer;
+      position: relative;
     }
 
-    .story-ring img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
+    .featured-block .bg-img {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .featured-block:hover .bg-img {
+      transform: scale(1.1);
+    }
+
+    .featured-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 12px;
+    }
+
+    .featured-name {
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
     }
 
     /* Section header */
@@ -178,36 +201,36 @@
     <main class="pb-28">
 
       <!-- ── HERO ── -->
-      <section class="px-5 pt-6 pb-4">
-        <p id="welcomeGreet" class="text-[10px] uppercase tracking-[0.3em] opacity-40 mb-3">Welcome back</p>
-        <div class="hero-headline text-[52px] text-accent mb-4">
-          PICK<br />
-          <span style="color:#ff4200;">NGƯỜI</span><br />
-          PICK ĐÚNG<br />
-          <span style="color:#ff4200;">KHOẢNH</span><br />KHẮC
-        </div>
-        <div class="flex gap-3 mb-5">
-          <div class="orange-pill px-4 py-2 text-center">
-            <p class="text-lg font-bold leading-none">500+</p>
-            <p class="text-[9px] uppercase tracking-wider opacity-80">Photographers</p>
-          </div>
-          <div class="border border-accent/10 rounded-full px-4 py-2 text-center">
-            <p id="statBookings" class="text-lg font-bold leading-none">...</p>
-            <p class="text-[9px] uppercase tracking-wider opacity-50">Bookings</p>
-          </div>
-          <div class="border border-accent/10 rounded-full px-4 py-2 text-center">
-            <p id="statFavs" class="text-lg font-bold leading-none">...</p>
-            <p class="text-[9px] uppercase tracking-wider opacity-50">Yêu thích</p>
+      <section class="w-full pt-0 pb-4 flex flex-col items-center relative">
+        <!-- Artistic Hero Banner Box - Full Width & Rectangular (No Rounded Corners) -->
+        <div class="w-full relative py-14 px-6 overflow-hidden mb-10 flex flex-col items-center shadow-xl">
+          <!-- Background Image -->
+          <div
+            class="absolute inset-0 bg-cover bg-center transform hover:scale-105 transition-transform duration-[3000ms]"
+            style="background-image:url('Picture/ebe8812dd5dd5b8302cc19.jpg');"></div>
+          <!-- Overlays -->
+          <div class="absolute inset-0 bg-gradient-to-b from-accent/90 via-accent/60 to-accent/95"></div>
+
+          <!-- Content -->
+          <div class="relative z-10 w-full flex flex-col items-center max-w-xl">
+            <p class="text-[10px] uppercase tracking-[0.5em] text-primary/50 mb-6 text-center">PicKic Studio</p>
+            <div class="hero-headline text-[38px] text-primary mb-2 text-center drop-shadow-2xl">
+              PICK ĐÚNG <span style="color:#ff4200;">NGƯỜI</span><br />
+              PICK ĐÚNG <span style="color:#ff4200;">KHOẢNH KHẮC</span>
+            </div>
           </div>
         </div>
-        <div class="flex gap-2">
+
+        <!-- Primary Action Buttons - Standardized with the flow -->
+        <div class="flex gap-3 w-full max-w-sm px-5 relative z-20 mb-4">
           <a href="discovery.html"
-            class="action-chip flex-1 flex items-center justify-center gap-2 bg-accent text-primary rounded-full py-3 px-4 text-xs font-bold uppercase tracking-wider">
-            <span class="material-symbols-outlined text-base">explore</span>Khám phá
+            class="action-chip flex-1 flex items-center justify-center gap-3 bg-accent text-primary rounded-full py-4 px-6 text-xs font-bold uppercase tracking-widest shadow-xl">
+            <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">explore</span>
+            Khám phá
           </a>
           <a href="search.html"
-            class="action-chip flex items-center justify-center gap-2 border border-accent/15 rounded-full py-3 px-4 text-xs font-bold uppercase tracking-wider hover:bg-accent/5">
-            <span class="material-symbols-outlined text-base">tune</span>Lọc
+            class="action-chip flex items-center justify-center gap-2 bg-primary text-accent border border-accent/10 rounded-full py-4 px-6 text-xs font-bold uppercase tracking-wider shadow-lg hover:bg-accent/5 transition-all">
+            <span class="material-symbols-outlined text-xl">tune</span>
           </a>
         </div>
       </section>
@@ -219,34 +242,48 @@
           <a href="discovery.html" class="text-[10px] uppercase tracking-widest opacity-40 hover:opacity-80">Xem tất
             cả</a>
         </div>
-        <div class="cat-strip">
-          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph001')">
-            <div class="story-ring" style="background:url('Picture/ebe8812dd5dd5b8302cc19.jpg') center/cover;"></div>
-            <span class="text-[10px] font-semibold text-center leading-none">Elena<br />Vance</span>
+        <div class="cat-strip px-5 -mx-5 pb-6">
+          <div class="featured-block shadow-lg" onclick="viewProfile('ph001')">
+            <div class="bg-img" style="background-image:url('Picture/ebe8812dd5dd5b8302cc19.jpg');"></div>
+            <div class="featured-overlay">
+              <span class="featured-name">Elena Vance</span>
+            </div>
           </div>
-          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph002')">
-            <div class="story-ring" style="background:url('Picture/e64e9293c663483d117210.jpg') center/cover;"></div>
-            <span class="text-[10px] font-semibold text-center leading-none">Minh<br />Khải</span>
+          <div class="featured-block shadow-lg" onclick="viewProfile('ph002')">
+            <div class="bg-img" style="background-image:url('Picture/e64e9293c663483d117210.jpg');"></div>
+            <div class="featured-overlay">
+              <span class="featured-name">Minh Khải</span>
+            </div>
           </div>
-          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph003')">
-            <div class="story-ring" style="background:url('Picture/208a3fac6b5ce502bc4d4.jpg') center/cover;"></div>
-            <span class="text-[10px] font-semibold text-center leading-none">Lisa<br />Nakamura</span>
+          <div class="featured-block shadow-lg" onclick="viewProfile('ph003')">
+            <div class="bg-img" style="background-image:url('Picture/208a3fac6b5ce502bc4d4.jpg');"></div>
+            <div class="featured-overlay">
+              <span class="featured-name">Lisa Nakamura</span>
+            </div>
           </div>
-          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph007')">
-            <div class="story-ring" style="background:url('Picture/aedee057ada723f97ab630.jpg') center/cover;"></div>
-            <span class="text-[10px] font-semibold text-center leading-none">Sophia<br />Lê</span>
+          <div class="featured-block shadow-lg" onclick="viewProfile('ph007')">
+            <div class="bg-img" style="background-image:url('Picture/aedee057ada723f97ab630.jpg');"></div>
+            <div class="featured-overlay">
+              <span class="featured-name">Sophia Lê</span>
+            </div>
           </div>
-          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph009')">
-            <div class="story-ring" style="background:url('Picture/8ca3508804788a26d3697.jpg') center/cover;"></div>
-            <span class="text-[10px] font-semibold text-center leading-none">Yuki<br />Tanaka</span>
+          <div class="featured-block shadow-lg" onclick="viewProfile('ph009')">
+            <div class="bg-img" style="background-image:url('Picture/8ca3508804788a26d3697.jpg');"></div>
+            <div class="featured-overlay">
+              <span class="featured-name">Yuki Tanaka</span>
+            </div>
           </div>
-          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph011')">
-            <div class="story-ring" style="background:url('Picture/2d5c71802570ab2ef26111.jpg') center/cover;"></div>
-            <span class="text-[10px] font-semibold text-center leading-none">Mai<br />Phương</span>
+          <div class="featured-block shadow-lg" onclick="viewProfile('ph011')">
+            <div class="bg-img" style="background-image:url('Picture/2d5c71802570ab2ef26111.jpg');"></div>
+            <div class="featured-overlay">
+              <span class="featured-name">Mai Phương</span>
+            </div>
           </div>
-          <div class="flex flex-col items-center gap-1 flex-shrink-0 cursor-pointer" onclick="viewProfile('ph006')">
-            <div class="story-ring" style="background:url('Picture/46ead19796671839417641.jpg') center/cover;"></div>
-            <span class="text-[10px] font-semibold text-center leading-none">Alvaro<br />Reyes</span>
+          <div class="featured-block shadow-lg" onclick="viewProfile('ph006')">
+            <div class="bg-img" style="background-image:url('Picture/46ead19796671839417641.jpg');"></div>
+            <div class="featured-overlay">
+              <span class="featured-name">Alvaro Reyes</span>
+            </div>
           </div>
         </div>
       </section>
@@ -511,10 +548,6 @@
     document.addEventListener("DOMContentLoaded", function () {
       PicKicStore.refreshNotifBadge();
       const user = PicKicStore.getUser();
-      if (user) {
-        const firstName = user.name.split(" ").pop();
-        document.getElementById("welcomeGreet").textContent = "Chào, " + firstName + " 👋";
-      }
       const bookings = PicKicStore.getBookings();
       const favs = PicKicStore.getFavorites();
       const bEl = document.getElementById("statBookings");
