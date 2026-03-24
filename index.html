@@ -231,20 +231,32 @@
     <!-- Top Navigation -->
     <header
       class="sticky top-0 z-40 bg-primary/90 backdrop-blur-md px-5 py-4 flex items-center justify-between border-b border-accent/8">
-      <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="h-14 w-auto" />
+      <a href="landing.html">
+        <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="h-14 w-auto" />
+      </a>
       <div class="flex items-center gap-3">
         <a href="search.html"
           class="flex items-center justify-center size-9 rounded-full border border-accent/10 hover:bg-accent/5 transition-colors">
           <span class="material-symbols-outlined text-lg">search</span>
         </a>
-        <a href="notifications.html"
-          class="relative flex items-center justify-center size-9 rounded-full border border-accent/10 hover:bg-accent/5 transition-colors">
-          <span class="material-symbols-outlined text-lg">notifications</span>
-          <span id="notifDot" class="absolute top-1 right-1 size-2 bg-red-500 rounded-full notif-badge"></span>
-        </a>
-        <a href="profile.html" class="flex items-center justify-center size-9 rounded-full bg-accent text-primary">
-          <span class="material-symbols-outlined text-lg">person</span>
-        </a>
+        
+        <!-- Logged In Actions -->
+        <div id="loggedInActions" class="hidden flex items-center gap-3">
+          <a href="notifications.html"
+            class="relative flex items-center justify-center size-9 rounded-full border border-accent/10 hover:bg-accent/5 transition-colors">
+            <span class="material-symbols-outlined text-lg">notifications</span>
+            <span id="notifDot" class="absolute top-1 right-1 size-2 bg-red-500 rounded-full notif-badge"></span>
+          </a>
+          <a href="profile.html" class="flex items-center justify-center size-9 rounded-full bg-accent text-primary">
+            <span class="material-symbols-outlined text-lg">person</span>
+          </a>
+        </div>
+
+        <!-- Guest Actions -->
+        <div id="guestActions" class="hidden flex items-center gap-2">
+          <a href="login.html" class="text-[10px] font-bold uppercase tracking-wider px-3 py-2 border border-accent/10 rounded-full hover:bg-accent/5">Đăng Nhập</a>
+          <a href="register.html" class="text-[10px] font-bold uppercase tracking-wider px-3 py-2 bg-orange text-primary rounded-full shadow-lg shadow-orange/20">Đăng Ký</a>
+        </div>
       </div>
     </header>
 
@@ -549,10 +561,12 @@
         </div>
       </section>
 
-      <!-- ── CTA ── -->
       <div class="text-center py-6 mx-5 border-t border-accent/5">
-        <p class="text-xs opacity-40 mb-4">Chưa có tài khoản?</p>
-        <a href="register.html" class="modern-btn-primary inline-block px-8 py-4 font-anton">Đăng Ký Ngay</a>
+        <p class="text-xs opacity-40 mb-4" id="cta-guest-msg">Chưa có tài khoản?</p>
+        <div class="flex flex-col gap-3 items-center">
+          <a href="register.html" class="modern-btn-primary inline-block px-12 py-4 font-anton w-full max-w-xs" id="cta-reg-btn">Đăng Ký Ngay</a>
+          <p class="text-[10px] opacity-40 mt-2" id="cta-login-msg">Đã có tài khoản? <a href="login.html" class="text-orange font-bold">Đăng nhập</a></p>
+        </div>
         <p class="text-[10px] opacity-40 mt-4">Miễn phí • Xác minh nhanh chóng</p>
       </div>
 
@@ -582,13 +596,29 @@
     </nav>
   </div>
   <script>
-    // ── Auth Guard: landing page for guests, dashboard for photographers
+    // ── Auth Guard & UI Updates
     (function () {
       const session = PicKicAuth.getSession();
-      if (!session) {
-        window.location.href = 'landing.html';
-      } else if (session.role === 'photographer') {
+      
+      // 1. Redirect photographers to their landing
+      if (session && session.role === 'photographer') {
         window.location.href = 'photographer-landing.html';
+        return;
+      }
+
+      // 2. Update Header & UI based on login state
+      const loggedInEl = document.getElementById('loggedInActions');
+      const guestEl    = document.getElementById('guestActions');
+      const ctaMsg     = document.getElementById('cta-guest-msg');
+      const ctaLogin   = document.getElementById('cta-login-msg');
+
+      if (session) {
+        loggedInEl.classList.remove('hidden');
+        if(ctaMsg) ctaMsg.style.display = 'none';
+        if(ctaLogin) ctaLogin.style.display = 'none';
+        // Profile link in header already exists in loggedInEl
+      } else {
+        guestEl.classList.remove('hidden');
       }
     })();
 

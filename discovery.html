@@ -333,17 +333,26 @@
             <!-- Phần 1: Header (Giữ nguyên kích thước - flex-shrink-0) -->
             <div class="flex items-center px-5 pt-3 pb-1 justify-between z-10 flex-shrink-0">
                 <a href="index.html"
-                    class="text-accent flex size-11 shrink-0 items-center justify-center cursor-pointer hover:opacity-60 transition-opacity rounded-full border border-accent/10">
-                    <span class="material-symbols-outlined text-[22px] font-extralight">arrow_back</span>
+                    class="text-accent flex size-10 shrink-0 items-center justify-center cursor-pointer hover:opacity-60 transition-opacity rounded-full border border-accent/10">
+                    <span class="material-symbols-outlined text-[20px] font-extralight">arrow_back</span>
                 </a>
                 <div class="text-center">
-                    <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="h-16 w-auto" />
-                    <p class="text-[9px] uppercase tracking-widest opacity-40 font-mono">Discovery Reel</p>
+                    <a href="landing.html">
+                        <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="h-14 w-auto" />
+                    </a>
                 </div>
-                <a href="filters.html"
-                    class="flex size-11 items-center justify-center overflow-hidden rounded-full border border-accent/10 hover:bg-accent/5 transition-colors">
-                    <span class="material-symbols-outlined text-[20px]">tune</span>
-                </a>
+                
+                <div class="flex items-center gap-2">
+                    <a href="filters.html"
+                        class="flex size-10 items-center justify-center overflow-hidden rounded-full border border-accent/10 hover:bg-accent/5 transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">tune</span>
+                    </a>
+                    
+                    <!-- Auth Actions -->
+                    <div id="authActions" class="flex items-center gap-2">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
             </div>
 
             <!-- Phần 2: Progress Bar (Giữ nguyên kích thước - flex-shrink-0) -->
@@ -419,8 +428,27 @@
     </div>
 
     <script>
-        // ── Auth Guard
-        PicKicAuth.requireLogin();
+        // ── Auth Guard & UI Updates
+        (function () {
+          const session = PicKicAuth.getSession();
+          if (session && session.role === 'photographer') {
+            window.location.href = 'photographer-landing.html';
+            return;
+          }
+
+          const authBlock = document.getElementById('authActions');
+          if (session) {
+            authBlock.innerHTML = `
+              <a href="profile.html" class="flex size-10 items-center justify-center rounded-full bg-accent text-primary">
+                <span class="material-symbols-outlined text-[18px]">person</span>
+              </a>
+            `;
+          } else {
+            authBlock.innerHTML = `
+              <a href="login.html" class="text-[9px] font-bold uppercase tracking-wider px-3 py-2 border border-accent/10 rounded-full hover:bg-accent/5">Login</a>
+            `;
+          }
+        })();
 
         // ─── PHOTOGRAPHER DATA ─────────────────────────────────────────────────────
         const PHOTOGRAPHERS = [
