@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html class="light" lang="vi">
 
 <head>
@@ -16,6 +16,7 @@
     rel="stylesheet" />
   <link rel="stylesheet" href="css/pickic-design-system.css" />
   <script src="js/pickic-store.js"></script>
+  <script src="js/pickic-auth.js"></script>
   <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
@@ -171,6 +172,54 @@
       font-size: 22px;
       letter-spacing: 0.02em;
       color: #1a1a0f;
+    }
+
+    /* ── Simple Bottom Nav ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff7e1;
+      border-top: 1px solid rgba(26,26,15,0.08);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 8px 0 12px;
+      z-index: 9999;
+    }
+
+    .bottom-nav .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: rgba(26,26,15,0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+      padding: 4px 16px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .bottom-nav .nav-item:hover {
+      color: #1a1a0f;
+    }
+
+    .bottom-nav .nav-item.active {
+      color: #ff4200;
+    }
+
+    .bottom-nav .nav-item .nb-icon {
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .bottom-nav .nav-item .nb-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1;
     }
   </style>
 </head>
@@ -410,7 +459,7 @@
             </div>
           </a>
           <!-- Thợ chụp ảnh — with background image and orange overlay -->
-          <a href="picture/index.html" class="photo-card" style="height:140px; background:#1a1a0f;">
+          <a href="photographer-landing.html" class="photo-card" style="height:140px; background:#1a1a0f;">
             <div class="absolute inset-0 bg-cover bg-center opacity-40"
               style="background-image:url('Picture/173fd2fa860a0854511b16.jpg');"></div>
 
@@ -508,53 +557,57 @@
       </div>
 
     </main>
-    <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-primary/90 backdrop-blur-xl border-t border-accent/5 pb-8 pt-3">
-      <div class="flex justify-around items-center max-w-md mx-auto px-6">
-        <a href="index.html" class="flex flex-col items-center gap-1 text-accent">
-          <span class="material-symbols-outlined text-[28px]"
-            style="font-variation-settings: &quot;FILL&quot; 1">home</span>
-          <span class="text-[9px] font-bold uppercase tracking-tighter">Trang chủ</span>
-        </a>
-        <a href="discovery.html"
-          class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
-          <span class="material-symbols-outlined text-[28px]">explore</span>
-          <span class="text-[9px] font-bold uppercase tracking-tighter">Khám phá</span>
-        </a>
-        <a href="search.html"
-          class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
-          <span class="material-symbols-outlined text-[28px]">search</span>
-          <span class="text-[9px] font-bold uppercase tracking-tighter">Tìm kiếm</span>
-        </a>
-        <a href="all-chat.html"
-          class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
-          <span class="material-symbols-outlined text-[28px]">chat_bubble</span>
-          <span class="text-[9px] font-bold uppercase tracking-tighter">Tin nhắn</span>
-        </a>
-        <a href="profile.html"
-          class="flex flex-col items-center gap-1 text-accent/40 hover:text-accent transition-colors">
-          <span class="material-symbols-outlined text-[28px]">person</span>
-          <span class="text-[9px] font-bold uppercase tracking-tighter">Tài khoản</span>
-        </a>
-      </div>
-      <div class="w-32 h-1 bg-accent/10 mx-auto mt-4 rounded-full"></div>
+    <!-- Simple Bottom Navigation -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item active">
+        <span class="material-symbols-outlined nb-icon" style="font-variation-settings:'FILL' 1">home</span>
+        <span class="nb-label">Trang chủ</span>
+      </a>
+      <a href="discovery.html" class="nav-item">
+        <span class="material-symbols-outlined nb-icon">explore</span>
+        <span class="nb-label">Khám phá</span>
+      </a>
+      <a href="search.html" class="nav-item">
+        <span class="material-symbols-outlined nb-icon">search</span>
+        <span class="nb-label">Tìm kiếm</span>
+      </a>
+      <a href="all-chat.html" class="nav-item">
+        <span class="material-symbols-outlined nb-icon">chat_bubble</span>
+        <span class="nb-label">Tin nhắn</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <span class="material-symbols-outlined nb-icon">person</span>
+        <span class="nb-label">Tài khoản</span>
+      </a>
     </nav>
   </div>
   <script>
+    // ── Auth Guard: landing page for guests, dashboard for photographers
+    (function () {
+      const session = PicKicAuth.getSession();
+      if (!session) {
+        window.location.href = 'landing.html';
+      } else if (session.role === 'photographer') {
+        window.location.href = 'photographer-landing.html';
+      }
+    })();
+
     function viewProfile(id) {
       sessionStorage.setItem("viewingPhotographer", id);
       window.location.href = "photo-profile.html";
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-      PicKicStore.refreshNotifBadge();
-      const user = PicKicStore.getUser();
-      const bookings = PicKicStore.getBookings();
-      const favs = PicKicStore.getFavorites();
-      const bEl = document.getElementById("statBookings");
-      const fEl = document.getElementById("statFavs");
-      if (bEl) bEl.textContent = bookings.length;
-      if (fEl) fEl.textContent = favs.length;
+      // PicKic store updates
+      if (typeof PicKicStore !== 'undefined') {
+        PicKicStore.refreshNotifBadge();
+        const bookings = PicKicStore.getBookings();
+        const favs = PicKicStore.getFavorites();
+        const bEl = document.getElementById("statBookings");
+        const fEl = document.getElementById("statFavs");
+        if (bEl) bEl.textContent = bookings.length;
+        if (fEl) fEl.textContent = favs.length;
+      }
     });
   </script>
 </body>

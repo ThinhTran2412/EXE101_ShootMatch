@@ -1,0 +1,601 @@
+<!doctype html>
+<html class="light" lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="description" content="PicKic — Kết nối khách hàng với nhiếp ảnh gia chuyên nghiệp. Tìm, kết nối và đặt lịch chụp ảnh dễ dàng." />
+  <title>PicKic — Nền Tảng Kết Nối Nhiếp Ảnh</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=Anton&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/pickic-design-system.css" />
+  <script src="js/pickic-store.js"></script>
+  <script src="js/pickic-auth.js"></script>
+  <style>
+    /* ── Dark app-shell for landing ── */
+    html, body { background: #111108 !important; }
+    #app-shell  { background: #0a0a06 !important; overflow-x: hidden; }
+
+    :root {
+      --cream: #fff7e1;
+      --dark:  #0a0a06;
+      --orange: #ff4200;
+      --purple: #3617cf;
+      --glass: rgba(255,247,225,0.05);
+      --border: rgba(255,247,225,0.09);
+    }
+
+    /* ══════════════ SECTION 1 — HERO FULL ══════════════ */
+    .lp-hero {
+      position: relative;
+      height: 100vh;
+      min-height: 680px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Layered bg images that crossfade */
+    .hero-slide {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+      filter: brightness(0.38) saturate(0.65);
+    }
+    .hero-slide.visible { opacity: 1; }
+
+    /* Gradient vignette layers */
+    .hero-vig-top { position:absolute;top:0;left:0;right:0;height:200px;background:linear-gradient(to bottom,rgba(10,10,6,0.95),transparent);z-index:2;pointer-events:none; }
+    .hero-vig-bot { position:absolute;bottom:0;left:0;right:0;height:280px;background:linear-gradient(to top,rgba(10,10,6,1) 20%,transparent);z-index:2;pointer-events:none; }
+    .hero-vig-side { position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(10,10,6,0.5) 100%);z-index:2;pointer-events:none; }
+
+    /* Orange glow orb */
+    .hero-orb {
+      position:absolute; bottom:-60px; left:50%; transform:translateX(-50%);
+      width:380px; height:380px;
+      background:radial-gradient(circle,rgba(255,66,0,0.28),transparent 60%);
+      filter:blur(40px); z-index:2; pointer-events:none;
+      animation: orbPulse 5s ease-in-out infinite;
+    }
+    @keyframes orbPulse {
+      0%,100%{opacity:0.7;transform:translateX(-50%) scale(1)}
+      50%    {opacity:1;  transform:translateX(-50%) scale(1.15)}
+    }
+
+    /* Particles */
+    .lp-particles{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;}
+    .lp-particle{position:absolute;border-radius:50%;background:var(--cream);animation:pUp 6s ease-in-out infinite;}
+    @keyframes pUp{0%{opacity:0;transform:translateY(0)}40%{opacity:.6}100%{opacity:0;transform:translateY(-80px)}}
+
+    /* Hero content */
+    .hero-inner {
+      position:relative;z-index:10;
+      display:flex;flex-direction:column;justify-content:space-between;
+      height:100%;padding:0 22px 36px;
+    }
+
+    /* Logo bar */
+    .lp-logobar {
+      display:flex;align-items:center;justify-content:space-between;
+      padding-top:52px;
+    }
+    .lp-logo { height:36px; width:auto; filter:brightness(0) invert(1); opacity:.8; }
+    .lp-login-link {
+      font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+      color:rgba(255,247,225,0.5);text-decoration:none;
+      padding:7px 16px;border:1px solid rgba(255,247,225,0.15);border-radius:20px;
+      backdrop-filter:blur(8px);transition:all .25s;
+    }
+    .lp-login-link:hover{color:var(--cream);border-color:rgba(255,247,225,0.4);}
+
+    /* Eyebrow */
+    .lp-eyebrow{font-size:9px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:rgba(255,247,225,.4);margin-bottom:14px;text-align:center;}
+
+    /* Main headline */
+    .lp-headline {
+      font-family:'Anton',sans-serif;
+      font-size:clamp(46px,13vw,68px);
+      color:var(--cream);line-height:1.0;letter-spacing:.01em;
+      text-align:center;
+      animation:hUp .9s cubic-bezier(.22,1,.36,1) both;
+    }
+    .lp-headline .hl{color:var(--orange);}
+    @keyframes hUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+
+    .lp-sub{
+      font-size:12px;color:rgba(255,247,225,.42);text-align:center;
+      line-height:1.7;letter-spacing:.03em;margin:14px auto 0;max-width:260px;
+      animation:hUp .9s .15s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    /* Slideshow dots */
+    .slide-dots{display:flex;gap:6px;justify-content:center;margin-top:14px;}
+    .slide-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,247,225,.25);cursor:pointer;transition:all .3s;}
+    .slide-dot.on{width:18px;border-radius:3px;background:var(--orange);}
+
+    /* ── DUAL CTA ── */
+    .dual-cta {
+      display:grid;grid-template-columns:1fr 1fr;gap:10px;
+      animation:hUp .9s .3s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    .cta-customer {
+      display:flex;flex-direction:column;align-items:center;
+      padding:18px 14px;border-radius:22px;
+      background:linear-gradient(145deg,rgba(255,66,0,0.22),rgba(255,66,0,0.08));
+      border:1.5px solid rgba(255,66,0,0.4);
+      text-decoration:none;cursor:pointer;
+      transition:all .3s cubic-bezier(.34,1.56,.64,1);
+      position:relative;overflow:hidden;
+    }
+    .cta-customer::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(145deg,rgba(255,66,0,0.35),transparent);
+      opacity:0;transition:opacity .3s;
+    }
+    .cta-customer:hover{transform:translateY(-4px);border-color:rgba(255,66,0,.7);box-shadow:0 12px 36px rgba(255,66,0,0.3);}
+    .cta-customer:hover::before{opacity:1;}
+
+    .cta-photographer {
+      display:flex;flex-direction:column;align-items:center;
+      padding:18px 14px;border-radius:22px;
+      background:linear-gradient(145deg,rgba(54,23,207,0.22),rgba(54,23,207,0.08));
+      border:1.5px solid rgba(54,23,207,0.4);
+      text-decoration:none;cursor:pointer;
+      transition:all .3s cubic-bezier(.34,1.56,.64,1);
+      position:relative;overflow:hidden;
+    }
+    .cta-photographer::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(145deg,rgba(54,23,207,0.35),transparent);
+      opacity:0;transition:opacity .3s;
+    }
+    .cta-photographer:hover{transform:translateY(-4px);border-color:rgba(54,23,207,.7);box-shadow:0 12px 36px rgba(54,23,207,0.3);}
+    .cta-photographer:hover::before{opacity:1;}
+
+    .cta-icon-wrap{
+      width:54px;height:54px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      margin-bottom:10px;
+    }
+    .cta-customer .cta-icon-wrap{background:rgba(255,66,0,0.18);}
+    .cta-photographer .cta-icon-wrap{background:rgba(54,23,207,0.2);}
+    .cta-icon-wrap .material-symbols-outlined{font-size:26px;}
+    .cta-customer  .cta-icon-wrap .material-symbols-outlined{color:var(--orange);}
+    .cta-photographer .cta-icon-wrap .material-symbols-outlined{color:#826eff;}
+
+    .cta-role{font-size:13px;font-weight:800;color:var(--cream);letter-spacing:.02em;margin-bottom:3px;}
+    .cta-desc{font-size:9.5px;color:rgba(255,247,225,.4);text-align:center;line-height:1.4;}
+    .cta-arrow{
+      margin-top:10px;display:flex;align-items:center;gap:4px;
+      font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    }
+    .cta-customer  .cta-arrow{color:rgba(255,66,0,.8);}
+    .cta-photographer .cta-arrow{color:rgba(130,110,255,.8);}
+    .cta-arrow .material-symbols-outlined{font-size:14px;}
+
+    /* ══════════════ SECTION 2 — STATS ══════════════ */
+    .lp-stats {
+      display:grid;grid-template-columns:repeat(3,1fr);
+      gap:1px;background:var(--border);
+      margin:0;
+    }
+    .lp-stat{background:#0d0d0a;padding:22px 10px;text-align:center;}
+    .lp-stat-num{font-family:'Anton',sans-serif;font-size:28px;color:var(--cream);line-height:1;}
+    .lp-stat-num span{color:var(--orange);}
+    .lp-stat-lbl{font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,247,225,.3);margin-top:4px;}
+
+    /* ══════════════ SECTION 3 — HOW IT WORKS ══════════════ */
+    .lp-section{padding:32px 20px;}
+    .lp-sec-label{font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;}
+    .lp-sec-title{font-family:'Anton',sans-serif;font-size:28px;color:var(--cream);line-height:1.1;letter-spacing:.01em;margin-bottom:20px;}
+
+    .steps-grid{display:flex;flex-direction:column;gap:14px;}
+    .step-item{
+      display:flex;align-items:flex-start;gap:14px;
+      padding:16px 16px;
+      background:var(--glass);border:1px solid var(--border);
+      border-radius:16px;
+    }
+    .step-num{
+      flex-shrink:0;width:34px;height:34px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Anton',sans-serif;font-size:14px;color:var(--dark);
+      background:var(--orange);
+    }
+    .step-num.purple{background:var(--purple);color:var(--cream);}
+    .step-title{font-size:13px;font-weight:700;color:var(--cream);margin-bottom:3px;}
+    .step-desc{font-size:11px;color:rgba(255,247,225,.38);line-height:1.5;}
+
+    /* ══════════════ SECTION 4 — PHOTO MOSAIC ══════════════ */
+    .lp-mosaic{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      grid-template-rows:110px 110px 110px;
+      gap:5px;
+      padding:0 20px 0;
+    }
+    .lpm{background-size:cover;background-position:center;border-radius:12px;overflow:hidden;cursor:pointer;transition:filter .3s,transform .3s;}
+    .lpm:hover{filter:brightness(.75);transform:scale(1.02);}
+    .lpm.tall{grid-row:span 2;}
+    .lpm.wide{grid-column:span 2;}
+    .lpm.wide-tall{grid-column:span 2;grid-row:span 2;}
+
+    /* ══════════════ SECTION 5 — WHO FOR ══════════════ */
+    .who-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .who-card{
+      border-radius:20px;overflow:hidden;position:relative;
+      min-height:200px;cursor:pointer;text-decoration:none;
+      transition:transform .3s,box-shadow .3s;
+    }
+    .who-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.5);}
+    .who-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .5s ease;}
+    .who-card:hover .who-bg{transform:scale(1.07);}
+    .who-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:16px 14px;}
+    .who-tag{font-size:8.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:20px;width:fit-content;margin-bottom:8px;}
+    .who-card.customer .who-tag{background:rgba(255,66,0,0.85);color:var(--cream);}
+    .who-card.photographer .who-tag{background:rgba(54,23,207,0.85);color:var(--cream);}
+    .who-title{font-family:'Anton',sans-serif;font-size:19px;color:var(--cream);line-height:1.1;margin-bottom:3px;}
+    .who-sub{font-size:10px;color:rgba(255,247,225,.6);}
+    .who-btn{
+      display:flex;align-items:center;gap:5px;
+      font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--cream);margin-top:10px;
+    }
+    .who-btn .material-symbols-outlined{font-size:13px;}
+
+    /* ══════════════ SECTION 6 — FEATURES ══════════════ */
+    .features-list{display:flex;flex-direction:column;gap:12px;}
+    .feat-item{
+      display:flex;align-items:center;gap:14px;
+      padding:14px 16px;
+      background:var(--glass);border:1px solid var(--border);border-radius:14px;
+    }
+    .feat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .feat-icon .material-symbols-outlined{font-size:22px;}
+    .feat-title{font-size:13px;font-weight:700;color:var(--cream);margin-bottom:2px;}
+    .feat-desc{font-size:10px;color:rgba(255,247,225,.35);line-height:1.4;}
+
+    /* ══════════════ SECTION 7 — FINAL CTA ══════════════ */
+    .final-cta{
+      margin:0 20px 32px;
+      border-radius:24px;overflow:hidden;position:relative;
+      padding:32px 22px;
+      background:linear-gradient(135deg,rgba(255,66,0,0.15),rgba(26,26,15,0.5));
+      border:1px solid rgba(255,66,0,0.2);
+      text-align:center;
+    }
+    .final-cta::before{
+      content:'';position:absolute;inset:0;
+      background-image:url('Picture/ebe8812dd5dd5b8302cc19.jpg');
+      background-size:cover;background-position:center;
+      opacity:.08;filter:saturate(.4);
+    }
+    .final-cta > *{position:relative;z-index:1;}
+    .fc-title{font-family:'Anton',sans-serif;font-size:32px;color:var(--cream);line-height:1.05;letter-spacing:.01em;margin-bottom:8px;}
+    .fc-title .hl{color:var(--orange);}
+    .fc-sub{font-size:11px;color:rgba(255,247,225,.4);margin-bottom:22px;line-height:1.6;}
+    .fc-btns{display:flex;flex-direction:column;gap:10px;}
+    .fc-btn-main{
+      display:block;width:100%;padding:16px;border:none;border-radius:14px;
+      background:var(--orange);color:var(--cream);
+      font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:800;
+      letter-spacing:.14em;text-transform:uppercase;
+      text-decoration:none;text-align:center;
+      box-shadow:0 8px 28px rgba(255,66,0,.4);
+      transition:all .25s;
+    }
+    .fc-btn-main:hover{opacity:.92;transform:translateY(-1px);}
+    .fc-btn-sec{
+      display:block;width:100%;padding:14px;border:1px solid rgba(255,247,225,.12);
+      border-radius:14px;background:transparent;color:rgba(255,247,225,.6);
+      font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:700;
+      letter-spacing:.12em;text-transform:uppercase;
+      text-decoration:none;text-align:center;transition:all .25s;
+    }
+    .fc-btn-sec:hover{color:var(--cream);border-color:rgba(255,247,225,.3);}
+
+    /* Footer */
+    .lp-footer{
+      padding:20px;border-top:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .lp-footer-logo{height:28px;width:auto;filter:brightness(0) invert(1);opacity:.3;}
+    .lp-footer-links{display:flex;gap:16px;}
+    .lp-footer-links a{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,247,225,.2);text-decoration:none;transition:color .2s;}
+    .lp-footer-links a:hover{color:rgba(255,247,225,.6);}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+    .reveal.in{opacity:1;transform:translateY(0);}
+  </style>
+</head>
+<body>
+<div id="app-shell">
+  <div class="film-grain"></div>
+
+  <!-- ══ HERO ══ -->
+  <section class="lp-hero">
+    <!-- BG Slideshow -->
+    <div class="hero-slide visible" id="sl0" style="background-image:url('Picture/ebe8812dd5dd5b8302cc19.jpg');"></div>
+    <div class="hero-slide"          id="sl1" style="background-image:url('Picture/208a3fac6b5ce502bc4d4.jpg');"></div>
+    <div class="hero-slide"          id="sl2" style="background-image:url('Picture/aedee057ada723f97ab630.jpg');"></div>
+    <div class="hero-slide"          id="sl3" style="background-image:url('Picture/46ead19796671839417641.jpg');"></div>
+
+    <div class="hero-vig-top"></div>
+    <div class="hero-vig-bot"></div>
+    <div class="hero-vig-side"></div>
+    <div class="hero-orb"></div>
+    <div class="lp-particles" id="lp-particles"></div>
+
+    <div class="hero-inner">
+      <!-- Logo + login -->
+      <div class="lp-logobar">
+        <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="lp-logo" />
+        <a href="login.html" class="lp-login-link">Đăng Nhập</a>
+      </div>
+
+      <!-- Center content -->
+      <div style="text-align:center;">
+        <p class="lp-eyebrow">Nền Tảng Nhiếp Ảnh Số 1 Việt Nam</p>
+        <h1 class="lp-headline">
+          PICK ĐÚNG<br/><span class="hl">NGƯỜI</span> PICK<br/>ĐÚNG <span class="hl">KHO&#7854;NH KH&#7854;C</span>
+        </h1>
+        <p class="lp-sub">Kết nối với 1,200+ nhiếp ảnh gia chuyên nghiệp. Đặt lịch nhanh chóng, tận hưởng trải nghiệm chụp ảnh đẳng cấp.</p>
+        <!-- Dots -->
+        <div class="slide-dots" id="slideDots">
+          <div class="slide-dot on" data-i="0"></div>
+          <div class="slide-dot" data-i="1"></div>
+          <div class="slide-dot" data-i="2"></div>
+          <div class="slide-dot" data-i="3"></div>
+        </div>
+      </div>
+
+      <!-- Dual CTA -->
+      <div>
+        <p style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,247,225,.25);text-align:center;margin-bottom:12px;">Bạn là ai?</p>
+        <div class="dual-cta">
+          <a href="register.html?role=customer" class="cta-customer" onclick="setRole('customer')">
+            <div class="cta-icon-wrap">
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">person_search</span>
+            </div>
+            <div class="cta-role">Khách Hàng</div>
+            <div class="cta-desc">Tôi muốn tìm &amp; đặt lịch thợ chụp ảnh</div>
+            <div class="cta-arrow">
+              Bắt đầu <span class="material-symbols-outlined">arrow_forward</span>
+            </div>
+          </a>
+          <a href="register.html?role=photographer" class="cta-photographer" onclick="setRole('photographer')">
+            <div class="cta-icon-wrap">
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">photo_camera</span>
+            </div>
+            <div class="cta-role">Thợ Chụp Ảnh</div>
+            <div class="cta-desc">Tôi muốn nhận booking &amp; showcase portfolio</div>
+            <div class="cta-arrow">
+              Tham gia <span class="material-symbols-outlined">arrow_forward</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ STATS ══ -->
+  <div class="lp-stats reveal">
+    <div class="lp-stat">
+      <div class="lp-stat-num"><span>1,200</span>+</div>
+      <div class="lp-stat-lbl">Thợ chụp ảnh</div>
+    </div>
+    <div class="lp-stat">
+      <div class="lp-stat-num"><span>48K</span>+</div>
+      <div class="lp-stat-lbl">Booking thành công</div>
+    </div>
+    <div class="lp-stat">
+      <div class="lp-stat-num"><span>4.9</span>★</div>
+      <div class="lp-stat-lbl">Đánh giá TB</div>
+    </div>
+  </div>
+
+  <!-- ══ PHOTO MOSAIC ══ -->
+  <section style="padding:24px 20px 0; background:#0a0a06;">
+    <p class="lp-sec-label reveal">Khoảnh Khắc</p>
+    <div class="lp-mosaic reveal">
+      <div class="lpm tall"      style="background-image:url('Picture/928cf20bbffb31a568ea35.jpg');"></div>
+      <div class="lpm"           style="background-image:url('Picture/aedee057ada723f97ab630.jpg');"></div>
+      <div class="lpm"           style="background-image:url('Picture/8ca3508804788a26d3697.jpg');"></div>
+      <div class="lpm wide"      style="background-image:url('Picture/c10a06db522bdc75853a13.jpg');"></div>
+      <div class="lpm"           style="background-image:url('Picture/2d5c71802570ab2ef26111.jpg');"></div>
+      <div class="lpm"           style="background-image:url('Picture/46ead19796671839417641.jpg');"></div>
+      <div class="lpm"           style="background-image:url('Picture/a3eecd2b99db17854eca20.jpg');"></div>
+    </div>
+  </section>
+
+  <!-- ══ WHO IS IT FOR ══ -->
+  <section class="lp-section reveal" style="background:#0a0a06;">
+    <p class="lp-sec-label">Dành Cho</p>
+    <h2 class="lp-sec-title">Ai có thể<br/>dùng PicKic?</h2>
+    <div class="who-cards">
+      <a href="register.html" class="who-card customer" onclick="setRole('customer')">
+        <div class="who-bg" style="background-image:url('Picture/8282dd4689b607e85ea723.jpg');background-image:linear-gradient(to bottom,rgba(0,0,0,.1),rgba(0,0,0,.7)),url('Picture/8282dd4689b607e85ea723.jpg');"></div>
+        <div class="who-overlay" style="background:linear-gradient(to top,rgba(10,10,6,.9) 20%,transparent);">
+          <div class="who-tag">Khách Hàng</div>
+          <div class="who-title">Tìm Thợ<br/>Chụp Ảnh</div>
+          <div class="who-sub">Đặt lịch nhanh, giá minh bạch</div>
+          <div class="who-btn">Đăng ký ngay <span class="material-symbols-outlined">arrow_forward</span></div>
+        </div>
+      </a>
+      <a href="register.html" class="who-card photographer" onclick="setRole('photographer')">
+        <div class="who-bg" style="background-image:url('Picture/208a3fac6b5ce502bc4d4.jpg');"></div>
+        <div class="who-overlay" style="background:linear-gradient(to top,rgba(10,10,6,.9) 20%,transparent);">
+          <div class="who-tag">Thợ Ảnh</div>
+          <div class="who-title">Nhận<br/>Booking</div>
+          <div class="who-sub">Portfolio đẹp, thu nhập ổn định</div>
+          <div class="who-btn">Tham gia <span class="material-symbols-outlined">arrow_forward</span></div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══ HOW IT WORKS ══ -->
+  <section class="lp-section reveal" style="background:#0d0d0a;padding-top:0;">
+    <p class="lp-sec-label">Quy Trình</p>
+    <h2 class="lp-sec-title">Chỉ 3 bước<br/>đơn giản</h2>
+    <div class="steps-grid">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Khám Phá &amp; Lọc</div>
+          <div class="step-desc">Browse hàng trăm nhiếp ảnh gia, lọc theo phong cách, giá, khu vực.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Match &amp; Đặt Lịch</div>
+          <div class="step-desc">Xem portfolio, đọc review, chọn ngày giờ và xác nhận booking trong vài giây.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num purple">3</div>
+        <div>
+          <div class="step-title">Chụp &amp; Tận Hưởng</div>
+          <div class="step-desc">Gặp gỡ nhiếp ảnh gia, tận hưởng buổi chụp, nhận ảnh đẹp về máy.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FEATURES ══ -->
+  <section class="lp-section reveal" style="background:#0a0a06;padding-top:0;">
+    <p class="lp-sec-label">Tính Năng</p>
+    <h2 class="lp-sec-title">Vì sao chọn<br/>PicKic?</h2>
+    <div class="features-list">
+      <div class="feat-item">
+        <div class="feat-icon" style="background:rgba(255,66,0,0.12);">
+          <span class="material-symbols-outlined" style="color:var(--orange);font-variation-settings:'FILL' 1;">verified</span>
+        </div>
+        <div>
+          <div class="feat-title">Xác Minh 100%</div>
+          <div class="feat-desc">Mọi nhiếp ảnh gia đều được kiểm duyệt portfolio và danh tính trước khi lên nền tảng.</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon" style="background:rgba(34,197,94,0.12);">
+          <span class="material-symbols-outlined" style="color:#4ade80;font-variation-settings:'FILL' 1;">payments</span>
+        </div>
+        <div>
+          <div class="feat-title">Thanh Toán An Toàn</div>
+          <div class="feat-desc">Tiền được giữ escrow cho đến khi buổi chụp hoàn thành và cả hai bên hài lòng.</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon" style="background:rgba(130,110,255,0.12);">
+          <span class="material-symbols-outlined" style="color:#826eff;font-variation-settings:'FILL' 1;">chat_bubble</span>
+        </div>
+        <div>
+          <div class="feat-title">Chat Trực Tiếp</div>
+          <div class="feat-desc">Trao đổi concept, yêu cầu và lịch trình với nhiếp ảnh gia trực tiếp trong app.</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon" style="background:rgba(251,191,36,0.12);">
+          <span class="material-symbols-outlined" style="color:#fbbf24;font-variation-settings:'FILL' 1;">star</span>
+        </div>
+        <div>
+          <div class="feat-title">Review Minh Bạch</div>
+          <div class="feat-desc">Đọc đánh giá thực từ khách hàng thật để đưa ra lựa chọn tự tin nhất.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FINAL CTA ══ -->
+  <div class="final-cta reveal" style="background:#0a0a06;padding-top:0;margin:0;padding:0 20px 32px;">
+    <div class="final-cta">
+      <h2 class="fc-title">SẴN SÀNG<br/>BẮT ĐẦU <span class="hl">CHƯA?</span></h2>
+      <p class="fc-sub">Tham gia cộng đồng PicKic ngay hôm nay.<br/>Miễn phí • Xác minh nhanh chóng.</p>
+      <div class="fc-btns">
+        <a href="register.html" class="fc-btn-main">Đăng Ký Miễn Phí</a>
+        <a href="login.html" class="fc-btn-sec">Đã có tài khoản? Đăng Nhập</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="lp-footer">
+    <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="lp-footer-logo" />
+    <div class="lp-footer-links">
+      <a href="#">Điều khoản</a>
+      <a href="#">Bảo mật</a>
+      <a href="#">Hỗ trợ</a>
+    </div>
+  </div>
+
+</div><!-- /app-shell -->
+
+<script>
+  // Nếu đã login → hiện banner "Tiếp tục" thay vì redirect luôn
+  (function(){
+    const s = PicKicAuth.getSession();
+    if(!s) return;
+    const dest = s.role === 'photographer' ? 'photographer-landing.html' : 'index.html';
+    const label = s.role === 'photographer' ? 'Dashboard Thợ Ảnh' : 'Trang Chủ';
+    const banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:0;left:50%;transform:translateX(-50%);width:430px;max-width:100%;z-index:99999;padding:10px 20px;background:rgba(10,10,6,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,247,225,0.1);display:flex;align-items:center;justify-content:space-between;gap:10px;';
+    banner.innerHTML = `
+      <span style="font-size:11px;color:rgba(255,247,225,0.6);font-family:Plus Jakarta Sans,sans-serif;">Xin chào, <strong style="color:#fff7e1;">${s.name}</strong></span>
+      <a href="${dest}" style="font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#ff4200;text-decoration:none;padding:6px 14px;border:1px solid rgba(255,66,0,0.4);border-radius:20px;white-space:nowrap;transition:all .2s;">${label} →</a>
+    `;
+    document.body.appendChild(banner);
+  })();
+
+
+  // Role hint for register page
+  function setRole(role){
+    sessionStorage.setItem('pickic_register_role', role);
+  }
+
+  // ── Particles
+  (function(){
+    const c=document.getElementById('lp-particles');
+    for(let i=0;i<18;i++){
+      const p=document.createElement('div'); p.className='lp-particle';
+      p.style.left=(Math.random()*100)+'%';
+      p.style.top=(10+Math.random()*80)+'%';
+      const s=(1+Math.random()*2.5)+'px'; p.style.width=s; p.style.height=s;
+      p.style.animationDelay=(Math.random()*6)+'s';
+      p.style.animationDuration=(4+Math.random()*5)+'s';
+      p.style.opacity=Math.random()*0.45;
+      c.appendChild(p);
+    }
+  })();
+
+  // ── Hero slideshow
+  (function(){
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots   = document.querySelectorAll('.slide-dot');
+    let cur = 0;
+    function goTo(n){
+      slides[cur].classList.remove('visible');
+      dots[cur].classList.remove('on');
+      cur = n;
+      slides[cur].classList.add('visible');
+      dots[cur].classList.add('on');
+    }
+    dots.forEach(d=>{
+      d.addEventListener('click',()=>goTo(+d.dataset.i));
+    });
+    setInterval(()=>goTo((cur+1)%slides.length), 4000);
+  })();
+
+  // ── Scroll reveal
+  const ios = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); ios.unobserve(e.target); } });
+  },{threshold:.06,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>ios.observe(el));
+</script>
+</body>
+</html>

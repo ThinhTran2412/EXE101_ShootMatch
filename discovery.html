@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="light" lang="vi">
 
 <head>
@@ -16,6 +16,7 @@
         rel="stylesheet" />
     <link rel="stylesheet" href="css/pickic-design-system.css">
     <script src="js/pickic-store.js"></script>
+    <script src="js/pickic-auth.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -418,6 +419,9 @@
     </div>
 
     <script>
+        // ── Auth Guard
+        PicKicAuth.requireLogin();
+
         // ─── PHOTOGRAPHER DATA ─────────────────────────────────────────────────────
         const PHOTOGRAPHERS = [
             {

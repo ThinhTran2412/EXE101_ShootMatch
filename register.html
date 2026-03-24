@@ -1,176 +1,600 @@
-﻿<!doctype html>
+<!doctype html>
 <html class="light" lang="vi">
-
 <head>
   <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
   <title>Đăng Ký - PicKic</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-    rel="stylesheet" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="css/pickic-design-system.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800&family=Anton&display=swap" rel="stylesheet" />
   <script src="js/pickic-store.js"></script>
-  <script id="tailwind-config">
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: "#FFFBF0",
-            accent: "#1a1a0f",
-            "beige-tonal": "#f0f0d0",
-            "beige-deep": "#e8e8c8",
-          },
-          fontFamily: {
-            sans: ["Plus Jakarta Sans", "sans-serif"],
-            display: ["'Fz Anton Round'", "Anton", "sans-serif"],
-          },
-        },
-      },
-    };
-  </script>
+  <script src="js/pickic-auth.js"></script>
   <style>
-    .artistic-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBwioxW3jjy_6uC1TYEOXInAWiG6Lfhucd-W1WaCTQ7qyl_q0i6jj1OY14vSUiNUTGgQdWORgkYjbpRWYAGKHUI7_0uZqa2XjNXoVdZ8orm0Qo0YnWiBanA2CUCj9p6ZHlbZIVDYsmOq3ggx6zDjiinNwBbZ7FYoM5MBA3SJdzYPp6n_Nr_KvjJt1LJ9er_nWvUjOy82Spo0AAss0vPPLWr2sY2SH7NFwyfrf9_400SCeU2c2F1WEl0ARHU0ohmb3hB2D4Cvv6ABdI");
-      background-size: cover;
-      background-position: center;
-      opacity: 0.07;
-      filter: sepia(20%) contrast(90%);
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #fff7e1;
+      --dark: #0f0f09;
+      --dark2: #1a1a0f;
+      --orange: #ff4200;
+      --purple: #3617cf;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      padding: 0;
+    }
+
+    /* Background ambient */
+    .bg-ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
       z-index: 0;
     }
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+    }
+    .bg-orb-1 { width:460px;height:460px;top:-100px;left:-100px;background:#ff420030; }
+    .bg-orb-2 { width:360px;height:360px;bottom:-80px;right:-60px;background:#3617cf25; }
 
-    .tag-pill {
-      padding: 0.5rem 1rem;
-      border-radius: 9999px;
-      font-size: 0.625rem;
-      font-weight: 500;
+    /* ── WRAPPER ── */
+    .register-wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 36px 20px 60px;
+    }
+
+    /* ── TOP HEADER ── */
+    .reg-header {
+      width: 100%;
+      max-width: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+    .reg-logo { height: 40px; width: auto; }
+    .back-link {
+      font-size:10px;font-weight:700;letter-spacing:0.12em;
+      text-transform:uppercase;color:rgba(255,247,225,0.35);
+      text-decoration:none;transition:color 0.2s;
+      display:flex;align-items:center;gap:4px;
+    }
+    .back-link:hover { color:rgba(255,247,225,0.8); }
+    .back-link .material-symbols-outlined { font-size:14px; }
+
+    /* ── STEP INDICATOR ── */
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 40px;
+    }
+    .step-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800;
+      transition: all 0.4s ease;
+    }
+    .step-dot.active   { background: var(--orange); color: var(--cream); }
+    .step-dot.done     { background: #22c55e; color: white; }
+    .step-dot.inactive { background: rgba(255,247,225,0.1); color: rgba(255,247,225,0.3); }
+    .step-line {
+      width: 50px; height: 2px;
+      background: rgba(255,247,225,0.1);
+      transition: background 0.4s;
+    }
+    .step-line.done { background: #22c55e; }
+
+    /* ── STEP CONTENT ── */
+    .step { display: none; width: 100%; max-width: 560px; animation: fadeUp 0.4s ease; }
+    .step.active { display: block; }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(16px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── STEP 1: ROLE CARDS ── */
+    .step-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 34px;
+      color: var(--cream);
+      line-height: 1.1;
+      letter-spacing: 0.01em;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .step-subtitle {
+      font-size: 12px;
+      color: rgba(255,247,225,0.4);
+      text-align: center;
+      margin-bottom: 32px;
+      letter-spacing: 0.04em;
+    }
+
+    .role-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .role-card {
+      position: relative;
+      background: rgba(255,247,225,0.04);
+      border: 2px solid rgba(255,247,225,0.1);
+      border-radius: 24px;
+      padding: 28px 20px;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .role-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .role-card.customer::before {
+      background: radial-gradient(circle at top, rgba(255,66,0,0.18), transparent 70%);
+    }
+    .role-card.photographer::before {
+      background: radial-gradient(circle at top, rgba(54,23,207,0.22), transparent 70%);
+    }
+
+    .role-card:hover { transform: translateY(-4px); }
+    .role-card.selected { border-color: var(--orange); transform: translateY(-4px); }
+    .role-card.selected::before { opacity: 1; }
+    .role-card.photographer.selected { border-color: #6347f0; }
+
+    .role-card-icon-wrap {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      transition: all 0.35s ease;
+    }
+
+    .role-card.customer .role-card-icon-wrap {
+      background: rgba(255,66,0,0.12);
+    }
+    .role-card.customer.selected .role-card-icon-wrap {
+      background: rgba(255,66,0,0.22);
+      box-shadow: 0 0 30px rgba(255,66,0,0.3);
+    }
+    .role-card.photographer .role-card-icon-wrap {
+      background: rgba(54,23,207,0.12);
+    }
+    .role-card.photographer.selected .role-card-icon-wrap {
+      background: rgba(54,23,207,0.25);
+      box-shadow: 0 0 30px rgba(54,23,207,0.4);
+    }
+
+    .role-card-icon {
+      font-size: 34px;
+      color: rgba(255,247,225,0.5);
+      transition: color 0.35s;
+    }
+    .role-card.customer.selected .role-card-icon { color: var(--orange); }
+    .role-card.photographer.selected .role-card-icon { color: #8a72ff; }
+
+    .role-card-name {
+      font-family: 'Anton', sans-serif;
+      font-size: 18px;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .role-card-desc {
+      font-size: 10px;
+      color: rgba(255,247,225,0.35);
+      line-height: 1.5;
+      letter-spacing: 0.02em;
+    }
+
+    .role-card-check {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--orange);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .role-card.photographer .role-card-check { background: var(--purple); }
+    .role-card.selected .role-card-check { opacity: 1; transform: scale(1); }
+    .role-card-check .material-symbols-outlined { font-size: 13px; color: white; }
+
+    /* ── STEP 2: FORM CARD ── */
+    .form-card {
+      background: var(--cream);
+      border-radius: 28px;
+      padding: 36px 32px;
+      margin-bottom: 24px;
+    }
+
+    .form-title-sm {
+      font-family: 'Anton', sans-serif;
+      font-size: 26px;
+      color: var(--dark2);
+      margin-bottom: 4px;
+    }
+    .form-subtitle-sm {
+      font-size: 11px;
+      color: rgba(26,26,15,0.4);
+      margin-bottom: 26px;
+      letter-spacing: 0.03em;
+    }
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      transition: all 0.3s ease;
-      box-shadow: inset 0 0 0 0.5px rgba(26, 26, 15, 0.05);
+      margin-bottom: 24px;
+    }
+    .role-badge.customer { background:rgba(255,66,0,0.12);color:var(--orange); }
+    .role-badge.photographer { background:rgba(54,23,207,0.1);color:var(--purple); }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 18px;
+    }
+    .field-label {
+      font-size: 9px;font-weight:800;letter-spacing:0.18em;
+      text-transform:uppercase;color:rgba(26,26,15,0.35);margin-bottom:7px;
+    }
+    .field-input {
+      background: transparent;border:none;
+      border-bottom: 1.5px solid rgba(26,26,15,0.12);
+      padding:10px 0;font-family:'Plus Jakarta Sans',sans-serif;
+      font-size:14px;color:var(--dark2);outline:none;
+      transition:border-color 0.25s;
+    }
+    .field-input:focus { border-bottom-color: var(--orange); }
+    .field-input.photographer-focus:focus { border-bottom-color: var(--purple); }
+    .field-input::placeholder { color:rgba(26,26,15,0.2); }
+
+    .fields-grid { display:grid;grid-template-columns:1fr 1fr;gap:0 20px; }
+
+    .submit-btn {
+      width:100%;padding:18px;border:none;border-radius:14px;cursor:pointer;
+      font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:800;
+      letter-spacing:0.18em;text-transform:uppercase;
+      background:var(--dark2);color:var(--cream);
+      transition:transform 0.2s,box-shadow 0.2s;
+      position:relative;overflow:hidden;
+    }
+    .submit-btn::after {
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(90deg,transparent,rgba(255,247,225,0.12),transparent);
+      transform:translateX(-100%);transition:transform 0.5s;
+    }
+    .submit-btn:hover::after { transform:translateX(100%); }
+    .submit-btn:hover { box-shadow:0 8px 32px rgba(26,26,15,0.25);transform:translateY(-1px); }
+    .submit-btn.photographer-btn { background:linear-gradient(135deg,var(--purple),#5238e0); }
+
+    .error-msg {
+      background:rgba(255,66,0,0.08);border-left:3px solid var(--orange);
+      border-radius:6px;padding:10px 14px;font-size:12px;color:#cc3500;
+      margin-bottom:12px;display:none;
     }
 
-    .tag-pill.selected {
-      background: #e8e8c8;
-      color: #1a1a0f;
+    .back-step-btn {
+      background:transparent;border:none;cursor:pointer;
+      font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+      color:rgba(26,26,15,0.3);display:flex;align-items:center;gap:4px;
+      margin-bottom:20px;transition:color 0.2s;
+      font-family:'Plus Jakarta Sans',sans-serif;
     }
+    .back-step-btn:hover { color:rgba(26,26,15,0.6); }
+
+    .txt-note {
+      font-size:9px;color:rgba(255,247,225,0.25);text-align:center;
+      letter-spacing:0.05em;line-height:1.6;margin-top:16px;
+    }
+
+    .login-link-row {
+      text-align:center;margin-top:20px;
+    }
+    .login-link-row a {
+      font-size:11px;font-weight:600;
+      color:rgba(255,247,225,0.35);text-decoration:none;
+      letter-spacing:0.05em;transition:color 0.2s;
+    }
+    .login-link-row a:hover { color:rgba(255,247,225,0.8); }
   </style>
 </head>
-
-<body class="flex flex-col h-screen overflow-hidden bg-primary text-accent selection:bg-accent selection:text-primary">
-  <div id="app-shell">
-    <div class="film-grain"></div>
-    <div class="artistic-bg"></div>
-
-    <header class="relative z-10 px-8 pt-12 pb-6">
-      <div class="flex justify-between items-center mb-12">
-        <a href="index.html" class="hover:opacity-60 transition-opacity">
-          <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="h-20 w-auto" />
-        </a>
-        <span class="text-[9px] font-bold tracking-[0.3em] uppercase opacity-40">Entry_01</span>
-      </div>
-      <div class="max-w-xs">
-        <h2 class="font-display text-4xl leading-[1.1] mb-4">Tạo Tài Khoản<br />Mới</h2>
-        <p class="text-[11px] leading-relaxed opacity-50 font-light tracking-wide">
-          Tham gia cộng đồng nhiếp ảnh gia và khách hàng chuyên nghiệp.
-        </p>
-      </div>
-    </header>
-
-    <main class="relative z-10 px-8 flex-1 flex flex-col justify-center overflow-y-auto pb-24">
-      <form id="registerForm" class="space-y-6" onsubmit="handleRegister(event)">
-        <div class="flex flex-col">
-          <label class="text-[9px] uppercase tracking-[0.2em] font-bold opacity-30 mb-1">Họ và Tên</label>
-          <input id="regName" class="minimal-input" placeholder="Nguyễn Văn A" type="text" required />
-        </div>
-        <div class="flex flex-col">
-          <label class="text-[9px] uppercase tracking-[0.2em] font-bold opacity-30 mb-1">Email</label>
-          <input id="regEmail" class="minimal-input" placeholder="your@email.com" type="email" required />
-        </div>
-        <div class="flex flex-col">
-          <label class="text-[9px] uppercase tracking-[0.2em] font-bold opacity-30 mb-1">Mật Khẩu</label>
-          <input class="minimal-input" placeholder="••••••••" type="password" required />
-        </div>
-        <div class="flex flex-col">
-          <label class="text-[9px] uppercase tracking-[0.2em] font-bold opacity-30 mb-1">Bạn là</label>
-          <div class="flex flex-wrap gap-2 mt-3">
-            <button type="button" class="tag-pill bg-beige-deep/40 text-accent selected" onclick="toggleTag(this)">
-              Khách hàng
-            </button>
-            <button type="button" class="tag-pill bg-primary/20 text-accent/40" onclick="toggleTag(this)">
-              Photographer
-            </button>
-            <button type="button" class="tag-pill bg-primary/20 text-accent/40" onclick="toggleTag(this)">
-              Studio
-            </button>
-          </div>
-        </div>
-        <div class="pt-10">
-          <button
-            class="textured-btn w-full py-5 rounded-sm text-[11px] font-bold tracking-[0.4em] uppercase text-accent/80 active:scale-[0.99] transition-transform"
-            type="submit">
-            Tạo Tài Khoản
-          </button>
-        </div>
-      </form>
-      <div class="mt-8 text-center">
-        <a href="login.html"
-          class="text-[10px] uppercase tracking-[0.2em] font-medium opacity-40 hover:opacity-80 transition-opacity">
-          Đã có tài khoản? <span class="border-b border-accent/20 pb-0.5">Đăng Nhập</span>
-        </a>
-      </div>
-    </main>
-
-    <footer class="relative z-10 px-8 pb-12">
-      <div class="flex items-center justify-between border-t border-accent/5 pt-6">
-        <div class="flex gap-4">
-          <span class="text-[8px] font-bold tracking-widest opacity-20 uppercase">Điều khoản</span>
-          <span class="text-[8px] font-bold tracking-widest opacity-20 uppercase">Bảo mật</span>
-        </div>
-        <div class="flex items-center gap-2 opacity-20">
-          <span class="material-symbols-outlined text-[14px]">verified</span>
-          <span class="text-[8px] font-bold tracking-widest uppercase">Nền tảng đã xác minh</span>
-        </div>
-      </div>
-      <div class="w-32 h-1 bg-accent/5 mx-auto mt-8 rounded-full"></div>
-    </footer>
-
-    <script>
-      function toggleTag(element) {
-        const siblings = element.parentElement.querySelectorAll(".tag-pill");
-        siblings.forEach((tag) => tag.classList.remove("selected", "bg-beige-deep/40", "text-accent"));
-        siblings.forEach((tag) => tag.classList.add("bg-primary/20", "text-accent/40"));
-        element.classList.add("selected", "bg-beige-deep/40", "text-accent");
-        element.classList.remove("bg-primary/20", "text-accent/40");
-      }
-
-      function handleRegister(e) {
-        e.preventDefault();
-        const name = document.getElementById("regName").value.trim();
-        const email = document.getElementById("regEmail").value.trim();
-        const role = document.querySelector(".tag-pill.selected")?.textContent.trim() || "Khách hàng";
-        // Tạo user mới và lưu
-        PicKicStore.saveUser({
-          id: "u_" + Date.now(),
-          name,
-          email,
-          role,
-          joinedAt: new Date().toISOString(),
-        });
-        // Reset và seed lại demo data cho user mới
-        localStorage.setItem("pickic_initialized", "false");
-        PicKicStore.initDemoData();
-        window.location.href = "index.html";
-      }
-    </script>
+<body>
+  <div class="bg-ambient">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
   </div>
-</body>
 
+  <div class="register-wrap">
+    <!-- Header -->
+    <div class="reg-header">
+      <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="reg-logo" />
+      <a href="login.html" class="back-link">
+        <span class="material-symbols-outlined">arrow_back</span>
+        Đã có tài khoản
+      </a>
+    </div>
+
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step-dot active" id="dot1">1</div>
+      <div class="step-line" id="line1"></div>
+      <div class="step-dot inactive" id="dot2">2</div>
+      <div class="step-line" id="line2"></div>
+      <div class="step-dot inactive" id="dot3">✓</div>
+    </div>
+
+    <!-- ── STEP 1: Choose Role ── -->
+    <div class="step active" id="step1">
+      <div class="step-title">Bạn là ai?</div>
+      <div class="step-subtitle">Chọn loại tài khoản phù hợp với bạn</div>
+
+      <div class="role-cards">
+        <div class="role-card customer" id="cardCustomer" onclick="selectRole('customer')">
+          <div class="role-card-check"><span class="material-symbols-outlined">check</span></div>
+          <div class="role-card-icon-wrap">
+            <span class="material-symbols-outlined role-card-icon">person_search</span>
+          </div>
+          <div class="role-card-name">Khách Hàng</div>
+          <div class="role-card-desc">Tìm kiếm & đặt lịch thợ chụp ảnh chuyên nghiệp</div>
+        </div>
+
+        <div class="role-card photographer" id="cardPhotographer" onclick="selectRole('photographer')">
+          <div class="role-card-check"><span class="material-symbols-outlined">check</span></div>
+          <div class="role-card-icon-wrap">
+            <span class="material-symbols-outlined role-card-icon">photo_camera</span>
+          </div>
+          <div class="role-card-name">Thợ Chụp Ảnh</div>
+          <div class="role-card-desc">Showcase portfolio & nhận booking từ khách hàng</div>
+        </div>
+      </div>
+
+      <button id="nextBtn"
+        style="width:100%;padding:18px;border:none;border-radius:14px;cursor:pointer;background:rgba(255,247,225,0.08);color:rgba(255,247,225,0.25);font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;transition:all 0.3s;pointer-events:none;"
+        onclick="goToStep2()">
+        TIẾP THEO →
+      </button>
+
+      <div class="login-link-row">
+        <a href="login.html">Đã có tài khoản? <strong>Đăng nhập</strong></a>
+      </div>
+    </div>
+
+    <!-- ── STEP 2: Fill Form ── -->
+    <div class="step" id="step2">
+      <div class="form-card">
+        <button class="back-step-btn" onclick="goToStep1()">
+          <span class="material-symbols-outlined" style="font-size:14px;">arrow_back</span>
+          Quay lại
+        </button>
+
+        <div class="role-badge customer" id="regRoleBadge">
+          <span class="material-symbols-outlined" style="font-size:14px;" id="regRoleIcon">person</span>
+          <span id="regRoleLabel">Khách Hàng</span>
+        </div>
+
+        <div class="form-title-sm">Tạo Tài Khoản</div>
+        <div class="form-subtitle-sm">Điền thông tin để bắt đầu hành trình của bạn</div>
+
+        <div class="error-msg" id="regError"></div>
+
+        <form id="registerForm" onsubmit="handleRegister(event)" novalidate>
+          <div class="fields-grid">
+            <div class="field">
+              <label class="field-label">Họ & Tên</label>
+              <input id="regName" class="field-input" type="text" placeholder="Nguyễn Văn A" required />
+            </div>
+            <div class="field">
+              <label class="field-label">Số Điện Thoại</label>
+              <input id="regPhone" class="field-input" type="tel" placeholder="0901 234 567" />
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Email</label>
+            <input id="regEmail" class="field-input" type="email" placeholder="your@email.com" required />
+          </div>
+          <div class="field" id="studioField" style="display:none;">
+            <label class="field-label">Tên Studio (tuỳ chọn)</label>
+            <input id="regStudio" class="field-input" type="text" placeholder="Studio của bạn..." />
+          </div>
+          <div class="fields-grid">
+            <div class="field">
+              <label class="field-label">Mật Khẩu</label>
+              <input id="regPassword" class="field-input" type="password" placeholder="••••••••" required />
+            </div>
+            <div class="field">
+              <label class="field-label">Xác Nhận MK</label>
+              <input id="regConfirm" class="field-input" type="password" placeholder="••••••••" required />
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn" id="regSubmitBtn">
+            ĐĂNG KÝ NGAY
+          </button>
+        </form>
+      </div>
+
+      <p class="txt-note">
+        Bằng cách đăng ký, bạn đồng ý với Điều khoản sử dụng & Chính sách bảo mật của PicKic.<br />
+        Thông tin tài khoản sẽ được lưu trữ an toàn.
+      </p>
+    </div>
+
+    <!-- ── STEP 3: Success ── -->
+    <div class="step" id="step3" style="text-align:center;padding:60px 20px;">
+      <div style="width:90px;height:90px;border-radius:50%;background:rgba(34,197,94,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);">
+        <span class="material-symbols-outlined" style="font-size:44px;color:#22c55e;font-variation-settings:'FILL' 1;">check_circle</span>
+      </div>
+      <div class="step-title" style="color:var(--cream);margin-bottom:8px;">Đăng Ký Thành Công!</div>
+      <p style="font-size:12px;color:rgba(255,247,225,0.45);line-height:1.7;margin-bottom:10px;">
+        Tài khoản của bạn đã được tạo.<br />
+        File <strong style="color:rgba(255,247,225,0.7);">users.txt</strong> đã được tải về máy.
+      </p>
+      <p style="font-size:10px;color:rgba(255,247,225,0.25);margin-bottom:36px;">Đang chuyển hướng...</p>
+      <div style="width:200px;height:3px;background:rgba(255,247,225,0.08);border-radius:2px;margin:0 auto;overflow:hidden;">
+        <div id="progressBar" style="height:100%;background:var(--orange);width:0%;transition:width 1.5s ease;border-radius:2px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedRole = null;
+
+    PicKicAuth.redirectIfLoggedIn();
+
+    function selectRole(role) {
+      selectedRole = role;
+      document.getElementById('cardCustomer').classList.toggle('selected', role === 'customer');
+      document.getElementById('cardPhotographer').classList.toggle('selected', role === 'photographer');
+
+      const btn = document.getElementById('nextBtn');
+      btn.style.background = role === 'photographer'
+        ? 'linear-gradient(135deg, #3617cf, #5238e0)'
+        : '#ff4200';
+      btn.style.color = '#fff7e1';
+      btn.style.pointerEvents = 'auto';
+    }
+
+    function goToStep2() {
+      if (!selectedRole) return;
+      showStep('step2');
+      updateDots(2);
+
+      // Update badge & form
+      const badge  = document.getElementById('regRoleBadge');
+      const icon   = document.getElementById('regRoleIcon');
+      const label  = document.getElementById('regRoleLabel');
+      const submit = document.getElementById('regSubmitBtn');
+      const studio = document.getElementById('studioField');
+      const inputs = document.querySelectorAll('.field-input');
+
+      if (selectedRole === 'photographer') {
+        badge.className = 'role-badge photographer';
+        icon.textContent = 'photo_camera';
+        label.textContent = 'Thợ Chụp Ảnh';
+        submit.className = 'submit-btn photographer-btn';
+        studio.style.display = 'flex';
+        inputs.forEach(i => i.classList.add('photographer-focus'));
+      } else {
+        badge.className = 'role-badge customer';
+        icon.textContent = 'person';
+        label.textContent = 'Khách Hàng';
+        submit.className = 'submit-btn';
+        studio.style.display = 'none';
+        inputs.forEach(i => i.classList.remove('photographer-focus'));
+      }
+    }
+
+    function goToStep1() {
+      showStep('step1');
+      updateDots(1);
+    }
+
+    function showStep(id) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function updateDots(step) {
+      const d1 = document.getElementById('dot1');
+      const d2 = document.getElementById('dot2');
+      const d3 = document.getElementById('dot3');
+      const l1 = document.getElementById('line1');
+      const l2 = document.getElementById('line2');
+
+      d1.className = 'step-dot ' + (step > 1 ? 'done' : 'active');
+      d2.className = 'step-dot ' + (step > 2 ? 'done' : step === 2 ? 'active' : 'inactive');
+      d3.className = 'step-dot ' + (step > 2 ? 'done' : 'inactive');
+      l1.className = 'step-line ' + (step > 1 ? 'done' : '');
+      l2.className = 'step-line ' + (step > 2 ? 'done' : '');
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const name     = document.getElementById('regName').value.trim();
+      const email    = document.getElementById('regEmail').value.trim();
+      const phone    = document.getElementById('regPhone').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const confirm  = document.getElementById('regConfirm').value;
+      const studio   = document.getElementById('regStudio').value.trim();
+      const errEl    = document.getElementById('regError');
+      const btn      = document.getElementById('regSubmitBtn');
+
+      errEl.style.display = 'none';
+
+      if (!name || !email || !password) {
+        return showRegError('Vui lòng điền đầy đủ Họ tên, Email và Mật khẩu.');
+      }
+      if (password.length < 6) {
+        return showRegError('Mật khẩu phải có ít nhất 6 ký tự.');
+      }
+      if (password !== confirm) {
+        return showRegError('Mật khẩu xác nhận không khớp.');
+      }
+
+      btn.textContent = 'ĐANG XỬ LÝ...';
+      btn.style.opacity = '0.7';
+      btn.style.pointerEvents = 'none';
+
+      setTimeout(() => {
+        const result = PicKicAuth.registerUser({ role: selectedRole, name, email, password, phone, studio });
+
+        if (!result.success) {
+          btn.textContent = 'ĐĂNG KÝ NGAY';
+          btn.style.opacity = '1';
+          btn.style.pointerEvents = 'auto';
+          return showRegError(result.error);
+        }
+
+        // Show success step
+        showStep('step3');
+        updateDots(3);
+        setTimeout(() => {
+          document.getElementById('progressBar').style.width = '100%';
+        }, 100);
+        setTimeout(() => {
+          PicKicAuth.redirectAfterLogin(selectedRole);
+        }, 1800);
+      }, 800);
+    }
+
+    function showRegError(msg) {
+      const el = document.getElementById('regError');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+  </script>
+</body>
 </html>

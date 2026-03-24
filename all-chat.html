@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="light" lang="vi">
 
 <head>
@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="css/pickic-design-system.css">
+    <script src="js/pickic-store.js"></script>
+    <script src="js/pickic-auth.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -167,5 +169,5 @@
         </div>
     </div>
 </body>
-
+<script>PicKicAuth.requireLogin();</script>
 </html>

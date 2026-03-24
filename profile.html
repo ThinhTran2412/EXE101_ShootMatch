@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html class="light" lang="vi">
 
 <head>
@@ -15,6 +15,7 @@
     rel="stylesheet" />
   <link rel="stylesheet" href="css/pickic-design-system.css" />
   <script src="js/pickic-store.js"></script>
+  <script src="js/pickic-auth.js"></script>
   <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
@@ -238,6 +239,9 @@
       </nav>
     </div>
     <script>
+      // ── Auth Guard
+      PicKicAuth.requireLogin();
+
       document.addEventListener("DOMContentLoaded", function () {
         PicKicStore.refreshNotifBadge();
 

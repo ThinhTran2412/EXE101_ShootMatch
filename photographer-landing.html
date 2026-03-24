@@ -1,0 +1,753 @@
+<!doctype html>
+<html class="light" lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>PicKic — Thợ Chụp Ảnh</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=Anton&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/pickic-design-system.css" />
+  <script src="js/pickic-store.js"></script>
+  <script src="js/pickic-auth.js"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#fff7e1",
+            accent: "#1a1a0f",
+            orange: "#ff4200",
+          },
+          fontFamily: {
+            sans: ["Plus Jakarta Sans", "sans-serif"],
+            display: ["'Fz Anton Round'", "Anton", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* ── Override app-shell bg to dark for photographer pages ── */
+    #app-shell {
+      background: #0a0a06 !important;
+    }
+    html, body {
+      background: #1a1a0f !important;
+    }
+
+    :root {
+      --cream: #fff7e1;
+      --dark:  #0a0a06;
+      --dark2: #141410;
+      --dark3: #1e1e18;
+      --orange: #ff4200;
+      --purple: #3617cf;
+      --glass: rgba(255,247,225,0.04);
+      --border: rgba(255,247,225,0.08);
+    }
+
+    /* ── Simple Bottom Nav (dark theme for photographer page) ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #141410;
+      border-top: 1px solid rgba(255,247,225,0.08);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 8px 0 12px;
+      z-index: 9999;
+    }
+
+    .bottom-nav .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: rgba(255,247,225,0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+      padding: 4px 16px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .bottom-nav .nav-item:hover {
+      color: rgba(255,247,225,0.75);
+    }
+
+    .bottom-nav .nav-item.active {
+      color: #ff4200;
+    }
+
+    .bottom-nav .nav-item .nb-icon {
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .bottom-nav .nav-item .nb-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    /* ── HERO ── */
+    .pg-hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      background-image: url('Picture/208a3fac6b5ce502bc4d4.jpg');
+      background-size: cover;
+      background-position: center top;
+      filter: brightness(0.42) saturate(0.7);
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+    .hero-bg-img.loaded { transform: scale(1); }
+
+    .cin-top  { position: absolute; top: 0; left: 0; right: 0; height: 90px; background: linear-gradient(to bottom, rgba(10,10,6,1), transparent); z-index: 2; pointer-events: none; }
+    .cin-bot  { position: absolute; bottom: 0; left: 0; right: 0; height: 200px; background: linear-gradient(to top, #0a0a06 10%, transparent); z-index: 2; pointer-events: none; }
+
+    .hero-glow {
+      position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%);
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(255,66,0,0.22), transparent 65%);
+      filter: blur(25px); z-index: 2; pointer-events: none;
+      animation: glowPulse 4s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%,100% { opacity:0.7; transform:translateX(-50%) scale(1); }
+      50%     { opacity:1;   transform:translateX(-50%) scale(1.2); }
+    }
+
+    /* Particles */
+    .particles { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+    .particle  {
+      position: absolute; border-radius: 50%; background: var(--cream);
+      animation: partFade 5s ease-in-out infinite;
+    }
+    @keyframes partFade {
+      0%   { opacity:0; transform:translateY(0); }
+      30%  { opacity:0.7; }
+      100% { opacity:0; transform:translateY(-50px); }
+    }
+
+    .hero-content {
+      position: relative; z-index: 10;
+      padding: 0 22px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      min-height: 100vh;
+      padding-bottom: 44px;
+    }
+
+    /* Top bar */
+    .hero-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 54px;
+    }
+
+    .avail-pill {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(34,197,94,0.15);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 20px; padding: 7px 14px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #4ade80;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .avail-pill .dot-pulse {
+      width: 7px; height: 7px; border-radius: 50%; background: #4ade80;
+      animation: pulseDot 2s ease-in-out infinite;
+    }
+    @keyframes pulseDot {
+      0%,100% { transform:scale(1); opacity:1; }
+      50%     { transform:scale(1.4); opacity:0.7; }
+    }
+
+    .notif-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(255,247,225,0.1);
+      border: 1px solid rgba(255,247,225,0.12);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; position: relative; backdrop-filter: blur(8px);
+    }
+    .notif-btn .material-symbols-outlined { font-size: 18px; color: var(--cream); }
+    .notif-dot {
+      position: absolute; top: 7px; right: 7px;
+      width: 7px; height: 7px; border-radius: 50%; background: var(--orange);
+    }
+
+    /* ── Hero text ── */
+    .hero-main {
+      text-align: center; flex: 1;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 16px 0;
+    }
+    .hero-eyebrow {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.35em;
+      text-transform: uppercase; color: rgba(255,247,225,0.4); margin-bottom: 14px;
+    }
+    .hero-name {
+      font-family: 'Anton', sans-serif;
+      font-size: 52px; color: var(--cream);
+      line-height: 1.0; letter-spacing: 0.01em; margin-bottom: 5px;
+      animation: slideUp 0.8s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    .hero-studio {
+      font-family: 'Anton', sans-serif; font-size: 18px;
+      color: var(--orange); letter-spacing: 0.05em;
+      margin-bottom: 20px;
+      animation: slideUp 0.8s 0.1s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    .hero-desc {
+      font-size: 11px; color: rgba(255,247,225,0.4);
+      line-height: 1.7; letter-spacing: 0.03em;
+      max-width: 250px; margin: 0 auto 24px;
+      animation: slideUp 0.8s 0.2s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes slideUp {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .hero-ctas {
+      display: flex; gap: 10px; justify-content: center;
+      animation: slideUp 0.8s 0.3s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    .cta-primary {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--orange); color: var(--cream);
+      border-radius: 50px; padding: 12px 20px;
+      font-size: 10px; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; text-decoration: none;
+      box-shadow: 0 8px 28px rgba(255,66,0,0.38);
+      transition: all 0.25s;
+    }
+    .cta-primary:hover { transform: translateY(-2px); opacity: 0.92; }
+    .cta-secondary {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(255,247,225,0.08);
+      border: 1px solid rgba(255,247,225,0.14);
+      color: var(--cream); border-radius: 50px; padding: 12px 20px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; text-decoration: none;
+      backdrop-filter: blur(10px); transition: all 0.25s;
+    }
+    .cta-secondary:hover { background: rgba(255,247,225,0.14); }
+
+    /* Hero bottom stats row */
+    .hero-stats-row {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: rgba(255,247,225,0.07);
+      border-radius: 18px; overflow: hidden;
+      animation: slideUp 0.8s 0.4s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    .hstat { background: rgba(255,247,225,0.04); padding: 14px 10px; text-align: center; }
+    .hstat-num { font-family: 'Anton', sans-serif; font-size: 22px; color: var(--cream); line-height: 1; }
+    .hstat-num.orange-num { color: var(--orange); }
+    .hstat-label { font-size: 8px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,247,225,0.3); margin-top: 3px; }
+
+    /* ── MAIN ── */
+    .ph-main { padding-bottom: 110px; }
+
+    .section { padding: 24px 20px; }
+    .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .section-title { font-family: 'Anton', sans-serif; font-size: 19px; color: var(--cream); letter-spacing: 0.02em; }
+    .see-all { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,247,225,0.3); text-decoration: none; transition: color 0.2s; }
+    .see-all:hover { color: var(--orange); }
+
+    /* Stats scroll */
+    .stats-scroll { display: flex; gap: 10px; overflow-x: auto; padding: 0 20px; margin: 0 -20px; -ms-overflow-style:none; scrollbar-width:none; }
+    .stats-scroll::-webkit-scrollbar { display: none; }
+
+    .stat-card {
+      flex-shrink: 0; min-width: 120px;
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 16px; padding: 16px 18px; position: relative; overflow: hidden;
+      transition: transform 0.25s;
+    }
+    .stat-card:hover { transform: translateY(-3px); }
+    .stat-card.hi-orange { border-color: rgba(255,66,0,0.4); background: linear-gradient(135deg, rgba(255,66,0,0.1), rgba(255,66,0,0.03)); }
+    .stat-card.hi-purple { border-color: rgba(54,23,207,0.4); background: linear-gradient(135deg, rgba(54,23,207,0.12), rgba(54,23,207,0.03)); }
+
+    .sc-icon { font-size: 19px; color: rgba(255,247,225,0.22); margin-bottom: 9px; }
+    .hi-orange .sc-icon { color: rgba(255,66,0,0.7); }
+    .hi-purple .sc-icon { color: rgba(130,110,255,0.7); }
+
+    .sc-val { font-family: 'Anton', sans-serif; font-size: 24px; color: var(--cream); line-height: 1; margin-bottom: 3px; }
+    .hi-orange .sc-val { color: var(--orange); }
+    .hi-purple .sc-val { color: #826eff; }
+
+    .sc-lbl { font-size: 8.5px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(255,247,225,0.28); }
+    .sc-trend { position: absolute; top: 12px; right: 12px; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 6px; }
+    .up   { background: rgba(34,197,94,0.15); color: #4ade80; }
+    .down { background: rgba(239,68,68,0.15); color: #f87171; }
+
+    /* Request card */
+    .req-card { border-radius: 22px; overflow: hidden; border: 1px solid var(--border); }
+    .req-img   { width:100%; height:190px; object-fit:cover; display:block; filter:brightness(0.6) saturate(0.8); transition:filter 0.4s; }
+    .req-card:hover .req-img { filter: brightness(0.75); }
+    .req-badge {
+      position: absolute; top: 14px; left: 14px;
+      display: flex; align-items: center; gap: 6px;
+      background: var(--orange); border-radius: 20px; padding: 5px 12px;
+      font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream);
+    }
+    .dot-new { width:5px; height:5px; border-radius:50%; background:var(--cream); animation: pulseDot 1.5s infinite; }
+    .req-body { background: #1a1a12; padding: 18px; }
+    .req-title { font-size: 17px; font-weight: 800; color: var(--cream); margin-bottom: 4px; }
+    .req-meta  { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+    .req-meta-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: rgba(255,247,225,0.4); }
+    .req-meta-item .material-symbols-outlined { font-size: 14px; }
+    .req-price { font-family:'Anton',sans-serif; font-size:26px; color:var(--orange); }
+    .req-dur   { font-size:11px; color:rgba(255,247,225,0.3); margin-left:4px; }
+    .req-btns  { display:flex; gap:10px; margin-top:14px; }
+    .btn-accept { flex:1; padding:13px; background:var(--cream); color:#0a0a06; border:none; border-radius:11px; font-family:'Plus Jakarta Sans',sans-serif; font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.25s; }
+    .btn-accept:hover { background:#fff; transform:translateY(-1px); }
+    .btn-refuse { flex:1; padding:13px; background:rgba(255,247,225,0.06); border:1px solid var(--border); color:rgba(255,247,225,0.38); border-radius:11px; font-family:'Plus Jakarta Sans',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.25s; }
+    .btn-refuse:hover { background:rgba(239,68,68,0.1); color:#f87171; border-color:rgba(239,68,68,0.3); }
+
+    /* Schedule */
+    .sched-list { display:flex; flex-direction:column; gap:9px; }
+    .sched-card {
+      display:flex; align-items:center; gap:13px;
+      padding:13px 15px; background:var(--glass); border:1px solid var(--border);
+      border-radius:14px; cursor:pointer; transition:border-color 0.25s;
+    }
+    .sched-card:hover { border-color: rgba(255,247,225,0.16); }
+    .sched-card.active { border-color: rgba(34,197,94,0.32); background: rgba(34,197,94,0.04); }
+    .sched-card.active .sched-badge { background: rgba(34,197,94,0.15); color: #4ade80; }
+    .sched-badge { flex-shrink:0; background:rgba(255,247,225,0.07); border-radius:10px; padding:9px 11px; text-align:center; min-width:55px; }
+    .sched-time { font-family:'Anton',sans-serif; font-size:15px; color:var(--cream); }
+    .sched-ampm { font-size:8px; font-weight:700; letter-spacing:0.06em; color:rgba(255,247,225,0.3); text-transform:uppercase; display:block; }
+    .sched-info { flex:1; }
+    .sched-name { font-size:13px; font-weight:700; color:var(--cream); margin-bottom:2px; }
+    .sched-sub  { font-size:10px; color:rgba(255,247,225,0.32); }
+    .sched-price { font-size:11px; font-weight:700; color:var(--cream); }
+
+    /* Mosaic */
+    .mosaic {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 130px 130px;
+      gap: 5px;
+    }
+    .mosaic-item {
+      background-size:cover; background-position:center;
+      border-radius:12px; position:relative; cursor:pointer; overflow:hidden;
+      transition: filter 0.3s, transform 0.3s;
+    }
+    .mosaic-item:hover { transform:scale(1.02); filter:brightness(0.85); }
+    .mosaic-tall { grid-row:span 2; }
+    .mosaic-wide { grid-column:span 2; }
+    .mosaic-add {
+      border: 1.5px dashed rgba(255,247,225,0.12); border-radius:12px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      cursor:pointer; transition:all 0.25s;
+    }
+    .mosaic-add:hover { background:rgba(255,66,0,0.06); border-color:rgba(255,66,0,0.35); }
+    .mosaic-add .material-symbols-outlined { font-size:24px; color:rgba(255,247,225,0.22); margin-bottom:3px; }
+    .mosaic-add span { font-size:9px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,247,225,0.18); }
+    .port-badge { position:absolute; bottom:10px; right:10px; background:rgba(10,10,6,0.78); backdrop-filter:blur(6px); border:1px solid var(--border); border-radius:18px; padding:3px 9px; font-size:9px; font-weight:700; color:rgba(255,247,225,0.65); letter-spacing:0.05em; }
+
+    /* Quick actions */
+    .actions-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:9px; }
+    .action-tile {
+      background:var(--glass); border:1px solid var(--border);
+      border-radius:16px; padding:14px 6px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      cursor:pointer; text-decoration:none; transition:all 0.25s;
+    }
+    .action-tile:hover { border-color:rgba(255,247,225,0.18); transform:translateY(-2px); }
+    .at-icon { width:40px; height:40px; border-radius:11px; display:flex; align-items:center; justify-content:center; margin-bottom:7px; }
+    .at-icon .material-symbols-outlined { font-size:21px; }
+    .at-label { font-size:8px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,247,225,0.45); text-align:center; line-height:1.3; }
+
+    /* Earnings */
+    .earn-banner {
+      border-radius:22px; overflow:hidden; position:relative;
+      background: linear-gradient(135deg, #140a30, #090720);
+      border:1px solid rgba(130,110,255,0.18); padding:22px;
+    }
+    .earn-banner::before {
+      content:''; position:absolute; top:-50px; right:-30px;
+      width:180px; height:180px;
+      background:radial-gradient(circle, rgba(54,23,207,0.5), transparent 70%);
+      filter:blur(18px);
+    }
+    .earn-month { font-size:9px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,247,225,0.3); margin-bottom:5px; }
+    .earn-amt   { font-family:'Anton',sans-serif; font-size:38px; color:var(--cream); line-height:1; letter-spacing:0.01em; }
+    .earn-cur   { font-size:18px; color:rgba(255,247,225,0.45); margin-left:3px; }
+    .earn-note  { font-size:11px; color:rgba(255,247,225,0.35); margin-top:5px; margin-bottom:18px; }
+    .earn-track { background:rgba(255,247,225,0.07); border-radius:8px; height:5px; overflow:hidden; margin-bottom:7px; }
+    .earn-fill  { height:100%; background:linear-gradient(90deg,var(--purple),#826eff); border-radius:8px; width:73%; animation: barGrow 1.5s cubic-bezier(0.22,1,0.36,1) both; }
+    @keyframes barGrow { from{width:0;} }
+    .earn-labels { display:flex; justify-content:space-between; font-size:8px; color:rgba(255,247,225,0.28); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; }
+
+    /* Scroll reveal */
+    .reveal { opacity:0; transform:translateY(18px); transition:opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.in-view { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body class="text-accent selection:bg-accent selection:text-primary">
+<div id="app-shell">
+  <div class="film-grain"></div>
+
+  <!-- ── HERO ── -->
+  <section class="pg-hero">
+    <div class="hero-bg-img" id="heroBg"></div>
+    <div class="cin-top"></div>
+    <div class="cin-bot"></div>
+    <div class="hero-glow"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="hero-content">
+      <!-- Top bar -->
+      <div class="hero-topbar">
+        <div class="avail-pill" id="availToggle" onclick="toggleAvailability()">
+          <div class="dot-pulse" id="availDot"></div>
+          <span id="availText">Đang Nhận Job</span>
+        </div>
+        <img src="assets/1.1 ngang@2x.png" alt="PicKic" style="height:34px;width:auto;filter:brightness(0) invert(1);opacity:0.65;" />
+        <div style="display:flex;gap:8px;">
+          <div class="notif-btn" onclick="window.location.href='notifications.html'">
+            <span class="material-symbols-outlined">notifications</span>
+            <div class="notif-dot"></div>
+          </div>
+          <div class="notif-btn" onclick="PicKicAuth.logout()" title="Đăng xuất" style="border-color:rgba(239,68,68,0.25);">
+            <span class="material-symbols-outlined" style="color:#f87171;">power_settings_new</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main title -->
+      <div class="hero-main">
+        <p class="hero-eyebrow">Xin Chào, Nhiếp Ảnh Gia</p>
+        <h1 class="hero-name" id="heroName">ELENA VANCE</h1>
+        <div class="hero-studio" id="heroStudio">KYOTO STUDIO</div>
+        <p class="hero-desc">Cộng đồng PicKic đang chờ tài năng của bạn. Mỗi khoảnh khắc là một kiệt tác.</p>
+        <div class="hero-ctas">
+          <a href="gallery.html" class="cta-primary">
+            <span class="material-symbols-outlined" style="font-size:17px;font-variation-settings:'FILL' 1;">photo_library</span>
+            Portfolio
+          </a>
+          <a href="my-bookings.html" class="cta-secondary">
+            <span class="material-symbols-outlined" style="font-size:17px;">event</span>
+            Bookings
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero mini-stats -->
+      <div class="hero-stats-row">
+        <div class="hstat">
+          <div class="hstat-num orange-num">2.8M</div>
+          <div class="hstat-label">Hôm Nay</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-num">4</div>
+          <div class="hstat-label">Bookings</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-num">4.9★</div>
+          <div class="hstat-label">Rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MAIN ── -->
+  <main class="ph-main" style="background:linear-gradient(to bottom,#0a0a06,#0d0d0a);">
+
+    <!-- Stats scroll -->
+    <section class="section reveal">
+      <div class="section-head">
+        <span class="section-title">Tổng Quan</span>
+        <a href="#" class="see-all">Tháng này</a>
+      </div>
+      <div class="stats-scroll">
+        <div class="stat-card hi-orange">
+          <span class="material-symbols-outlined sc-icon" style="font-variation-settings:'FILL' 1;">payments</span>
+          <div class="sc-val">18.4M</div>
+          <div class="sc-lbl">Doanh Thu T3</div>
+          <div class="sc-trend up">+24%</div>
+        </div>
+        <div class="stat-card hi-purple">
+          <span class="material-symbols-outlined sc-icon" style="font-variation-settings:'FILL' 1;">event_available</span>
+          <div class="sc-val">12</div>
+          <div class="sc-lbl">Booking T3</div>
+          <div class="sc-trend up">+3</div>
+        </div>
+        <div class="stat-card">
+          <span class="material-symbols-outlined sc-icon" style="font-variation-settings:'FILL' 1;">visibility</span>
+          <div class="sc-val">3.2K</div>
+          <div class="sc-lbl">Profile Views</div>
+          <div class="sc-trend up">+18%</div>
+        </div>
+        <div class="stat-card">
+          <span class="material-symbols-outlined sc-icon" style="font-variation-settings:'FILL' 1;">star</span>
+          <div class="sc-val">4.9</div>
+          <div class="sc-lbl">Rating</div>
+          <div class="sc-trend up">+0.1</div>
+        </div>
+        <div class="stat-card">
+          <span class="material-symbols-outlined sc-icon" style="font-variation-settings:'FILL' 1;">thumb_up</span>
+          <div class="sc-val">98%</div>
+          <div class="sc-lbl">Hoàn Thành</div>
+          <div class="sc-trend up">+2%</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- New request -->
+    <section class="section reveal" style="padding-top:0;">
+      <div class="section-head">
+        <span class="section-title">Yêu Cầu Mới</span>
+        <span style="background:rgba(255,66,0,0.12);color:var(--orange);padding:4px 10px;border-radius:20px;font-size:8.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;">3 đang chờ</span>
+      </div>
+      <div class="req-card" style="position:relative;">
+        <img src="Picture/928cf20bbffb31a568ea35.jpg" class="req-img" alt="" />
+        <div class="req-badge">
+          <div class="dot-new"></div>
+          Yêu Cầu Mới
+        </div>
+        <div class="req-body">
+          <div class="req-title">Chụp Portrait Minimalist</div>
+          <div class="req-meta">
+            <div class="req-meta-item"><span class="material-symbols-outlined">location_on</span>Hoàn Kiếm, Hà Nội</div>
+            <div class="req-meta-item"><span class="material-symbols-outlined">schedule</span>26/03 · 14:00</div>
+            <div class="req-meta-item"><span class="material-symbols-outlined">person</span>Nguyễn Thị Mai</div>
+          </div>
+          <div style="display:flex;align-items:baseline;">
+            <span class="req-price">1.800.000</span><span class="req-dur">₫ · 90 phút</span>
+          </div>
+          <div class="req-btns">
+            <button class="btn-accept" onclick="acceptRequest(this)">✓ Chấp Nhận</button>
+            <button class="btn-refuse">✕ Từ Chối</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Schedule -->
+    <section class="section reveal" style="padding-top:0;">
+      <div class="section-head">
+        <span class="section-title">Lịch Hôm Nay</span>
+        <a href="my-bookings.html" class="see-all">Xem tất cả</a>
+      </div>
+      <div class="sched-list">
+        <div class="sched-card active">
+          <div class="sched-badge">
+            <span class="sched-time">10:00</span>
+            <span class="sched-ampm">sáng</span>
+          </div>
+          <div class="sched-info">
+            <div class="sched-name">Wedding Pre-shoot</div>
+            <div class="sched-sub">Hồ Tây · Studio Lake</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="sched-price">3.500.000₫</div>
+            <div style="font-size:9px;color:rgba(34,197,94,0.8);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-top:2px;">Đang tới</div>
+          </div>
+        </div>
+        <div class="sched-card">
+          <div class="sched-badge">
+            <span class="sched-time">14:00</span>
+            <span class="sched-ampm">chiều</span>
+          </div>
+          <div class="sched-info">
+            <div class="sched-name">Portrait Session</div>
+            <div class="sched-sub">Hoàn Kiếm · Khách: Minh</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="sched-price">1.200.000₫</div>
+          </div>
+        </div>
+        <div class="sched-card">
+          <div class="sched-badge">
+            <span class="sched-time">18:30</span>
+            <span class="sched-ampm">tối</span>
+          </div>
+          <div class="sched-info">
+            <div class="sched-name">Fashion Editorial</div>
+            <div class="sched-sub">Studio Tây Hồ</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="sched-price">4.000.000₫</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio mosaic -->
+    <section class="section reveal" style="padding-top:0;">
+      <div class="section-head">
+        <span class="section-title">Portfolio</span>
+        <a href="gallery.html" class="see-all">Quản lý</a>
+      </div>
+      <div class="mosaic">
+        <div class="mosaic-item mosaic-tall" style="background-image:url('Picture/ebe8812dd5dd5b8302cc19.jpg');">
+          <div class="port-badge">24 ảnh</div>
+        </div>
+        <div class="mosaic-item" style="background-image:url('Picture/aedee057ada723f97ab630.jpg');"></div>
+        <div class="mosaic-item" style="background-image:url('Picture/8ca3508804788a26d3697.jpg');"></div>
+        <div class="mosaic-item mosaic-wide" style="background-image:url('Picture/c10a06db522bdc75853a13.jpg');"></div>
+        <div class="mosaic-add" onclick="window.location.href='upload-portfolio.html'">
+          <span class="material-symbols-outlined">add_photo_alternate</span>
+          <span>Thêm ảnh</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick actions -->
+    <section class="section reveal" style="padding-top:0;">
+      <div class="section-title" style="margin-bottom:12px;">Thao Tác Nhanh</div>
+      <div class="actions-grid">
+        <a href="upload-portfolio.html" class="action-tile">
+          <div class="at-icon" style="background:rgba(255,66,0,0.12);">
+            <span class="material-symbols-outlined" style="color:var(--orange);font-variation-settings:'FILL' 1;">add_photo_alternate</span>
+          </div>
+          <span class="at-label">Tải Lên<br/>Portfolio</span>
+        </a>
+        <a href="photo-profile.html" class="action-tile">
+          <div class="at-icon" style="background:rgba(130,110,255,0.12);">
+            <span class="material-symbols-outlined" style="color:#826eff;font-variation-settings:'FILL' 1;">edit_square</span>
+          </div>
+          <span class="at-label">Sửa<br/>Profile</span>
+        </a>
+        <a href="my-bookings.html" class="action-tile">
+          <div class="at-icon" style="background:rgba(34,197,94,0.12);">
+            <span class="material-symbols-outlined" style="color:#4ade80;font-variation-settings:'FILL' 1;">event</span>
+          </div>
+          <span class="at-label">Lịch<br/>Booking</span>
+        </a>
+        <a href="all-chat.html" class="action-tile">
+          <div class="at-icon" style="background:rgba(251,191,36,0.12);">
+            <span class="material-symbols-outlined" style="color:#fbbf24;font-variation-settings:'FILL' 1;">chat_bubble</span>
+          </div>
+          <span class="at-label">Tin<br/>Nhắn</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Earnings -->
+    <section class="section reveal" style="padding-top:0;">
+      <div class="earn-banner">
+        <div class="earn-month">Thu Nhập Tháng 3</div>
+        <div class="earn-amt">18.400.000<span class="earn-cur">₫</span></div>
+        <p class="earn-note">73% mục tiêu 25 triệu — 8 ngày còn lại</p>
+        <div class="earn-track"><div class="earn-fill"></div></div>
+        <div class="earn-labels"><span>0₫</span><span>Mục tiêu: 25M₫</span></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Simple Bottom Navigation (dark theme) -->
+  <nav class="bottom-nav">
+    <a href="photographer-landing.html" class="nav-item active">
+      <span class="material-symbols-outlined nb-icon" style="font-variation-settings:'FILL' 1;">home</span>
+      <span class="nb-label">Home</span>
+    </a>
+    <a href="gallery.html" class="nav-item">
+      <span class="material-symbols-outlined nb-icon">photo_library</span>
+      <span class="nb-label">Gallery</span>
+    </a>
+    <a href="my-bookings.html" class="nav-item">
+      <span class="material-symbols-outlined nb-icon">event</span>
+      <span class="nb-label">Bookings</span>
+    </a>
+    <a href="all-chat.html" class="nav-item">
+      <span class="material-symbols-outlined nb-icon">chat_bubble</span>
+      <span class="nb-label">Chat</span>
+    </a>
+    <a href="profile.html" class="nav-item">
+      <span class="material-symbols-outlined nb-icon">person</span>
+      <span class="nb-label">Profile</span>
+    </a>
+  </nav>
+
+</div><!-- /app-shell -->
+
+<script>
+  // ── Particles
+  (function(){
+    const c = document.getElementById('particles');
+    for(let i=0;i<22;i++){
+      const p=document.createElement('div'); p.className='particle';
+      p.style.left=(Math.random()*100)+'%';
+      p.style.top=(30+Math.random()*55)+'%';
+      const s=(1+Math.random()*2.5)+'px'; p.style.width=s; p.style.height=s;
+      p.style.animationDelay=(Math.random()*5)+'s';
+      p.style.animationDuration=(3+Math.random()*4)+'s';
+      p.style.opacity=Math.random()*0.5;
+      c.appendChild(p);
+    }
+  })();
+
+  // ── Hero bg zoom on load
+  window.addEventListener('load',()=>{ document.getElementById('heroBg').classList.add('loaded'); });
+
+  // ── Personalize from auth session
+  (function(){
+    const s = PicKicAuth.getSession();
+    if(!s) return;
+    if(s.role !== 'photographer') { window.location.href='index.html'; return; }
+    if(s.name)   document.getElementById('heroName').textContent   = s.name.toUpperCase();
+    if(s.studio) document.getElementById('heroStudio').textContent = s.studio.toUpperCase();
+  })();
+
+  // ── Availability toggle
+  let isAvail = true;
+  function toggleAvailability(){
+    isAvail = !isAvail;
+    const pill=document.getElementById('availToggle');
+    const dot=document.getElementById('availDot');
+    const txt=document.getElementById('availText');
+    if(isAvail){
+      pill.style.cssText='background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.3);color:#4ade80;';
+      dot.style.background='#4ade80'; dot.style.animationPlayState='running';
+      txt.textContent='Đang Nhận Job';
+    } else {
+      pill.style.cssText='background:rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.25);color:#f87171;';
+      dot.style.background='#f87171'; dot.style.animationPlayState='paused';
+      txt.textContent='Tạm Nghỉ';
+    }
+  }
+
+  // ── Accept request
+  function acceptRequest(btn){
+    btn.textContent='✓ Đã Chấp Nhận'; btn.style.background='#22c55e';
+    btn.style.color='#fff'; btn.disabled=true;
+    const r=btn.nextElementSibling; if(r) r.style.display='none';
+  }
+
+  // Scroll reveal
+  document.addEventListener('DOMContentLoaded', function(){
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){ entry.target.classList.add('in-view'); io.unobserve(entry.target); }
+      });
+    },{ threshold:0.05, rootMargin:'0px 0px -30px 0px' });
+    reveals.forEach(el=>io.observe(el));
+  });
+</script>
+</body>
+</html>

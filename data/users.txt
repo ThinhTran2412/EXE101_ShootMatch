@@ -1,0 +1,7 @@
+# PicKic Users Registry
+# Auto-exported by PicKicAuth on each registration
+# Format: id | role | name | email | phone | studio | joinedAt
+#
+u001 | customer | Nguyễn Văn An | an@pickic.vn | 0901 234 567 |  | 2026-01-10T08:00:00.000Z
+ph001 | photographer | Elena Vance | elena@pickic.vn | 0987 654 321 | Kyoto Studio | 2026-01-05T09:00:00.000Z
+ph002 | photographer | Minh Khải | minhkhai@pickic.vn | 0912 345 678 | Sài Gòn Lens | 2026-01-08T10:00:00.000Z

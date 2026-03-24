@@ -1,138 +1,635 @@
-﻿<!doctype html>
+<!doctype html>
 <html class="light" lang="vi">
-
 <head>
   <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
   <title>Đăng Nhập - PicKic</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-    rel="stylesheet" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="css/pickic-design-system.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,300&family=Anton&display=swap" rel="stylesheet" />
   <script src="js/pickic-store.js"></script>
-  <script id="tailwind-config">
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: "#FFFBF0",
-            accent: "#1a1a0f",
-            "beige-tonal": "#f0f0d0",
-            "beige-deep": "#e8e8c8",
-          },
-          fontFamily: {
-            sans: ["Plus Jakarta Sans", "sans-serif"],
-            display: ["'Fz Anton Round'", "Anton", "sans-serif"],
-          },
-        },
-      },
-    };
-  </script>
+  <script src="js/pickic-auth.js"></script>
   <style>
-    .artistic-bg {
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #fff7e1;
+      --dark: #0f0f09;
+      --orange: #ff4200;
+      --dark2: #1a1a0f;
+      --purple: #3617cf;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── LAYOUT ── */
+    .login-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+
+    @media (max-width: 768px) {
+      .login-layout { grid-template-columns: 1fr; }
+      .visual-panel { display: none; }
+    }
+
+    /* ── VISUAL LEFT PANEL ── */
+    .visual-panel {
+      position: relative;
+      overflow: hidden;
+      background: var(--dark2);
+    }
+
+    .visual-bg {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBwioxW3jjy_6uC1TYEOXInAWiG6Lfhucd-W1WaCTQ7qyl_q0i6jj1OY14vSUiNUTGgQdWORgkYjbpRWYAGKHUI7_0uZqa2XjNXoVdZ8orm0Qo0YnWiBanA2CUCj9p6ZHlbZIVDYsmOq3ggx6zDjiinNwBbZ7FYoM5MBA3SJdzYPp6n_Nr_KvjJt1LJ9er_nWvUjOy82Spo0AAss0vPPLWr2sY2SH7NFwyfrf9_400SCeU2c2F1WEl0ARHU0ohmb3hB2D4Cvv6ABdI");
+      inset: 0;
+      background-image: url('Picture/ebe8812dd5dd5b8302cc19.jpg');
       background-size: cover;
       background-position: center;
-      opacity: 0.07;
-      filter: sepia(20%) contrast(90%);
+      transition: opacity 0.8s ease;
+    }
+
+    .visual-bg.photographer-bg {
+      background-image: url('Picture/208a3fac6b5ce502bc4d4.jpg');
+    }
+
+    .visual-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(255,66,0,0.25) 100%);
+    }
+
+    .visual-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 48px 44px;
+    }
+
+    .visual-logo {
+      height: 52px;
+      width: auto;
+    }
+
+    .visual-headline {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(36px, 4vw, 58px);
+      color: var(--cream);
+      line-height: 1.1;
+      letter-spacing: 0.01em;
+    }
+
+    .visual-headline .hl {
+      color: var(--orange);
+    }
+
+    .visual-tagline {
+      margin-top: 16px;
+      font-size: 13px;
+      color: rgba(255,247,225,0.5);
+      line-height: 1.6;
+      letter-spacing: 0.04em;
+    }
+
+    .visual-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+    }
+
+    .vstat {
+      text-align: left;
+    }
+
+    .vstat-num {
+      font-family: 'Anton', sans-serif;
+      font-size: 28px;
+      color: var(--cream);
+      line-height: 1;
+    }
+
+    .vstat-label {
+      font-size: 10px;
+      color: rgba(255,247,225,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 4px;
+    }
+
+    /* Floating photos */
+    .float-photos {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .float-photo {
+      position: absolute;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      animation: floatImg 6s ease-in-out infinite;
+    }
+
+    .float-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .float-photo:nth-child(1) {
+      width: 110px; height: 150px;
+      right: 10%; top: 15%;
+      animation-delay: 0s;
+    }
+    .float-photo:nth-child(2) {
+      width: 80px; height: 110px;
+      right: 28%; top: 42%;
+      animation-delay: -2s;
+    }
+    .float-photo:nth-child(3) {
+      width: 95px; height: 130px;
+      right: 6%; bottom: 22%;
+      animation-delay: -4s;
+    }
+
+    @keyframes floatImg {
+      0%, 100% { transform: translateY(0px) rotate(-2deg); }
+      50%       { transform: translateY(-14px) rotate(2deg); }
+    }
+
+    /* ── RIGHT FORM PANEL ── */
+    .form-panel {
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 48px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-panel::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,66,0,0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .mobile-logo {
+      display: none;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-logo { display: block; }
+      .form-panel { padding: 40px 28px; }
+    }
+
+    /* ── ROLE TOGGLE ── */
+    .role-toggle {
+      display: flex;
+      background: rgba(26,26,15,0.07);
+      border-radius: 14px;
+      padding: 4px;
+      margin-bottom: 36px;
+      position: relative;
+    }
+
+    .role-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 12px 16px;
+      border-radius: 11px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(26,26,15,0.4);
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .role-btn .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    .role-btn.active {
+      color: var(--dark2);
+    }
+
+    .role-slider {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      height: calc(100% - 8px);
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 1;
+    }
+
+    .role-slider.photographer {
+      transform: translateX(100%);
+    }
+
+    /* Customer: orange accent | Photographer: purple */
+    body.role-photographer .form-panel::before {
+      background: radial-gradient(circle, rgba(54,23,207,0.08), transparent 70%);
+    }
+
+    /* ── FORM HEADING ── */
+    .form-heading {
+      font-family: 'Anton', sans-serif;
+      font-size: 38px;
+      color: var(--dark2);
+      line-height: 1.1;
+      letter-spacing: 0.01em;
+      margin-bottom: 6px;
+    }
+
+    .form-subhead {
+      font-size: 12px;
+      color: rgba(26,26,15,0.4);
+      letter-spacing: 0.03em;
+      margin-bottom: 36px;
+    }
+
+    /* ── INPUTS ── */
+    .field {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+
+    .field-label {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(26,26,15,0.35);
+      margin-bottom: 8px;
+    }
+
+    .field-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid rgba(26,26,15,0.15);
+      padding: 10px 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      color: var(--dark2);
+      outline: none;
+      transition: border-color 0.25s ease;
+    }
+
+    .field-input:focus {
+      border-bottom-color: var(--orange);
+    }
+
+    body.role-photographer .field-input:focus {
+      border-bottom-color: var(--purple);
+    }
+
+    .field-input::placeholder {
+      color: rgba(26,26,15,0.2);
+    }
+
+    /* ── SUBMIT BUTTON ── */
+    .submit-btn {
+      width: 100%;
+      margin-top: 32px;
+      padding: 18px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: var(--dark2);
+      color: var(--cream);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .submit-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,247,225,0.12), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+
+    .submit-btn:hover::after { transform: translateX(100%); }
+    .submit-btn:hover { box-shadow: 0 8px 32px rgba(26,26,15,0.25); transform: translateY(-1px); }
+    .submit-btn:active { transform: scale(0.98); }
+
+    body.role-photographer .submit-btn {
+      background: linear-gradient(135deg, var(--purple), #5238e0);
+    }
+
+    /* ── ERROR ── */
+    .error-msg {
+      background: rgba(255,66,0,0.08);
+      border-left: 3px solid var(--orange);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #cc3500;
+      margin-top: 8px;
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── FOOTER LINKS ── */
+    .form-footer {
+      margin-top: 28px;
+      text-align: center;
+    }
+
+    .form-footer a {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(26,26,15,0.4);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+
+    .form-footer a:hover { color: var(--orange); }
+
+    body.role-photographer .form-footer a:hover { color: var(--purple); }
+
+    .forgot-link {
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: rgba(26,26,15,0.25);
+      text-decoration: none;
+      text-transform: uppercase;
+      float: right;
+      margin-top: -2px;
+      transition: color 0.2s;
+    }
+
+    .forgot-link:hover { color: rgba(26,26,15,0.6); }
+
+    /* ── LOADING STATE ── */
+    .submit-btn.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    /* Particle dots ambient */
+    .ambient {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
       z-index: 0;
+    }
+
+    .dot {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(255,66,0,0.3);
+      animation: dotFloat 8s ease-in-out infinite;
+    }
+
+    @keyframes dotFloat {
+      0%   { transform: translateY(0) scale(1); opacity: 0.3; }
+      50%  { transform: translateY(-40px) scale(1.5); opacity: 0.6; }
+      100% { transform: translateY(0) scale(1); opacity: 0.3; }
     }
   </style>
 </head>
+<body>
+  <div class="login-layout">
 
-<body class="flex flex-col h-screen overflow-hidden bg-primary text-accent selection:bg-accent selection:text-primary">
-  <div id="app-shell">
-    <div class="film-grain"></div>
-    <div class="artistic-bg"></div>
-
-    <header class="relative z-10 px-8 pt-12 pb-6">
-      <div class="flex justify-between items-center mb-16">
-        <a href="index.html" class="hover:opacity-60 transition-opacity">
-          <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="h-20 w-auto" />
-        </a>
-        <span class="text-[9px] font-bold tracking-[0.3em] uppercase opacity-40">Access_Portal</span>
+    <!-- ── LEFT: VISUAL PANEL ── -->
+    <div class="visual-panel">
+      <div class="visual-bg" id="visualBg"></div>
+      <div class="visual-overlay"></div>
+      <div class="float-photos">
+        <div class="float-photo"><img src="Picture/928cf20bbffb31a568ea35.jpg" alt="" /></div>
+        <div class="float-photo"><img src="Picture/aedee057ada723f97ab630.jpg" alt="" /></div>
+        <div class="float-photo"><img src="Picture/8ca3508804788a26d3697.jpg" alt="" /></div>
       </div>
-      <div class="max-w-xs">
-        <h2 class="font-display text-4xl leading-[1.1] mb-4">Đăng Nhập<br />Tài Khoản</h2>
-        <p class="text-[11px] leading-relaxed opacity-50 font-light tracking-wide">
-          Kết nối với cộng đồng nhiếp ảnh gia chuyên nghiệp.
+      <div class="visual-content">
+        <img src="assets/1.1 ngang@2x.png" alt="PicKic" class="visual-logo" />
+        <div>
+          <div class="visual-headline" id="visualHead">
+            PICK ĐÚNG <span class="hl">NGƯỜI</span><br />
+            PICK ĐÚNG <span class="hl">KHOẢNH KHẮC</span>
+          </div>
+          <p class="visual-tagline" id="visualTagline">
+            Kết nối khách hàng với nhiếp ảnh gia chuyên nghiệp.<br />
+            Trải nghiệm dịch vụ chụp ảnh đẳng cấp nhất Việt Nam.
+          </p>
+          <div class="visual-stats">
+            <div class="vstat">
+              <div class="vstat-num">1,200+</div>
+              <div class="vstat-label">Thợ chụp ảnh</div>
+            </div>
+            <div class="vstat">
+              <div class="vstat-num">48K+</div>
+              <div class="vstat-label">Booking thành công</div>
+            </div>
+            <div class="vstat">
+              <div class="vstat-num">4.9★</div>
+              <div class="vstat-label">Đánh giá trung bình</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── RIGHT: FORM PANEL ── -->
+    <div class="form-panel">
+      <div class="ambient" id="ambient"></div>
+
+      <!-- Mobile logo -->
+      <div class="mobile-logo">
+        <img src="assets/1.1 ngang@2x.png" alt="PicKic" style="height:44px;width:auto;" />
+      </div>
+
+      <!-- Role Toggle -->
+      <div class="role-toggle">
+        <div class="role-slider" id="roleSlider"></div>
+        <button class="role-btn active" id="btnCustomer" onclick="switchRole('customer')">
+          <span class="material-symbols-outlined">person</span>
+          Khách Hàng
+        </button>
+        <button class="role-btn" id="btnPhotographer" onclick="switchRole('photographer')">
+          <span class="material-symbols-outlined">photo_camera</span>
+          Thợ Chụp Ảnh
+        </button>
+      </div>
+
+      <!-- Heading -->
+      <h1 class="form-heading" id="formHeading">Đăng Nhập</h1>
+      <p class="form-subhead" id="formSubhead">Chào mừng trở lại! Đăng nhập để tiếp tục.</p>
+
+      <!-- Form -->
+      <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
+        <div class="field">
+          <label class="field-label">Email</label>
+          <input id="emailInput" class="field-input" type="email" placeholder="your@email.com" required />
+        </div>
+        <div class="field">
+          <label class="field-label" style="display:flex;justify-content:space-between;align-items:center;">
+            <span>Mật Khẩu</span>
+            <a href="#" class="forgot-link">Quên mật khẩu?</a>
+          </label>
+          <input id="passwordInput" class="field-input" type="password" placeholder="••••••••" required />
+        </div>
+
+        <div class="error-msg" id="errorMsg"></div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          ĐĂNG NHẬP
+        </button>
+      </form>
+
+      <div class="form-footer">
+        <a href="register.html">Chưa có tài khoản? <strong>Đăng Ký Ngay</strong></a>
+      </div>
+
+      <!-- Demo hint -->
+      <div style="margin-top:28px;padding:14px 16px;background:rgba(26,26,15,0.04);border-radius:10px;border:1px dashed rgba(26,26,15,0.1);">
+        <p style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(26,26,15,0.3);margin-bottom:6px;">Demo Accounts</p>
+        <p style="font-size:10px;color:rgba(26,26,15,0.4);line-height:1.7;">
+          👤 Khách hàng: <code style="background:rgba(0,0,0,0.06);padding:1px 5px;border-radius:3px;">an@pickic.vn</code> / <code style="background:rgba(0,0,0,0.06);padding:1px 5px;border-radius:3px;">123456</code><br />
+          📷 Thợ chụp ảnh: <code style="background:rgba(0,0,0,0.06);padding:1px 5px;border-radius:3px;">elena@pickic.vn</code> / <code style="background:rgba(0,0,0,0.06);padding:1px 5px;border-radius:3px;">123456</code>
         </p>
       </div>
-    </header>
+    </div>
 
-    <main class="relative z-10 px-8 flex-1 flex flex-col justify-center">
-      <form id="loginForm" class="space-y-8" onsubmit="handleLogin(event)">
-        <div class="flex flex-col">
-          <label class="text-[9px] uppercase tracking-[0.2em] font-bold opacity-30 mb-1">Email</label>
-          <input id="loginEmail" class="minimal-input" placeholder="your@email.com" type="email" required />
-        </div>
-        <div class="flex flex-col">
-          <div class="flex justify-between items-end mb-1">
-            <label class="text-[9px] uppercase tracking-[0.2em] font-bold opacity-30">Mật Khẩu</label>
-            <button class="text-[8px] uppercase tracking-[0.1em] opacity-20 hover:opacity-40 transition-opacity"
-              type="button">
-              Quên mật khẩu?
-            </button>
-          </div>
-          <input class="minimal-input" placeholder="••••••••" type="password" required />
-        </div>
-        <div class="pt-12">
-          <button
-            class="textured-btn w-full py-5 rounded-sm text-[11px] font-bold tracking-[0.4em] uppercase text-accent/80 active:scale-[0.99] transition-transform"
-            type="submit">
-            ĐĂNG NHẬP
-          </button>
-        </div>
-      </form>
-      <div class="mt-12 text-center">
-        <a href="register.html"
-          class="text-[10px] uppercase tracking-[0.2em] font-medium opacity-40 hover:opacity-80 transition-opacity">
-          Chưa có tài khoản? <span class="border-b border-accent/20 pb-0.5">Đăng Ký</span>
-        </a>
-      </div>
-    </main>
-
-    <footer class="relative z-10 px-8 pb-12">
-      <div class="flex items-center justify-between border-t border-accent/5 pt-6">
-        <div class="flex gap-4">
-          <span class="text-[8px] font-bold tracking-widest opacity-20 uppercase">Điều khoản</span>
-          <span class="text-[8px] font-bold tracking-widest opacity-20 uppercase">Bảo mật</span>
-        </div>
-        <div class="flex items-center gap-2 opacity-20">
-          <span class="material-symbols-outlined text-[14px]">verified</span>
-          <span class="text-[8px] font-bold tracking-widest uppercase">Nền tảng an toàn</span>
-        </div>
-      </div>
-      <div class="w-32 h-1 bg-accent/5 mx-auto mt-8 rounded-full"></div>
-    </footer>
-    <script>
-      // Nếu đã login thì redirect vào app
-      (function () {
-        const user = PicKicStore.getUser();
-        if (user) window.location.replace("index.html");
-      })();
-
-      function handleLogin(e) {
-        e.preventDefault();
-        const email = document.getElementById("loginEmail").value.trim();
-        const name = email
-          .split("@")[0]
-          .replace(/[._]/g, " ")
-          .replace(/\b\w/g, (c) => c.toUpperCase());
-        // Lưu user session (giả lập login)
-        PicKicStore.saveUser({ id: "u_" + Date.now(), name, email, joinedAt: new Date().toISOString() });
-        window.location.href = "index.html";
-      }
-    </script>
   </div>
-</body>
 
+  <script>
+    let currentRole = 'customer';
+
+    // Redirect if already logged in
+    PicKicAuth.redirectIfLoggedIn();
+
+    // ── Ambient particles
+    (function(){
+      const amb = document.getElementById('ambient');
+      for(let i=0;i<12;i++){
+        const d = document.createElement('div');
+        d.className = 'dot';
+        d.style.left = Math.random()*100+'%';
+        d.style.top  = Math.random()*100+'%';
+        d.style.animationDelay = (Math.random()*8)+'s';
+        d.style.animationDuration = (6+Math.random()*6)+'s';
+        amb.appendChild(d);
+      }
+    })();
+
+    function switchRole(role) {
+      currentRole = role;
+      const slider = document.getElementById('roleSlider');
+      const btnC   = document.getElementById('btnCustomer');
+      const btnP   = document.getElementById('btnPhotographer');
+      const bg     = document.getElementById('visualBg');
+      const head   = document.getElementById('formHeading');
+      const sub    = document.getElementById('formSubhead');
+      const vHead  = document.getElementById('visualHead');
+      const vTag   = document.getElementById('visualTagline');
+      const dots   = document.querySelectorAll('.dot');
+      const err    = document.getElementById('errorMsg');
+      err.style.display = 'none';
+
+      if (role === 'photographer') {
+        slider.classList.add('photographer');
+        btnC.classList.remove('active');
+        btnP.classList.add('active');
+        document.body.className = 'role-photographer';
+        bg.className = 'visual-bg photographer-bg';
+        head.textContent = 'Chào Thợ Chụp';
+        sub.textContent = 'Quản lý booking & portfolio của bạn.';
+        vHead.innerHTML = 'NGHỀ ẢNH<br /><span class="hl">ĐẲNG CẤP</span>';
+        vTag.textContent = 'Nơi tài năng của bạn gặp gỡ cơ hội. Tham gia cộng đồng nhiếp ảnh gia chuyên nghiệp.';
+        dots.forEach(d => d.style.background = 'rgba(54,23,207,0.25)');
+      } else {
+        slider.classList.remove('photographer');
+        btnP.classList.remove('active');
+        btnC.classList.add('active');
+        document.body.className = '';
+        bg.className = 'visual-bg';
+        head.textContent = 'Đăng Nhập';
+        sub.textContent = 'Chào mừng trở lại! Đăng nhập để tiếp tục.';
+        vHead.innerHTML = 'PICK ĐÚNG <span class="hl">NGƯỜI</span><br />PICK ĐÚNG <span class="hl">KHOẢNH KHẮC</span>';
+        vTag.textContent = 'Kết nối khách hàng với nhiếp ảnh gia chuyên nghiệp. Trải nghiệm dịch vụ chụp ảnh đẳng cấp nhất.';
+        dots.forEach(d => d.style.background = 'rgba(255,66,0,0.3)');
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const email    = document.getElementById('emailInput').value.trim();
+      const password = document.getElementById('passwordInput').value;
+      const errEl    = document.getElementById('errorMsg');
+      const btn      = document.getElementById('submitBtn');
+
+      if (!email || !password) {
+        showError('Vui lòng điền đầy đủ email và mật khẩu.');
+        return;
+      }
+
+      btn.classList.add('loading');
+      btn.textContent = 'ĐANG XỬ LÝ...';
+
+      setTimeout(() => {
+        const result = PicKicAuth.loginUser(email, password, currentRole);
+        btn.classList.remove('loading');
+        btn.textContent = 'ĐĂNG NHẬP';
+
+        if (!result.success) {
+          showError(result.error);
+        } else {
+          btn.textContent = '✓ THÀNH CÔNG';
+          btn.style.background = '#22c55e';
+          setTimeout(() => PicKicAuth.redirectAfterLogin(currentRole), 600);
+        }
+      }, 700);
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('errorMsg');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+  </script>
+</body>
 </html>
