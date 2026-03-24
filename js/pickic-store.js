@@ -133,7 +133,7 @@ window.PicKicStore = (function () {
   function logout() {
     localStorage.removeItem('pickic_user');
     localStorage.removeItem('pickic_initialized');
-    window.location.href = 'Login.html';
+    window.location.href = 'login.html';
   }
 
   // ─── FAVORITES ──────────────────────────────────────────────────────────────
