@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Admin Dashboard — PicKic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Anton&display=swap" rel="stylesheet" />
+  <script src="js/pickic-admin-auth.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #fff7e1;
+      --dark: #0f0f09;
+      --dark2: #1a1a0f;
+      --orange: #ff4200;
+      --purple: #3617cf;
+      --sidebar-w: 260px;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #0c0c07;
+      min-height: 100vh;
+      color: var(--cream);
+    }
+
+    /* ── LAYOUT ── */
+    .admin-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: #111108;
+      border-right: 1px solid rgba(255,247,225,0.06);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 100;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .content { margin-left: 0 !important; }
+    }
+
+    .sidebar-logo {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid rgba(255,247,225,0.06);
+    }
+
+    .sidebar-logo img { height: 36px; width: auto; }
+
+    .sidebar-logo .admin-tag {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--orange);
+      background: rgba(255,66,0,0.1);
+      border: 1px solid rgba(255,66,0,0.2);
+      border-radius: 4px;
+      padding: 3px 8px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 20px 12px;
+      overflow-y: auto;
+    }
+
+    .nav-section-label {
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,247,225,0.2);
+      padding: 0 12px;
+      margin-bottom: 8px;
+      margin-top: 20px;
+    }
+
+    .nav-section-label:first-child { margin-top: 0; }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      color: rgba(255,247,225,0.5);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      margin-bottom: 2px;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,247,225,0.06);
+      color: var(--cream);
+    }
+
+    .nav-item.active {
+      background: rgba(255,66,0,0.12);
+      color: var(--cream);
+      border: 1px solid rgba(255,66,0,0.2);
+    }
+
+    .nav-item.active .nav-icon { color: var(--orange); }
+
+    .nav-icon {
+      font-size: 20px;
+      font-variation-settings: 'FILL' 0;
+      transition: color 0.2s;
+    }
+
+    .nav-item.active .nav-icon {
+      font-variation-settings: 'FILL' 1;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--orange);
+      color: white;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 20px;
+    }
+
+    /* Admin info at bottom of sidebar */
+    .sidebar-footer {
+      padding: 16px;
+      border-top: 1px solid rgba(255,247,225,0.06);
+    }
+
+    .admin-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255,247,225,0.04);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .admin-info:hover { background: rgba(255,247,225,0.08); }
+
+    .admin-avatar {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--orange), #cc3500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .admin-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.2;
+    }
+
+    .admin-role {
+      font-size: 10px;
+      color: rgba(255,247,225,0.35);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .logout-btn {
+      margin-left: auto;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(255,247,225,0.3);
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+    }
+
+    .logout-btn:hover { color: var(--orange); }
+
+    /* ── MAIN CONTENT ── */
+    .content {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-height: 100vh;
+    }
+
+    /* Top bar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      background: rgba(12,12,7,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,247,225,0.06);
+    }
+
+    .top-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--cream);
+      font-size: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .menu-btn { display: flex; align-items: center; }
+    }
+
+    .page-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 20px;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topbar-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: rgba(255,247,225,0.05);
+      border: 1px solid rgba(255,247,225,0.08);
+      cursor: pointer;
+      color: rgba(255,247,225,0.6);
+      transition: all 0.2s;
+    }
+
+    .topbar-btn:hover {
+      background: rgba(255,247,225,0.1);
+      color: var(--cream);
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      font-size: 11px;
+      color: rgba(255,247,225,0.3);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .breadcrumb span { font-size: 14px; }
+
+    /* ── PAGE CONTENT ── */
+    .page-content {
+      padding: 32px;
+    }
+
+    @media (max-width: 640px) {
+      .page-content { padding: 20px 16px; }
+      .topbar { padding: 14px 16px; }
+    }
+
+    /* ── GREETING ── */
+    .greeting {
+      margin-bottom: 32px;
+    }
+
+    .greeting-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 36px;
+      color: var(--cream);
+      letter-spacing: 0.01em;
+      line-height: 1;
+    }
+
+    .greeting-title .hi { color: var(--orange); }
+
+    .greeting-sub {
+      margin-top: 8px;
+      font-size: 13px;
+      color: rgba(255,247,225,0.4);
+    }
+
+    /* ── KPI CARDS ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 1100px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
+
+    .kpi-card {
+      background: #161610;
+      border: 1px solid rgba(255,247,225,0.06);
+      border-radius: 20px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+
+    .kpi-card:hover {
+      border-color: rgba(255,247,225,0.12);
+      transform: translateY(-2px);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--kpi-color, var(--orange));
+      border-radius: 20px 20px 0 0;
+    }
+
+    .kpi-icon-wrap {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--kpi-bg, rgba(255,66,0,0.1));
+      margin-bottom: 16px;
+    }
+
+    .kpi-icon-wrap .material-symbols-outlined {
+      font-size: 22px;
+      color: var(--kpi-color, var(--orange));
+      font-variation-settings: 'FILL' 1;
+    }
+
+    .kpi-value {
+      font-family: 'Anton', sans-serif;
+      font-size: 32px;
+      color: var(--cream);
+      line-height: 1;
+      letter-spacing: 0.01em;
+    }
+
+    .kpi-label {
+      font-size: 11px;
+      color: rgba(255,247,225,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 6px;
+    }
+
+    .kpi-change {
+      margin-top: 12px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .kpi-change.up { color: #22c55e; }
+    .kpi-change.down { color: #ef4444; }
+    .kpi-change .material-symbols-outlined { font-size: 14px; }
+
+    /* ── SECTIONS ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 20px;
+      color: var(--cream);
+      letter-spacing: 0.01em;
+    }
+
+    .section-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--orange);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,66,0,0.2);
+      transition: all 0.2s;
+    }
+
+    .section-action:hover { background: rgba(255,66,0,0.1); }
+
+    /* ── TWO COLUMN ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── DARK CARD ── */
+    .dark-card {
+      background: #161610;
+      border: 1px solid rgba(255,247,225,0.06);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    /* ── PACKAGE PREVIEW CARDS ── */
+    .pkg-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .pkg-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: rgba(255,247,225,0.03);
+      border-radius: 12px;
+      border: 1px solid rgba(255,247,225,0.05);
+      transition: background 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .pkg-row:hover { background: rgba(255,247,225,0.07); }
+
+    .pkg-dot {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .pkg-info { flex: 1; min-width: 0; }
+
+    .pkg-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cream);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pkg-meta {
+      font-size: 10px;
+      color: rgba(255,247,225,0.35);
+      margin-top: 2px;
+    }
+
+    .pkg-price {
+      font-family: 'Anton', sans-serif;
+      font-size: 16px;
+      color: var(--cream);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    .pkg-status {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .pkg-status.active { background: #22c55e; box-shadow: 0 0 8px rgba(34,197,94,0.5); }
+    .pkg-status.inactive { background: rgba(255,247,225,0.2); }
+
+    /* ── RECENT USERS TABLE ── */
+    .users-table { width: 100%; border-collapse: collapse; }
+
+    .users-table th {
+      text-align: left;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,247,225,0.25);
+      padding: 0 0 12px;
+      border-bottom: 1px solid rgba(255,247,225,0.06);
+    }
+
+    .users-table td {
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,247,225,0.04);
+      font-size: 13px;
+      color: rgba(255,247,225,0.7);
+      vertical-align: middle;
+    }
+
+    .users-table tr:last-child td { border-bottom: none; }
+
+    .user-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: rgba(255,247,225,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .role-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .role-chip.customer {
+      background: rgba(255,66,0,0.1);
+      color: #ff7a50;
+      border: 1px solid rgba(255,66,0,0.2);
+    }
+
+    .role-chip.photographer {
+      background: rgba(54,23,207,0.15);
+      color: #7c5ef0;
+      border: 1px solid rgba(54,23,207,0.25);
+    }
+
+    /* ── ACTIVITY CHART (visual placeholder) ── */
+    .chart-placeholder {
+      height: 120px;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      padding-top: 20px;
+    }
+
+    .chart-bar {
+      flex: 1;
+      border-radius: 4px 4px 0 0;
+      background: rgba(255,66,0,0.2);
+      transition: background 0.2s;
+      cursor: pointer;
+      min-height: 8px;
+    }
+
+    .chart-bar:hover { background: rgba(255,66,0,0.5); }
+    .chart-bar.highlight { background: var(--orange); }
+
+    .chart-labels {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .chart-labels span {
+      flex: 1;
+      text-align: center;
+      font-size: 8px;
+      color: rgba(255,247,225,0.25);
+      letter-spacing: 0.03em;
+    }
+
+    /* ── QUICK ACTIONS ── */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    @media (max-width: 900px) { .quick-actions { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .quick-actions { grid-template-columns: 1fr 1fr; } }
+
+    .qa-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 12px;
+      background: #161610;
+      border: 1px solid rgba(255,247,225,0.06);
+      border-radius: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      color: rgba(255,247,225,0.6);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      transition: all 0.25s ease;
+      text-align: center;
+    }
+
+    .qa-btn:hover {
+      background: rgba(255,247,225,0.06);
+      border-color: rgba(255,247,225,0.12);
+      color: var(--cream);
+      transform: translateY(-2px);
+    }
+
+    .qa-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qa-icon .material-symbols-outlined {
+      font-size: 22px;
+      font-variation-settings: 'FILL' 1;
+    }
+
+    /* Overlay for mobile sidebar */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 99;
+    }
+
+    .sidebar-overlay.show { display: block; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: #22c55e;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 999;
+    }
+
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="admin-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <img src="assets/1.1 ngang@2x.png" alt="PicKic" />
+      <div class="admin-tag">Admin Panel</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Tổng Quan</div>
+      <a href="admin-dashboard.html" class="nav-item active">
+        <span class="material-symbols-outlined nav-icon">dashboard</span>
+        Dashboard
+      </a>
+
+      <div class="nav-section-label">Quản Lý</div>
+      <a href="admin-packages.html" class="nav-item">
+        <span class="material-symbols-outlined nav-icon">package_2</span>
+        Gói Dịch Vụ
+        <span class="nav-badge">5</span>
+      </a>
+      <a href="#" class="nav-item" onclick="comingSoon()">
+        <span class="material-symbols-outlined nav-icon">group</span>
+        Người Dùng
+      </a>
+      <a href="#" class="nav-item" onclick="comingSoon()">
+        <span class="material-symbols-outlined nav-icon">photo_camera</span>
+        Nhiếp Ảnh Gia
+      </a>
+      <a href="#" class="nav-item" onclick="comingSoon()">
+        <span class="material-symbols-outlined nav-icon">event</span>
+        Booking
+        <span class="nav-badge">12</span>
+      </a>
+
+      <div class="nav-section-label">Phân Tích</div>
+      <a href="admin-reports.html" class="nav-item">
+        <span class="material-symbols-outlined nav-icon">bar_chart</span>
+        Báo Cáo
+      </a>
+      <a href="admin-revenue.html" class="nav-item">
+        <span class="material-symbols-outlined nav-icon">payments</span>
+        Doanh Thu
+      </a>
+
+      <div class="nav-section-label">Cài Đặt</div>
+      <a href="#" class="nav-item" onclick="comingSoon()">
+        <span class="material-symbols-outlined nav-icon">settings</span>
+        Cài Đặt Hệ Thống
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="admin-info">
+        <div class="admin-avatar">🛡️</div>
+        <div>
+          <div class="admin-name" id="adminName">Admin</div>
+          <div class="admin-role">Super Admin</div>
+        </div>
+        <button class="logout-btn" onclick="PicKicAdmin.logoutAdmin()" title="Đăng xuất">
+          <span class="material-symbols-outlined" style="font-size:20px;">logout</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="content">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="top-left">
+        <button class="menu-btn" onclick="toggleSidebar()">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <div>
+          <div class="page-title">Dashboard</div>
+          <div class="breadcrumb">
+            <span class="material-symbols-outlined" style="font-size:12px;">home</span>
+            Admin / Tổng Quan
+          </div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-btn" onclick="refreshStats()" title="Làm mới">
+          <span class="material-symbols-outlined" style="font-size:18px;">refresh</span>
+        </button>
+        <button class="topbar-btn" onclick="comingSoon()" title="Thông báo">
+          <span class="material-symbols-outlined" style="font-size:18px;">notifications</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="page-content">
+
+      <!-- Greeting -->
+      <div class="greeting">
+        <div class="greeting-title">
+          <span class="hi">Xin chào,</span> Admin 👋
+        </div>
+        <p class="greeting-sub">Đây là tổng quan hệ thống PicKic hôm nay.</p>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid" id="kpiGrid">
+        <div class="kpi-card" style="--kpi-color:#ff4200;--kpi-bg:rgba(255,66,0,0.1);">
+          <div class="kpi-icon-wrap">
+            <span class="material-symbols-outlined">group</span>
+          </div>
+          <div class="kpi-value" id="kpiUsers">—</div>
+          <div class="kpi-label">Tổng Người Dùng</div>
+          <div class="kpi-change up">
+            <span class="material-symbols-outlined">trending_up</span>
+            +12% tháng này
+          </div>
+        </div>
+        <div class="kpi-card" style="--kpi-color:#22c55e;--kpi-bg:rgba(34,197,94,0.1);">
+          <div class="kpi-icon-wrap">
+            <span class="material-symbols-outlined">event_available</span>
+          </div>
+          <div class="kpi-value" id="kpiBookings">—</div>
+          <div class="kpi-label">Tổng Booking</div>
+          <div class="kpi-change up">
+            <span class="material-symbols-outlined">trending_up</span>
+            +8% tháng này
+          </div>
+        </div>
+        <div class="kpi-card" style="--kpi-color:#f59e0b;--kpi-bg:rgba(245,158,11,0.1);">
+          <div class="kpi-icon-wrap">
+            <span class="material-symbols-outlined">payments</span>
+          </div>
+          <div class="kpi-value" id="kpiRevenue">—</div>
+          <div class="kpi-label">Doanh Thu (VNĐ)</div>
+          <div class="kpi-change up">
+            <span class="material-symbols-outlined">trending_up</span>
+            +24% tháng này
+          </div>
+        </div>
+        <div class="kpi-card" style="--kpi-color:#3617cf;--kpi-bg:rgba(54,23,207,0.1);">
+          <div class="kpi-icon-wrap">
+            <span class="material-symbols-outlined">star</span>
+          </div>
+          <div class="kpi-value" id="kpiRating">—</div>
+          <div class="kpi-label">Rating Trung Bình</div>
+          <div class="kpi-change up">
+            <span class="material-symbols-outlined">trending_up</span>
+            Ổn định
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="section-header">
+        <div class="section-title">Thao Tác Nhanh</div>
+      </div>
+      <div class="quick-actions">
+        <a href="admin-packages.html" class="qa-btn">
+          <div class="qa-icon" style="background:rgba(255,66,0,0.12);">
+            <span class="material-symbols-outlined" style="color:#ff4200;">package_2</span>
+          </div>
+          Quản lý Gói
+        </a>
+        <a href="#" class="qa-btn" onclick="comingSoon()">
+          <div class="qa-icon" style="background:rgba(54,23,207,0.12);">
+            <span class="material-symbols-outlined" style="color:#7c5ef0;">person_add</span>
+          </div>
+          Thêm User
+        </a>
+        <a href="#" class="qa-btn" onclick="comingSoon()">
+          <div class="qa-icon" style="background:rgba(34,197,94,0.12);">
+            <span class="material-symbols-outlined" style="color:#22c55e;">bar_chart</span>
+          </div>
+          Xem Báo Cáo
+        </a>
+        <a href="#" class="qa-btn" onclick="comingSoon()">
+          <div class="qa-icon" style="background:rgba(245,158,11,0.12);">
+            <span class="material-symbols-outlined" style="color:#f59e0b;">campaign</span>
+          </div>
+          Thông Báo
+        </a>
+      </div>
+
+      <!-- Two Column Section -->
+      <div class="two-col">
+
+        <!-- Packages list -->
+        <div class="dark-card">
+          <div class="section-header" style="margin-bottom:14px;">
+            <div class="section-title" style="font-size:16px;">Gói Dịch Vụ</div>
+            <a href="admin-packages.html" class="section-action">
+              <span class="material-symbols-outlined" style="font-size:14px;">open_in_new</span>
+              Xem tất cả
+            </a>
+          </div>
+          <div class="pkg-list" id="pkgList"></div>
+        </div>
+
+        <!-- Recent users + chart -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+
+          <!-- Booking activity chart -->
+          <div class="dark-card">
+            <div class="section-title" style="font-size:16px;margin-bottom:4px;">Hoạt Động Booking</div>
+            <div style="font-size:10px;color:rgba(255,247,225,0.3);margin-bottom:16px;">7 ngày qua</div>
+            <div class="chart-placeholder" id="chartBars"></div>
+            <div class="chart-labels" id="chartLabels"></div>
+          </div>
+
+          <!-- Role breakdown -->
+          <div class="dark-card">
+            <div class="section-title" style="font-size:16px;margin-bottom:16px;">Phân Loại Người Dùng</div>
+            <div style="display:flex;gap:16px;">
+              <div style="flex:1;text-align:center;">
+                <div style="font-family:'Anton',sans-serif;font-size:28px;color:#ff4200;" id="roleCustomer">—</div>
+                <div style="font-size:10px;color:rgba(255,247,225,0.35);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;">Khách Hàng</div>
+              </div>
+              <div style="width:1px;background:rgba(255,247,225,0.08);"></div>
+              <div style="flex:1;text-align:center;">
+                <div style="font-family:'Anton',sans-serif;font-size:28px;color:#7c5ef0;" id="rolePhotog">—</div>
+                <div style="font-size:10px;color:rgba(255,247,225,0.35);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;">Nhiếp Ảnh Gia</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Recent Users -->
+      <div class="dark-card">
+        <div class="section-header">
+          <div class="section-title" style="font-size:16px;">Người Dùng Gần Đây</div>
+          <a href="#" class="section-action" onclick="comingSoon()">
+            Quản lý <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+          </a>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="users-table" id="usersTable">
+            <thead>
+              <tr>
+                <th>Người dùng</th>
+                <th>Email</th>
+                <th>Vai trò</th>
+                <th>Ngày tham gia</th>
+              </tr>
+            </thead>
+            <tbody id="usersBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /page-content -->
+  </main>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="material-symbols-outlined" style="font-size:18px;">check_circle</span>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+  // Auth guard
+  PicKicAdmin.requireAdmin();
+
+  // Populate admin name
+  const admin = PicKicAdmin.getAdminSession();
+  if (admin) document.getElementById('adminName').textContent = admin.name;
+
+  // Load stats
+  function refreshStats() {
+    const stats = PicKicAdmin.getStats();
+
+    document.getElementById('kpiUsers').textContent    = stats.totalUsers.toLocaleString('vi-VN');
+    document.getElementById('kpiBookings').textContent = stats.bookings.toLocaleString('vi-VN');
+    document.getElementById('kpiRevenue').textContent  = formatRevenue(stats.revenue);
+    document.getElementById('kpiRating').textContent   = stats.rating + '★';
+    document.getElementById('roleCustomer').textContent = stats.customers;
+    document.getElementById('rolePhotog').textContent   = stats.photographers;
+
+    buildPackageList();
+    buildUsersTable();
+    buildChart();
+    showToast('Đã làm mới dữ liệu');
+  }
+
+  function formatRevenue(v) {
+    if (v >= 1000000) return (v / 1000000).toFixed(1) + 'M';
+    if (v >= 1000) return (v / 1000).toFixed(0) + 'K';
+    return v.toString();
+  }
+
+  // Package list
+  function buildPackageList() {
+    const packages = PicKicAdmin.getPackages().slice(0, 4);
+    const el = document.getElementById('pkgList');
+    el.innerHTML = packages.map(p => `
+      <a href="admin-packages.html" class="pkg-row">
+        <div class="pkg-dot" style="background:${p.gradient || p.color}22;">${p.icon}</div>
+        <div class="pkg-info">
+          <div class="pkg-name">${p.nameVi}</div>
+          <div class="pkg-meta">${p.targetRole === 'customer' ? 'Khách hàng' : 'Nhiếp ảnh gia'}</div>
+        </div>
+        <div class="pkg-price">${p.priceLabel}</div>
+        <div class="pkg-status ${p.isActive ? 'active' : 'inactive'}"></div>
+      </a>
+    `).join('');
+  }
+
+  // Users table
+  function buildUsersTable() {
+    const raw  = localStorage.getItem('pickic_auth_users');
+    const users = raw ? JSON.parse(raw) : [];
+    const recent = users.slice(0, 5);
+    const body  = document.getElementById('usersBody');
+
+    const roleEmoji = { customer: '👤', photographer: '📷', admin: '🛡️' };
+    const role2label = { customer: 'Khách hàng', photographer: 'Nhiếp ảnh gia', admin: 'Admin' };
+
+    body.innerHTML = recent.map(u => `
+      <tr>
+        <td>
+          <div class="user-cell">
+            <div class="user-icon">${roleEmoji[u.role] || '👤'}</div>
+            <span style="color:var(--cream);font-weight:600;">${u.name}</span>
+          </div>
+        </td>
+        <td>${u.email}</td>
+        <td>
+          <span class="role-chip ${u.role}">
+            ${role2label[u.role] || u.role}
+          </span>
+        </td>
+        <td>${formatDate(u.joinedAt)}</td>
+      </tr>
+    `).join('') || '<tr><td colspan="4" style="text-align:center;padding:20px;color:rgba(255,247,225,0.3);">Chưa có người dùng</td></tr>';
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '—';
+    return new Date(iso).toLocaleDateString('vi-VN', { day:'2-digit', month:'2-digit', year:'numeric' });
+  }
+
+  // Chart
+  function buildChart() {
+    const bars   = document.getElementById('chartBars');
+    const labels = document.getElementById('chartLabels');
+    const days   = ['T2','T3','T4','T5','T6','T7','CN'];
+    const values = [65, 82, 45, 93, 78, 110, 67];
+    const max    = Math.max(...values);
+
+    bars.innerHTML = values.map((v, i) => {
+      const h = Math.round((v / max) * 100);
+      const isHighlight = i === values.indexOf(max);
+      return `<div class="chart-bar ${isHighlight ? 'highlight' : ''}" style="height:${h}%" title="${v} booking"></div>`;
+    }).join('');
+
+    labels.innerHTML = days.map(d => `<span>${d}</span>`).join('');
+  }
+
+  // Sidebar toggle (mobile)
+  function toggleSidebar() {
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    sb.classList.toggle('open');
+    ov.classList.toggle('show');
+  }
+
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+
+  // Toast
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  function comingSoon() {
+    showToast('Tính năng đang phát triển...');
+  }
+
+  // Init
+  refreshStats();
+</script>
+</body>
+</html>

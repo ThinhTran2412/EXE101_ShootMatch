@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Admin Login — PicKic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Anton&display=swap" rel="stylesheet" />
+  <script src="js/pickic-admin-auth.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #fff7e1;
+      --orange: #ff4200;
+      --purple: #3617cf;
+      --gold: #f59e0b;
+    }
+
+    /* ── BG ── */
+    html, body {
+      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background: #070704;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Layered background blobs */
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob-1 { width: 600px; height: 600px; background: rgba(54,23,207,0.18); top: -15%; left: -15%; }
+    .blob-2 { width: 500px; height: 500px; background: rgba(255,66,0,0.12); bottom: -10%; right: -10%; animation: blobShift 10s ease-in-out infinite alternate; }
+    .blob-3 { width: 300px; height: 300px; background: rgba(245,158,11,0.1); top: 40%; left: 60%; animation: blobShift 14s ease-in-out infinite alternate-reverse; }
+
+    @keyframes blobShift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(40px,-40px) scale(1.1); }
+    }
+
+    /* Scrolling grid */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 52px 52px;
+      animation: gridMove 25s linear infinite;
+    }
+
+    @keyframes gridMove {
+      to { background-position: 0 52px; }
+    }
+
+    /* ── MAIN CARD ── */
+    .login-card {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 940px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      min-height: 580px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.07),
+        0 40px 120px rgba(0,0,0,0.6);
+      animation: cardIn 0.7s cubic-bezier(0.22,1,0.36,1) both;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(32px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 760px) {
+      .login-card { grid-template-columns: 1fr; max-width: 440px; }
+      .card-left  { display: none; }
+    }
+
+    /* ── LEFT PANEL ── */
+    .card-left {
+      background: #0d0d09;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 44px 48px;
+    }
+
+    /* Inner grid on left */
+    .card-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* Accent glow top-right */
+    .card-left::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 260px; height: 260px;
+      background: radial-gradient(circle, rgba(255,66,0,0.2), transparent 70%);
+      pointer-events: none;
+    }
+
+    .left-inner { position: relative; z-index: 2; }
+    .left-bottom { position: relative; z-index: 2; }
+
+    /* Logo row */
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-row img { height: 38px; width: auto; filter: brightness(0) invert(1); opacity: 0.85; }
+
+    .panel-badge {
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      background: rgba(255,66,0,0.12);
+      border: 1px solid rgba(255,66,0,0.25);
+      border-radius: 4px;
+      padding: 4px 9px;
+    }
+
+    /* Big headline */
+    .panel-headline {
+      margin-top: 40px;
+    }
+
+    .panel-headline .eyebrow {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,247,225,0.3);
+      margin-bottom: 14px;
+    }
+
+    .panel-headline h2 {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(40px, 4.5vw, 60px);
+      color: var(--cream);
+      line-height: 1.05;
+      letter-spacing: 0.01em;
+    }
+
+    .panel-headline h2 .o { color: var(--orange); }
+    .panel-headline h2 .p { color: #826eff; }
+
+    .panel-desc {
+      margin-top: 18px;
+      font-size: 12px;
+      color: rgba(255,247,225,0.38);
+      line-height: 1.8;
+      max-width: 300px;
+    }
+
+    /* Stats */
+    .panel-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 36px;
+    }
+
+    .ps-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 16px 18px;
+      transition: background 0.25s;
+    }
+
+    .ps-card:hover { background: rgba(255,255,255,0.07); }
+
+    .ps-emoji { font-size: 18px; margin-bottom: 8px; }
+
+    .ps-num {
+      font-family: 'Anton', sans-serif;
+      font-size: 22px;
+      color: var(--cream);
+      line-height: 1;
+      letter-spacing: 0.01em;
+    }
+
+    .ps-label {
+      font-size: 9px;
+      color: rgba(255,247,225,0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 3px;
+    }
+
+    /* Left footer */
+    .left-footer {
+      font-size: 9px;
+      color: rgba(255,247,225,0.18);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── RIGHT FORM PANEL ── */
+    .card-right {
+      background: #111108;
+      border-left: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 48px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle corner glows */
+    .card-right::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(255,66,0,0.07), transparent 70%);
+      pointer-events: none;
+    }
+    .card-right::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(54,23,207,0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Mobile logo (only shown on small screens) */
+    .mobile-logo {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+
+    @media (max-width: 760px) {
+      .mobile-logo { display: flex; }
+      .card-right { padding: 40px 28px; }
+    }
+
+    .mobile-logo img { height: 34px; width: auto; filter: brightness(0) invert(1); opacity: 0.8; }
+
+    /* Shield icon */
+    .shield-wrap {
+      width: 58px; height: 58px;
+      border-radius: 16px;
+      background: rgba(255,66,0,0.1);
+      border: 1px solid rgba(255,66,0,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 26px;
+      position: relative;
+    }
+
+    .shield-wrap .material-symbols-outlined {
+      font-size: 28px;
+      color: var(--orange);
+      font-variation-settings: 'FILL' 1;
+    }
+
+    .shield-ping {
+      position: absolute;
+      top: -3px; right: -3px;
+      width: 12px; height: 12px;
+      background: #22c55e;
+      border-radius: 50%;
+      border: 2px solid #111108;
+      animation: ping 2s ease-in-out infinite;
+    }
+
+    @keyframes ping {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+      50%       { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+    }
+
+    /* Form heading */
+    .form-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 34px;
+      color: var(--cream);
+      line-height: 1.05;
+      letter-spacing: 0.01em;
+      margin-bottom: 6px;
+    }
+
+    .form-sub {
+      font-size: 11px;
+      color: rgba(255,247,225,0.35);
+      letter-spacing: 0.04em;
+      margin-bottom: 36px;
+    }
+
+    /* ── FIELDS ── */
+    .field { display: flex; flex-direction: column; margin-bottom: 18px; }
+
+    .field-label {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,247,225,0.3);
+      margin-bottom: 8px;
+    }
+
+    .field-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .f-icon {
+      position: absolute;
+      left: 14px;
+      font-size: 17px;
+      color: rgba(255,247,225,0.2);
+      font-variation-settings: 'FILL' 0;
+      pointer-events: none;
+      transition: color 0.2s;
+    }
+
+    .f-input {
+      width: 100%;
+      background: rgba(255,247,225,0.04);
+      border: 1px solid rgba(255,247,225,0.08);
+      border-radius: 12px;
+      padding: 13px 14px 13px 42px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      color: var(--cream);
+      outline: none;
+      transition: border-color 0.25s, background 0.25s;
+    }
+
+    .f-input::placeholder { color: rgba(255,247,225,0.15); }
+
+    .f-input:focus {
+      border-color: rgba(255,66,0,0.45);
+      background: rgba(255,247,225,0.06);
+    }
+
+    .field-wrap:focus-within .f-icon {
+      color: var(--orange);
+    }
+
+    .eye-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(255,247,225,0.2);
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+      padding: 4px;
+    }
+
+    .eye-btn:hover { color: rgba(255,247,225,0.6); }
+    .eye-btn .material-symbols-outlined { font-size: 18px; }
+
+    /* ── SUBMIT ── */
+    .submit-btn {
+      width: 100%;
+      margin-top: 28px;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--orange), #cc3500);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(255,66,0,0.35);
+    }
+
+    .submit-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+
+    .submit-btn:hover::after { transform: translateX(100%); }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(255,66,0,0.45); }
+    .submit-btn:active { transform: scale(0.98); }
+    .submit-btn.loading { pointer-events: none; opacity: 0.7; }
+    .submit-btn .material-symbols-outlined { font-size: 18px; font-variation-settings: 'FILL' 1; }
+
+    /* ── ERROR ── */
+    .err-msg {
+      background: rgba(255,66,0,0.1);
+      border: 1px solid rgba(255,66,0,0.2);
+      border-left: 3px solid var(--orange);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #ff8060;
+      margin-top: 10px;
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── DEMO HINT ── */
+    .demo-hint {
+      margin-top: 24px;
+      padding: 14px 16px;
+      background: rgba(255,247,225,0.03);
+      border-radius: 12px;
+      border: 1px dashed rgba(255,247,225,0.08);
+    }
+
+    .demo-hint .dh-label {
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,247,225,0.2);
+      margin-bottom: 8px;
+    }
+
+    .demo-hint .dh-creds {
+      font-size: 11px;
+      color: rgba(255,247,225,0.35);
+      line-height: 1.9;
+    }
+
+    .dh-creds code {
+      background: rgba(255,247,225,0.07);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 11px;
+      color: rgba(255,247,225,0.65);
+    }
+
+    /* ── BACK LINK ── */
+    .back-link {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .back-link a {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,247,225,0.25);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+
+    .back-link a:hover { color: rgba(255,247,225,0.7); }
+    .back-link a .material-symbols-outlined { font-size: 14px; }
+
+    /* ── FLOATING PARTICLES ── */
+    .particle {
+      position: fixed;
+      width: 2px; height: 2px;
+      border-radius: 50%;
+      background: rgba(255,247,225,0.4);
+      pointer-events: none;
+      z-index: 1;
+      animation: particleDrift linear infinite;
+    }
+
+    @keyframes particleDrift {
+      from { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.6; }
+      to   { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic background -->
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+  <div class="bg-grid"></div>
+  <div id="particles"></div>
+
+  <!-- ── MAIN CARD ── -->
+  <div class="login-card">
+
+    <!-- LEFT: Brand panel -->
+    <div class="card-left">
+      <div class="left-inner">
+        <!-- Logo -->
+        <div class="logo-row">
+          <img src="assets/1.1 ngang@2x.png" alt="PicKic" />
+          <span class="panel-badge">Admin Panel</span>
+        </div>
+
+        <!-- Headline -->
+        <div class="panel-headline">
+          <div class="eyebrow">Hệ Thống Quản Trị</div>
+          <h2>
+            QUẢN<br />
+            <span class="o">TRỊ</span>
+            <span class="p"> HỆ<br />THỐNG</span>
+          </h2>
+          <p class="panel-desc">
+            Trung tâm điều hành PicKic — quản lý người dùng,
+            gói dịch vụ và tối ưu toàn bộ hoạt động nền tảng.
+          </p>
+        </div>
+
+        <!-- Stats -->
+        <div class="panel-stats">
+          <div class="ps-card">
+            <div class="ps-emoji">👥</div>
+            <div class="ps-num">1,200+</div>
+            <div class="ps-label">Người dùng</div>
+          </div>
+          <div class="ps-card">
+            <div class="ps-emoji">📦</div>
+            <div class="ps-num" id="pkgCount">5</div>
+            <div class="ps-label">Gói dịch vụ</div>
+          </div>
+          <div class="ps-card">
+            <div class="ps-emoji">📅</div>
+            <div class="ps-num">48K+</div>
+            <div class="ps-label">Booking</div>
+          </div>
+          <div class="ps-card">
+            <div class="ps-emoji">⭐</div>
+            <div class="ps-num">4.9</div>
+            <div class="ps-label">Rating TB</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="left-bottom">
+        <div class="left-footer">PicKic Admin v1.0 · 2026</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Form panel -->
+    <div class="card-right">
+
+      <!-- Mobile only logo -->
+      <div class="mobile-logo">
+        <img src="assets/1.1 ngang@2x.png" alt="PicKic" />
+        <span style="font-size:8px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);background:rgba(255,66,0,0.1);border:1px solid rgba(255,66,0,.2);border-radius:4px;padding:3px 8px;">Admin</span>
+      </div>
+
+      <!-- Shield icon -->
+      <div class="shield-wrap">
+        <span class="material-symbols-outlined">shield_person</span>
+        <div class="shield-ping"></div>
+      </div>
+
+      <h1 class="form-title">Chào<br />Admin 👋</h1>
+      <p class="form-sub">Đăng nhập để truy cập bảng điều hành.</p>
+
+      <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
+
+        <div class="field">
+          <label class="field-label">Email Admin</label>
+          <div class="field-wrap">
+            <span class="f-icon material-symbols-outlined">alternate_email</span>
+            <input id="emailInput" class="f-input" type="email"
+              placeholder="admin@pickic.vn" autocomplete="username" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Mật Khẩu</label>
+          <div class="field-wrap">
+            <span class="f-icon material-symbols-outlined">lock</span>
+            <input id="pwInput" class="f-input" type="password"
+              placeholder="••••••••" autocomplete="current-password" required />
+            <button type="button" class="eye-btn" onclick="togglePwd()">
+              <span class="material-symbols-outlined" id="eyeIcon">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="err-msg" id="errMsg"></div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span class="material-symbols-outlined">lock_open</span>
+          ĐĂNG NHẬP ADMIN
+        </button>
+      </form>
+
+      <!-- Demo credentials -->
+      <div class="demo-hint">
+        <div class="dh-label">Demo Credentials</div>
+        <div class="dh-creds">
+          📧 <code>admin@pickic.vn</code><br />
+          🔑 <code>admin123</code>
+        </div>
+      </div>
+
+      <!-- Back -->
+      <div class="back-link">
+        <a href="landing.html">
+          <span class="material-symbols-outlined">arrow_back_ios</span>
+          Quay về trang chủ
+        </a>
+      </div>
+
+    </div><!-- /card-right -->
+  </div><!-- /login-card -->
+
+  <script>
+    // Redirect if already admin
+    if (PicKicAdmin.isAdminLoggedIn()) {
+      window.location.href = 'admin-dashboard.html';
+    }
+
+    // Live pkg count
+    document.getElementById('pkgCount').textContent = PicKicAdmin.getPackages().length;
+
+    // Particles
+    (function () {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 24; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = 1 + Math.random() * 2.5;
+        p.style.cssText = `
+          left: ${Math.random() * 100}%;
+          width: ${size}px;
+          height: ${size}px;
+          animation-duration: ${10 + Math.random() * 16}s;
+          animation-delay: ${Math.random() * 14}s;
+          opacity: ${0.1 + Math.random() * 0.4};
+        `;
+        container.appendChild(p);
+      }
+    })();
+
+    // Password toggle
+    function togglePwd() {
+      const input = document.getElementById('pwInput');
+      const icon  = document.getElementById('eyeIcon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility_off';
+      } else {
+        input.type = 'password';
+        icon.textContent = 'visibility';
+      }
+    }
+
+    // Login handler
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('emailInput').value.trim();
+      const pw    = document.getElementById('pwInput').value;
+      const btn   = document.getElementById('submitBtn');
+      const err   = document.getElementById('errMsg');
+
+      err.style.display = 'none';
+
+      if (!email || !pw) {
+        showErr('Vui lòng điền đầy đủ email và mật khẩu.');
+        return;
+      }
+
+      btn.classList.add('loading');
+      btn.innerHTML = '<span class="material-symbols-outlined">hourglass_top</span> ĐANG XÁC THỰC...';
+
+      setTimeout(() => {
+        const result = PicKicAdmin.loginAdmin(email, pw);
+        btn.classList.remove('loading');
+        if (!result.success) {
+          showErr(result.error);
+          btn.innerHTML = '<span class="material-symbols-outlined">lock_open</span> ĐĂNG NHẬP ADMIN';
+        } else {
+          btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+          btn.style.boxShadow  = '0 8px 32px rgba(34,197,94,0.4)';
+          btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> THÀNH CÔNG!';
+          setTimeout(() => { window.location.href = 'admin-dashboard.html'; }, 700);
+        }
+      }, 900);
+    }
+
+    function showErr(msg) {
+      const el = document.getElementById('errMsg');
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
