@@ -1,0 +1,819 @@
+<!doctype html>
+<html class="light" lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Quản Lý Booking — PicKic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Anton&display=swap" rel="stylesheet" />
+  <script src="js/pickic-store.js"></script>
+  <script src="js/pickic-auth.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #fff7e1;
+      --dark:  #0a0a06;
+      --dark2: #141410;
+      --dark3: #1e1e18;
+      --orange: #ff4200;
+      --purple: #3617cf;
+      --green: #22c55e;
+      --yellow: #fbbf24;
+      --red: #ef4444;
+      --glass: rgba(255,247,225,0.04);
+      --border: rgba(255,247,225,0.08);
+    }
+
+    html, body {
+      background: #0a0a06;
+      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--cream);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 54px 20px 16px;
+      background: linear-gradient(to bottom, #0a0a06 70%, transparent);
+    }
+
+    .topbar-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 24px;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+    }
+
+    .topbar-back {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .topbar-back:hover { background: rgba(255,247,225,0.1); }
+    .topbar-back .material-symbols-outlined { font-size: 20px; color: var(--cream); }
+
+    .notif-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; position: relative;
+    }
+    .notif-btn .material-symbols-outlined { font-size: 18px; color: var(--cream); }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 0 20px 20px;
+    }
+    .mini-stat {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 10px;
+      text-align: center;
+    }
+    .mini-stat-num {
+      font-family: 'Anton', sans-serif;
+      font-size: 22px;
+      color: var(--cream);
+      line-height: 1;
+    }
+    .mini-stat-num.orange { color: var(--orange); }
+    .mini-stat-num.green  { color: #4ade80; }
+    .mini-stat-num.yellow { color: var(--yellow); }
+    .mini-stat-num.red    { color: #f87171; }
+    .mini-stat-label {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: rgba(255,247,225,0.3);
+      margin-top: 3px;
+      line-height: 1.3;
+    }
+
+    /* ── FILTER TABS ── */
+    .filter-wrap {
+      padding: 0 20px 16px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .filter-wrap::-webkit-scrollbar { display: none; }
+
+    .filter-tab {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--glass);
+      color: rgba(255,247,225,0.4);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .filter-tab:hover { color: var(--cream); border-color: rgba(255,247,225,0.15); }
+    .filter-tab.active {
+      background: rgba(255,66,0,0.15);
+      border-color: rgba(255,66,0,0.35);
+      color: var(--orange);
+    }
+    .filter-tab .tab-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 9px;
+      background: rgba(255,66,0,0.25);
+      font-size: 9px;
+      padding: 0 4px;
+    }
+
+    /* ── BOOKING CARDS ── */
+    .bookings-list {
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-bottom: 120px;
+    }
+
+    .booking-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .booking-card:hover { border-color: rgba(255,247,225,0.14); transform: translateY(-1px); }
+    .booking-card.status-pending { border-color: rgba(251,191,36,0.25); }
+    .booking-card.status-confirmed { border-color: rgba(34,197,94,0.2); }
+    .booking-card.status-active { border-color: rgba(54,23,207,0.3); }
+    .booking-card.status-completed { border-color: rgba(255,247,225,0.06); }
+    .booking-card.status-cancelled { border-color: rgba(239,68,68,0.2); opacity: 0.7; }
+
+    .bc-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 16px 12px;
+    }
+
+    .bc-avatar {
+      width: 46px; height: 46px;
+      border-radius: 12px;
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .bc-avatar-initials {
+      width: 46px; height: 46px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255,66,0,0.3), rgba(54,23,207,0.3));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 800;
+      color: var(--cream);
+      flex-shrink: 0;
+    }
+
+    .bc-info { flex: 1; min-width: 0; }
+    .bc-client {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--cream);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+    .bc-session {
+      font-size: 10px;
+      color: rgba(255,247,225,0.4);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bc-status-badge {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .bc-status-badge .status-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+    }
+
+    /* status colors */
+    .badge-pending  { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25); }
+    .badge-confirmed{ background: rgba(34,197,94,0.1); color: #4ade80; border: 1px solid rgba(34,197,94,0.25); }
+    .badge-active   { background: rgba(130,110,255,0.12); color: #826eff; border: 1px solid rgba(130,110,255,0.25); }
+    .badge-completed{ background: rgba(255,247,225,0.06); color: rgba(255,247,225,0.4); border: 1px solid var(--border); }
+    .badge-cancelled{ background: rgba(239,68,68,0.1); color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+
+    /* Meta info rows */
+    .bc-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 0 16px 12px;
+    }
+    .bc-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: rgba(255,247,225,0.45);
+    }
+    .bc-meta-item .material-symbols-outlined { font-size: 13px; }
+
+    /* Price row */
+    .bc-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: rgba(255,247,225,0.02);
+      border-top: 1px solid var(--border);
+    }
+    .bc-price {
+      font-family: 'Anton', sans-serif;
+      font-size: 20px;
+      color: var(--orange);
+      letter-spacing: 0.01em;
+    }
+    .bc-pkg-name {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255,247,225,0.35);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* Action buttons */
+    .bc-actions {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px 16px;
+    }
+    .bc-btn {
+      flex: 1;
+      padding: 11px;
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .bc-btn .material-symbols-outlined { font-size: 14px; }
+
+    .btn-accept {
+      background: var(--cream);
+      color: #0a0a06;
+    }
+    .btn-accept:hover { background: #fff; transform: translateY(-1px); }
+    .btn-accept:disabled { background: rgba(34,197,94,0.2); color: #4ade80; cursor: default; transform: none; }
+
+    .btn-reject {
+      background: rgba(255,247,225,0.06);
+      border: 1px solid var(--border) !important;
+      color: rgba(255,247,225,0.4);
+    }
+    .btn-reject:hover { background: rgba(239,68,68,0.12); color: #f87171; border-color: rgba(239,68,68,0.3) !important; }
+    .btn-reject:disabled { opacity: 0.4; cursor: default; transform: none; }
+
+    .btn-chat {
+      background: rgba(130,110,255,0.12);
+      color: #826eff;
+      border: 1px solid rgba(130,110,255,0.2) !important;
+    }
+    .btn-chat:hover { background: rgba(130,110,255,0.2); }
+
+    .btn-detail {
+      background: var(--glass);
+      border: 1px solid var(--border) !important;
+      color: rgba(255,247,225,0.55);
+    }
+    .btn-detail:hover { background: rgba(255,247,225,0.08); color: var(--cream); }
+
+    /* Empty state */
+    .empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 30px;
+      gap: 12px;
+    }
+    .empty-state .material-symbols-outlined {
+      font-size: 52px;
+      color: rgba(255,247,225,0.14);
+    }
+    .empty-state h3 {
+      font-family: 'Anton', sans-serif;
+      font-size: 20px;
+      color: rgba(255,247,225,0.35);
+      letter-spacing: 0.02em;
+    }
+    .empty-state p { font-size: 12px; color: rgba(255,247,225,0.2); }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #141410;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 8px 0 12px;
+      z-index: 9999;
+    }
+    .bottom-nav .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: rgba(255,247,225,0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+      padding: 4px 16px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .bottom-nav .nav-item:hover { color: rgba(255,247,225,0.7); }
+    .bottom-nav .nav-item.active { color: var(--orange); }
+    .bottom-nav .nav-item .nb-icon { font-size: 26px; line-height: 1; }
+    .bottom-nav .nav-item .nb-label {
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase; line-height: 1;
+    }
+
+    /* ── TOAST ── */
+    #pgToast {
+      position: fixed;
+      bottom: 100px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1e1e18;
+      border: 1px solid rgba(255,247,225,0.12);
+      color: var(--cream);
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 700;
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    #pgToast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<div id="app-shell">
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <a href="photographer-landing.html" class="topbar-back">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </a>
+    <span class="topbar-title">Bookings</span>
+    <div class="notif-btn" onclick="window.location.href='notifications.html'">
+      <span class="material-symbols-outlined">notifications</span>
+    </div>
+  </div>
+
+  <!-- Stats Strip -->
+  <div class="stats-strip reveal">
+    <div class="mini-stat">
+      <div class="mini-stat-num" id="statTotal">0</div>
+      <div class="mini-stat-label">Tất cả</div>
+    </div>
+    <div class="mini-stat">
+      <div class="mini-stat-num yellow" id="statPending">0</div>
+      <div class="mini-stat-label">Chờ xác nhận</div>
+    </div>
+    <div class="mini-stat">
+      <div class="mini-stat-num green" id="statDone">0</div>
+      <div class="mini-stat-label">Hoàn thành</div>
+    </div>
+    <div class="mini-stat">
+      <div class="mini-stat-num orange" id="statRevenue">0M</div>
+      <div class="mini-stat-label">Doanh thu</div>
+    </div>
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="filter-wrap reveal">
+    <button class="filter-tab active" data-filter="all" onclick="setFilter('all',this)">
+      Tất Cả <span class="tab-count" id="cnt-all">0</span>
+    </button>
+    <button class="filter-tab" data-filter="pending" onclick="setFilter('pending',this)">
+      Chờ XN <span class="tab-count" id="cnt-pending">0</span>
+    </button>
+    <button class="filter-tab" data-filter="confirmed" onclick="setFilter('confirmed',this)">
+      Đã XN <span class="tab-count" id="cnt-confirmed">0</span>
+    </button>
+    <button class="filter-tab" data-filter="active" onclick="setFilter('active',this)">
+      Đang Làm <span class="tab-count" id="cnt-active">0</span>
+    </button>
+    <button class="filter-tab" data-filter="completed" onclick="setFilter('completed',this)">
+      Hoàn Thành <span class="tab-count" id="cnt-completed">0</span>
+    </button>
+    <button class="filter-tab" data-filter="cancelled" onclick="setFilter('cancelled',this)">
+      Đã Hủy <span class="tab-count" id="cnt-cancelled">0</span>
+    </button>
+  </div>
+
+  <!-- Bookings List -->
+  <div class="bookings-list" id="bookingsList"></div>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="emptyState">
+    <span class="material-symbols-outlined">event_busy</span>
+    <h3>Chưa Có Booking</h3>
+    <p>Các booking sẽ xuất hiện ở đây sau khi khách đặt lịch.</p>
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <a href="photographer-landing.html" class="nav-item">
+      <span class="material-symbols-outlined nb-icon">home</span>
+      <span class="nb-label">Home</span>
+    </a>
+    <a href="gallery.html" class="nav-item">
+      <span class="material-symbols-outlined nb-icon">photo_library</span>
+      <span class="nb-label">Gallery</span>
+    </a>
+    <a href="photographer-bookings.html" class="nav-item active">
+      <span class="material-symbols-outlined nb-icon" style="font-variation-settings:'FILL' 1;">event</span>
+      <span class="nb-label">Bookings</span>
+    </a>
+    <a href="all-chat.html" class="nav-item">
+      <span class="material-symbols-outlined nb-icon">chat_bubble</span>
+      <span class="nb-label">Chat</span>
+    </a>
+    <a href="photo-profile.html" class="nav-item">
+      <span class="material-symbols-outlined nb-icon">person</span>
+      <span class="nb-label">Profile</span>
+    </a>
+  </nav>
+
+</div>
+
+<div id="pgToast"></div>
+
+<script>
+// ─── SAMPLE DATA (fallback nếu chưa có trong store) ──────────────────────────
+const SAMPLE_BOOKINGS = [
+  {
+    id: 'bk001',
+    clientName: 'Nguyễn Thị Mai',
+    clientInitials: 'NM',
+    sessionName: 'Portrait Minimalist',
+    packageName: 'Portrait Mini Session',
+    date: '26/03/2026',
+    time: '14:00',
+    location: 'Hoàn Kiếm, Hà Nội',
+    price: '1.200.000',
+    duration: '1 giờ',
+    status: 'pending',
+    notes: 'Chụp ảnh cá nhân cho profile LinkedIn.'
+  },
+  {
+    id: 'bk002',
+    clientName: 'Trần Minh Đức',
+    clientInitials: 'TM',
+    sessionName: 'Wedding Pre-shoot',
+    packageName: 'Pre-wedding',
+    date: '27/03/2026',
+    time: '10:00',
+    location: 'Hồ Tây · Studio Lake',
+    price: '3.500.000',
+    duration: '3 giờ',
+    status: 'confirmed',
+    notes: 'Chụp trước đám cưới, cần vibe lãng mạn.'
+  },
+  {
+    id: 'bk003',
+    clientName: 'Lê Hồng Anh',
+    clientInitials: 'LA',
+    sessionName: 'Fashion Editorial',
+    packageName: 'Fashion Editorial',
+    date: '28/03/2026',
+    time: '18:30',
+    location: 'Studio Tây Hồ',
+    price: '4.000.000',
+    duration: '3 giờ',
+    status: 'active',
+    notes: 'Chụp bộ sưu tập thời trang mùa hè.'
+  },
+  {
+    id: 'bk004',
+    clientName: 'Phạm Thu Hương',
+    clientInitials: 'PH',
+    sessionName: 'Corporate Headshot',
+    packageName: 'Commercial Headshot',
+    date: '20/03/2026',
+    time: '09:00',
+    location: 'Văn phòng Q1, HN',
+    price: '1.800.000',
+    duration: '2 giờ',
+    status: 'completed',
+    notes: 'Ảnh đại diện cho ban lãnh đạo công ty.'
+  },
+  {
+    id: 'bk005',
+    clientName: 'Võ Đình Khải',
+    clientInitials: 'VK',
+    sessionName: 'Full Day Luxury',
+    packageName: 'Full Day Luxury',
+    date: '15/03/2026',
+    time: '08:00',
+    location: 'Ba Vì, Hà Nội',
+    price: '5.800.000',
+    duration: '8 giờ',
+    status: 'cancelled',
+    notes: 'Hủy do thời tiết xấu.'
+  },
+  {
+    id: 'bk006',
+    clientName: 'Bùi Lan Anh',
+    clientInitials: 'BL',
+    sessionName: 'Couple Golden Hour',
+    packageName: 'Portrait Session',
+    date: '01/04/2026',
+    time: '16:30',
+    location: 'Tràng An, Ninh Bình',
+    price: '2.500.000',
+    duration: '3 giờ',
+    status: 'pending',
+    notes: 'Chụp kỷ niệm 1 năm yêu nhau.'
+  }
+];
+
+const STATUS_CONFIG = {
+  pending:   { label: 'Chờ Xác Nhận', badgeClass: 'badge-pending',   dotColor: '#fbbf24' },
+  confirmed: { label: 'Đã Xác Nhận',  badgeClass: 'badge-confirmed',  dotColor: '#4ade80' },
+  active:    { label: 'Đang Thực Hiện', badgeClass: 'badge-active',   dotColor: '#826eff' },
+  completed: { label: 'Hoàn Thành',   badgeClass: 'badge-completed',  dotColor: 'rgba(255,247,225,0.3)' },
+  cancelled: { label: 'Đã Hủy',       badgeClass: 'badge-cancelled',  dotColor: '#f87171' },
+};
+
+let currentFilter = 'all';
+let bookings = [];
+
+// Load / init data
+function loadData() {
+  // Try from store, fallback to sample
+  try {
+    const stored = PicKicStore.getBookings ? PicKicStore.getBookings() : [];
+    bookings = (stored && stored.length) ? stored.map(normalizeFromStore) : [...SAMPLE_BOOKINGS];
+  } catch(e) {
+    bookings = [...SAMPLE_BOOKINGS];
+  }
+  updateStats();
+  renderBookings();
+}
+
+function normalizeFromStore(b) {
+  return {
+    id: b.id || 'bk' + Math.random(),
+    clientName: b.clientName || b.photographerName || 'Khách hàng',
+    clientInitials: initials(b.clientName || b.photographerName || 'KH'),
+    sessionName: b.sessionName || b.type || 'Buổi chụp',
+    packageName: b.packageName || b.studio || '',
+    date: b.date || '',
+    time: b.time || '',
+    location: b.location || '',
+    price: b.price || '0',
+    duration: b.duration || '',
+    status: b.status || 'pending',
+    notes: b.notes || ''
+  };
+}
+
+function initials(name) {
+  return name.split(' ').map(w => w[0]).slice(-2).join('').toUpperCase();
+}
+
+function updateStats() {
+  const pending   = bookings.filter(b => b.status === 'pending').length;
+  const completed = bookings.filter(b => b.status === 'completed').length;
+  const revenue   = bookings
+    .filter(b => b.status === 'completed')
+    .reduce((sum, b) => sum + (parseInt(b.price.replace(/\D/g,'')) || 0), 0);
+
+  document.getElementById('statTotal').textContent   = bookings.length;
+  document.getElementById('statPending').textContent  = pending;
+  document.getElementById('statDone').textContent     = completed;
+  document.getElementById('statRevenue').textContent  = revenue >= 1000000 ? (revenue/1000000).toFixed(1) + 'M' : (revenue/1000).toFixed(0) + 'K';
+
+  // Tab counts
+  ['all','pending','confirmed','active','completed','cancelled'].forEach(f => {
+    const cnt = f === 'all' ? bookings.length : bookings.filter(b => b.status === f).length;
+    const el = document.getElementById('cnt-' + f);
+    if(el) el.textContent = cnt;
+  });
+}
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderBookings();
+}
+
+function renderBookings() {
+  const list = document.getElementById('bookingsList');
+  const empty = document.getElementById('emptyState');
+  const filtered = currentFilter === 'all' ? bookings : bookings.filter(b => b.status === currentFilter);
+
+  if(!filtered.length) {
+    list.innerHTML = '';
+    list.style.display = 'none';
+    empty.style.display = 'flex';
+    return;
+  }
+
+  list.style.display = 'flex';
+  empty.style.display = 'none';
+
+  list.innerHTML = filtered.map(b => {
+    const sc = STATUS_CONFIG[b.status] || STATUS_CONFIG.pending;
+    const isPending = b.status === 'pending';
+    const isActive  = b.status === 'active';
+    const isDone    = b.status === 'completed' || b.status === 'cancelled';
+
+    const actionBtns = isPending ? `
+      <button class="bc-btn btn-accept" id="accept-${b.id}" onclick="acceptBooking('${b.id}',this)">
+        <span class="material-symbols-outlined">check_circle</span> Chấp Nhận
+      </button>
+      <button class="bc-btn btn-reject" id="reject-${b.id}" onclick="rejectBooking('${b.id}',this)">
+        <span class="material-symbols-outlined">cancel</span> Từ Chối
+      </button>
+    ` : (isActive ? `
+      <a href="chat.html" class="bc-btn btn-chat">
+        <span class="material-symbols-outlined">chat_bubble</span> Nhắn Tin
+      </a>
+      <a href="booking-detail.html" class="bc-btn btn-detail">
+        <span class="material-symbols-outlined">info</span> Chi Tiết
+      </a>
+    ` : `
+      <a href="chat.html" class="bc-btn btn-chat">
+        <span class="material-symbols-outlined">chat_bubble</span> Chat
+      </a>
+      <a href="booking-detail.html" class="bc-btn btn-detail">
+        <span class="material-symbols-outlined">receipt_long</span> Chi Tiết
+      </a>
+    `);
+
+    return `
+    <div class="booking-card status-${b.status}" id="card-${b.id}">
+      <div class="bc-head">
+        <div class="bc-avatar-initials">${b.clientInitials}</div>
+        <div class="bc-info">
+          <div class="bc-client">${b.clientName}</div>
+          <div class="bc-session">${b.sessionName}</div>
+        </div>
+        <div class="bc-status-badge ${sc.badgeClass}">
+          <div class="status-dot" style="background:${sc.dotColor};"></div>
+          ${sc.label}
+        </div>
+      </div>
+      <div class="bc-meta">
+        <div class="bc-meta-item">
+          <span class="material-symbols-outlined">event</span>
+          ${b.date}
+        </div>
+        <div class="bc-meta-item">
+          <span class="material-symbols-outlined">schedule</span>
+          ${b.time}${b.duration ? ' · ' + b.duration : ''}
+        </div>
+        <div class="bc-meta-item" style="grid-column:span 2;">
+          <span class="material-symbols-outlined">location_on</span>
+          ${b.location}
+        </div>
+        ${b.notes ? `<div class="bc-meta-item" style="grid-column:span 2;color:rgba(255,247,225,0.3);font-style:italic;">
+          <span class="material-symbols-outlined">notes</span>${b.notes}
+        </div>` : ''}
+      </div>
+      <div class="bc-price-row">
+        <div>
+          <div class="bc-price">${b.price}₫</div>
+          <div class="bc-pkg-name">${b.packageName}</div>
+        </div>
+        <div style="font-size:9px;color:rgba(255,247,225,0.25);text-align:right;">
+          ID: ${b.id.toUpperCase()}<br/>
+          <span style="color:rgba(255,247,225,0.15);">${b.time}</span>
+        </div>
+      </div>
+      <div class="bc-actions">
+        ${actionBtns}
+      </div>
+    </div>
+    `;
+  }).join('');
+}
+
+function acceptBooking(id, btn) {
+  const booking = bookings.find(b => b.id === id);
+  if(!booking) return;
+  booking.status = 'confirmed';
+  btn.textContent = '✓ Đã Chấp Nhận';
+  btn.disabled = true;
+  btn.style.background = '#22c55e';
+  btn.style.color = '#fff';
+  const rejectBtn = document.getElementById('reject-' + id);
+  if(rejectBtn) rejectBtn.style.display = 'none';
+  const card = document.getElementById('card-' + id);
+  if(card) {
+    card.className = 'booking-card status-confirmed';
+  }
+  showToast('✓ Đã xác nhận booking cho ' + booking.clientName);
+  updateStats();
+  setTimeout(() => renderBookings(), 1200);
+}
+
+function rejectBooking(id, btn) {
+  const booking = bookings.find(b => b.id === id);
+  if(!booking) return;
+  booking.status = 'cancelled';
+  showToast('✕ Đã từ chối booking');
+  updateStats();
+  setTimeout(() => renderBookings(), 1200);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('pgToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// Scroll reveal
+document.addEventListener('DOMContentLoaded', function() {
+  loadData();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target); } });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+});
+</script>
+</body>
+</html>
